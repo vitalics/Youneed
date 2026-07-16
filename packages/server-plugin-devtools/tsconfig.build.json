@@ -9,5 +9,5 @@
     "paths": {}
   },
   "include": ["src/**/*.ts"],
-  "exclude": ["src/**/*.test.ts", "src/web.ts", "src/flow-island.tsx"]
+  "exclude": ["src/**/*.test.ts", "src/web.ts", "src/ext.ts", "src/flow-island.tsx"]
 }

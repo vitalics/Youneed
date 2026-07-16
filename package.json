@@ -5,7 +5,7 @@
   "type": "module",
   "private": true,
   "scripts": {
-    "build": "pnpm --filter \"./packages/*\" run build",
+    "build": "pnpm --filter-prod \"@youneed/server-plugin-devtools...\" --filter-prod \"@youneed/server...\" --filter-prod \"@youneed/dom-ui-shad...\" run build && pnpm --filter \"./packages/*\" --filter \"!@youneed/server-plugin-devtools\" run build && pnpm --filter \"@youneed/server-plugin-devtools\" --filter \"@youneed/cli-plugin-devtools\" run build:web",
     "typecheck": "tsc -p tsconfig.json",
     "test": "pnpm -r run test && pnpm examples:test:dom",
     "bench": "pnpm -r --workspace-concurrency=1 run bench",
