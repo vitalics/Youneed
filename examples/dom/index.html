@@ -1,0 +1,19 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>DOM framework demo</title>
+  </head>
+  <body>
+    <h1>Custom-elements framework demo</h1>
+    <!-- bootstrap() mounts <app-root> here -->
+    <div id="root"></div>
+
+    <!-- compiled from bin-dom.ts: `pnpm build:dom`.
+         Classic <script> (no type="module") so it also works over file://
+         — ES modules are blocked by CORS on file://, classic scripts aren't.
+         Over HTTP (`pnpm serve:dom`) both styles work. -->
+    <script src="./bin-dom.js"></script>
+  </body>
+</html>

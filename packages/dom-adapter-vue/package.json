@@ -1,0 +1,31 @@
+{
+  "name": "@youneed/dom-adapter-vue",
+  "version": "0.1.0",
+  "description": "Use @youneed/dom components inside Vue and Vue components inside @youneed/dom — type-safe and refactor-friendly (pass the component, not a tag string).",
+  "type": "module",
+  "license": "ISC",
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "sideEffects": false,
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json",
+    "test": "tsx tests/to-vue.test.ts && tsx tests/from-vue.test.ts"
+  },
+  "peerDependencies": {
+    "vue": ">=3.3"
+  },
+  "devDependencies": {
+    "@youneed/dom": "workspace:*",
+    "vue": "^3.5.0"
+  }
+}

@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>youneed providers — one component, every provider</title>
+    <style>
+      body { font-family: system-ui, sans-serif; margin: 32px; max-width: 720px; color: #1b1b1f; }
+      h1 { font-size: 24px; }
+      code { background: #eef2ff; color: #4338ca; padding: 1px 5px; border-radius: 4px; }
+      ul { color: #475569; line-height: 1.7; }
+      .hint { color: #64748b; font-size: 14px; margin-top: 18px; }
+    </style>
+  </head>
+  <body>
+    <h1>One component, every provider</h1>
+    <p>
+      The card below composes six <code>dom-provider-*</code> packages in a single
+      <code>providers: [...]</code> array — all typed onto <code>this</code>:
+    </p>
+    <ul>
+      <li><code>this.i18n</code> — translations (EN / DE / AR), params from templates</li>
+      <li><code>this.direction</code> — LTR / RTL (auto-follows the locale)</li>
+      <li><code>this.colorScheme</code> — light / dark / auto</li>
+      <li><code>this.a11y</code> — screen-reader announcements + dev CSS audit</li>
+      <li><code>this.logger</code> — a scoped <code>@youneed/logger</code> child</li>
+      <li><code>this.store</code> — a Zustand store (selector-gated re-renders)</li>
+    </ul>
+
+    <showcase-card></showcase-card>
+
+    <p class="hint">
+      Open the devtools panel (launcher, bottom-right) — alongside the built-in
+      Components / Time-travel / Styles tabs you'll find <b>i18n</b>, <b>a11y</b>
+      and <b>zustand</b> tabs, each fed by its capture plugin.
+    </p>
+    <script src="./app.js"></script>
+  </body>
+</html>

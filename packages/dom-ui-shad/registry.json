@@ -1,0 +1,136 @@
+{
+  "name": "@youneed/dom-ui-shad",
+  "homepage": "https://github.com/youneed/shad",
+  "items": {
+    "lib": {
+      "description": "Shared helpers (cn, tw, variants, registerTailwind).",
+      "internal": true,
+      "files": ["lib/shad.ts"]
+    },
+    "theme": {
+      "description": "Design tokens (:root/.dark CSS variables). Load in <head>.",
+      "internal": true,
+      "files": ["theme.css"]
+    },
+    "button": {
+      "description": "Button with variants and sizes.",
+      "files": ["ui/button.ts"],
+      "registryDependencies": ["lib"],
+      "dependencies": ["@youneed/dom"]
+    },
+    "badge": {
+      "description": "Small status pill with variants.",
+      "files": ["ui/badge.ts"],
+      "registryDependencies": ["lib"],
+      "dependencies": ["@youneed/dom"]
+    },
+    "card": {
+      "description": "Content container with title/description/footer slots.",
+      "files": ["ui/card.ts"],
+      "registryDependencies": ["lib"],
+      "dependencies": ["@youneed/dom"]
+    },
+    "input": {
+      "description": "Styled text input that re-emits its value.",
+      "files": ["ui/input.ts"],
+      "registryDependencies": ["lib"],
+      "dependencies": ["@youneed/dom"]
+    },
+    "label": {
+      "description": "Form label.",
+      "files": ["ui/label.ts"],
+      "registryDependencies": ["lib"],
+      "dependencies": ["@youneed/dom"]
+    },
+    "separator": {
+      "description": "Horizontal or vertical divider.",
+      "files": ["ui/separator.ts"],
+      "registryDependencies": ["lib"],
+      "dependencies": ["@youneed/dom"]
+    },
+    "skeleton": {
+      "description": "Loading placeholder (sized on the host).",
+      "files": ["ui/skeleton.ts"],
+      "registryDependencies": ["lib"],
+      "dependencies": ["@youneed/dom"]
+    },
+    "avatar": {
+      "description": "Image with a slotted fallback.",
+      "files": ["ui/avatar.ts"],
+      "registryDependencies": ["lib"],
+      "dependencies": ["@youneed/dom"]
+    },
+    "alert": {
+      "description": "Callout with icon/title/description slots and variants.",
+      "files": ["ui/alert.ts"],
+      "registryDependencies": ["lib"],
+      "dependencies": ["@youneed/dom"]
+    },
+    "switch": {
+      "description": "On/off toggle; emits change.",
+      "files": ["ui/switch.ts"],
+      "registryDependencies": ["lib"],
+      "dependencies": ["@youneed/dom"]
+    },
+    "checkbox": {
+      "description": "Checkbox; emits change.",
+      "files": ["ui/checkbox.ts"],
+      "registryDependencies": ["lib"],
+      "dependencies": ["@youneed/dom"]
+    },
+    "textarea": {
+      "description": "Styled multi-line input that re-emits its value.",
+      "files": ["ui/textarea.ts"],
+      "registryDependencies": ["lib"],
+      "dependencies": ["@youneed/dom"]
+    },
+    "progress": {
+      "description": "Determinate progress bar.",
+      "files": ["ui/progress.ts"],
+      "registryDependencies": ["lib"],
+      "dependencies": ["@youneed/dom"]
+    },
+    "toggle": {
+      "description": "Two-state toggle button; emits change.",
+      "files": ["ui/toggle.ts"],
+      "registryDependencies": ["lib"],
+      "dependencies": ["@youneed/dom"]
+    },
+    "tabs": {
+      "description": "Tabbed panels (<shad-tabs> + <shad-tab>).",
+      "files": ["ui/tabs.ts"],
+      "registryDependencies": ["lib"],
+      "dependencies": ["@youneed/dom"]
+    },
+    "dialog": {
+      "description": "Modal dialog; closes on backdrop/Escape; emits close.",
+      "files": ["ui/dialog.ts"],
+      "registryDependencies": ["lib"],
+      "dependencies": ["@youneed/dom"]
+    },
+    "tooltip": {
+      "description": "Hover/focus tooltip (CSS-positioned).",
+      "files": ["ui/tooltip.ts"],
+      "registryDependencies": ["lib"],
+      "dependencies": ["@youneed/dom"]
+    },
+    "select": {
+      "description": "Dropdown select (<shad-select> + <shad-option>); emits change.",
+      "files": ["ui/select.ts"],
+      "registryDependencies": ["lib"],
+      "dependencies": ["@youneed/dom"]
+    },
+    "accordion": {
+      "description": "Collapsible sections (<shad-accordion> + <shad-accordion-item>).",
+      "files": ["ui/accordion.ts"],
+      "registryDependencies": ["lib"],
+      "dependencies": ["@youneed/dom"]
+    },
+    "calendar": {
+      "description": "Month date picker; emits change with an ISO date.",
+      "files": ["ui/calendar.ts"],
+      "registryDependencies": ["lib"],
+      "dependencies": ["@youneed/dom"]
+    }
+  }
+}

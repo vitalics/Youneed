@@ -1,0 +1,25 @@
+{
+  "name": "@youneed/ssr-router",
+  "version": "0.1.0",
+  "description": "SSR router for @youneed: an ssr() module adding Error/404 pages (server), plus the @youneed/dom-router for client SPA navigation.",
+  "type": "module",
+  "license": "ISC",
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": { ".": { "types": "./dist/index.d.ts", "default": "./dist/index.js" } },
+  "files": ["dist"],
+  "sideEffects": false,
+  "scripts": { "build": "tsc -p tsconfig.build.json", "test": "tsx tests/router.test.ts" },
+  "dependencies": {
+    "@youneed/server": "workspace:*",
+    "@youneed/server-plugin-ssr": "workspace:*",
+    "@youneed/ssr": "workspace:*",
+    "@youneed/dom-router": "workspace:*"
+  },
+  "devDependencies": {
+    "@youneed/dom": "workspace:*",
+    "@youneed/test": "workspace:*",
+    "@youneed/test-reporter-console": "workspace:*"
+  }
+}

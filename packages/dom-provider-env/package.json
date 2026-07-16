@@ -1,0 +1,46 @@
+{
+  "name": "@youneed/dom-provider-env",
+  "version": "0.1.0",
+  "description": "Type-safe, fail-fast environment variables for @youneed/dom — coerce + validate import.meta.env (or any source) against a @youneed/schema spec, read it via this.env, inspect it in devtools.",
+  "type": "module",
+  "license": "ISC",
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    },
+    "./devtools": {
+      "types": "./dist/devtools.d.ts",
+      "default": "./dist/devtools.js"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "sideEffects": false,
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json",
+    "test": "tsx tests/env.test.ts && tsx tests/provider.test.ts && tsx tests/devtools.test.ts"
+  },
+  "dependencies": {
+    "@youneed/schema": "workspace:*"
+  },
+  "peerDependencies": {
+    "@youneed/dom": "workspace:*",
+    "@youneed/devtools": "workspace:*"
+  },
+  "peerDependenciesMeta": {
+    "@youneed/devtools": {
+      "optional": true
+    }
+  },
+  "devDependencies": {
+    "@youneed/dom": "workspace:*",
+    "@youneed/devtools": "workspace:*",
+    "@youneed/test": "workspace:*",
+    "@youneed/test-reporter-console": "workspace:*"
+  }
+}

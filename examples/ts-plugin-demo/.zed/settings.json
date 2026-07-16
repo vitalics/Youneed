@@ -1,0 +1,24 @@
+{
+  // Zed reads project settings from the OPENED folder. When you open this demo
+  // folder directly, this file applies. `location: "."` resolves @youneed/ts-plugin
+  // via Node module resolution (walks up to the repo-root node_modules symlink).
+  // `languages` is required by vtsls to activate the plugin for those file types.
+  "lsp": {
+    "vtsls": {
+      "settings": {
+        "vtsls": {
+          "tsserver": {
+            "globalPlugins": [
+              {
+                "name": "@youneed/ts-plugin",
+                "location": ".",
+                "languages": ["typescript", "typescriptreact", "javascript", "javascriptreact"],
+                "enableForWorkspaceTypeScriptVersions": true
+              }
+            ]
+          }
+        }
+      }
+    }
+  }
+}

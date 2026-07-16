@@ -1,0 +1,31 @@
+{
+  "name": "@youneed/dom-adapter-preact",
+  "version": "0.1.0",
+  "description": "Use @youneed/dom components inside Preact and Preact components inside @youneed/dom — type-safe and refactor-friendly (pass the component, not a tag string).",
+  "type": "module",
+  "license": "ISC",
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "sideEffects": false,
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json",
+    "test": "tsx tests/to-preact.test.ts && tsx tests/from-preact.test.ts"
+  },
+  "peerDependencies": {
+    "preact": ">=10"
+  },
+  "devDependencies": {
+    "@youneed/dom": "workspace:*",
+    "preact": "^10.24.0"
+  }
+}

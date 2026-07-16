@@ -1,0 +1,35 @@
+{
+  "name": "@youneed/dom-provider-rbac",
+  "version": "0.1.0",
+  "description": "Use @youneed/rbac inside @youneed/dom components — gate UI in html templates with `this.can(action, resource, instance?)`, re-rendering when the current subject changes.",
+  "type": "module",
+  "license": "ISC",
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "sideEffects": false,
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json",
+    "test": "tsx tests/dom-provider-rbac.test.ts"
+  },
+  "dependencies": {
+    "@youneed/rbac": "workspace:*"
+  },
+  "peerDependencies": {
+    "@youneed/dom": "workspace:*"
+  },
+  "devDependencies": {
+    "@youneed/dom": "workspace:*",
+    "@youneed/test": "workspace:*",
+    "@youneed/test-reporter-console": "workspace:*"
+  }
+}

@@ -1,0 +1,22 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Tailwind in Shadow DOM</title>
+    <style>
+      body { font-family: system-ui, sans-serif; margin: 40px auto; max-width: 640px; color: #18181b; background: #f4f4f5; }
+      code { background: #e4e4e7; padding: 1px 4px; border-radius: 4px; }
+    </style>
+  </head>
+  <body>
+    <h1>Tailwind × Shadow DOM</h1>
+    <p>
+      The card below is a custom element. Its Tailwind utility classes are styled
+      by the compiled Tailwind stylesheet <em>adopted into its shadow root</em> —
+      global Tailwind CSS alone wouldn't reach inside.
+    </p>
+    <tw-card></tw-card>
+    <script src="./app.js"></script>
+  </body>
+</html>

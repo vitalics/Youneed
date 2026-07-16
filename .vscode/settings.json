@@ -1,0 +1,9 @@
+{
+  // @youneed/ts-plugin is a TypeScript language-service plugin (declared in
+  // tsconfig.base.json `plugins`). VS Code only loads tsconfig plugins when the
+  // editor uses the WORKSPACE TypeScript — so point tsdk at it and accept the
+  // prompt (or run "TypeScript: Select TypeScript Version → Use Workspace
+  // Version"). Then open examples/ts-plugin-demo/demo.ts.
+  "js/ts.tsdk.path": "./node_modules/typescript/lib",
+  "js/ts.tsdk.promptToUseWorkspaceVersion": true
+}

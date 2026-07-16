@@ -1,0 +1,34 @@
+{
+  "name": "@youneed/test-plugin-feature-flags",
+  "version": "0.1.0",
+  "description": "Deterministic feature-flag helpers for @youneed/test: a fresh FeatureFlags fixture that resets overrides between tests, plus a scoped withFlags(...) override helper.",
+  "type": "module",
+  "license": "ISC",
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "sideEffects": false,
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json",
+    "test": "tsx tests/self.test.ts"
+  },
+  "dependencies": {
+    "@youneed/feature-flags": "workspace:*"
+  },
+  "peerDependencies": {
+    "@youneed/test": "workspace:*"
+  },
+  "devDependencies": {
+    "@youneed/test": "workspace:*",
+    "@youneed/test-reporter-console": "workspace:*"
+  }
+}

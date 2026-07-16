@@ -1,0 +1,56 @@
+{
+  "name": "@youneed/cli-plugin-devtools",
+  "version": "0.1.0",
+  "description": "Devtools server for @youneed/cli: serves the unified <youneed-devtools> shell (same UI as the server devtools) — a shad command/option builder that lists commands, fills in an invocation from a form, and copies or runs it over the devtools protocol.",
+  "type": "module",
+  "license": "ISC",
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    },
+    "./protocol": {
+      "types": "./dist/protocol.d.ts",
+      "default": "./dist/protocol.js"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "sideEffects": [
+    "./src/web.ts",
+    "./src/ext.ts"
+  ],
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json",
+    "build:web": "node build-web.mjs",
+    "test": "tsx tests/devtools.test.ts && tsx tests/protocol.test.ts && tsx tests/ws.test.ts"
+  },
+  "dependencies": {
+    "@youneed/devtools-protocol": "workspace:*",
+    "@youneed/schema": "workspace:*"
+  },
+  "peerDependencies": {
+    "@youneed/cli": "workspace:*",
+    "@youneed/dom": "workspace:*",
+    "@youneed/dom-ui-shad": "workspace:*"
+  },
+  "peerDependenciesMeta": {
+    "@youneed/dom": {
+      "optional": true
+    },
+    "@youneed/dom-ui-shad": {
+      "optional": true
+    }
+  },
+  "devDependencies": {
+    "@youneed/cli": "workspace:*",
+    "@youneed/dom": "workspace:*",
+    "@youneed/dom-ui-shad": "workspace:*",
+    "@youneed/test": "workspace:*",
+    "@youneed/test-reporter-console": "workspace:*"
+  }
+}

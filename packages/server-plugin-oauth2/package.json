@@ -1,0 +1,115 @@
+{
+  "name": "@youneed/server-plugin-oauth2",
+  "version": "0.1.0",
+  "description": "OAuth2/OIDC login (Authorization Code + PKCE) for @youneed/server: a ServerPlugin core + universal, named providers (github/google/facebook/yandex/vk) you can extend, plus Telegram Login Widget.",
+  "type": "module",
+  "license": "ISC",
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    },
+    "./github": {
+      "types": "./dist/providers/github.d.ts",
+      "default": "./dist/providers/github.js"
+    },
+    "./google": {
+      "types": "./dist/providers/google.d.ts",
+      "default": "./dist/providers/google.js"
+    },
+    "./facebook": {
+      "types": "./dist/providers/facebook.d.ts",
+      "default": "./dist/providers/facebook.js"
+    },
+    "./yandex": {
+      "types": "./dist/providers/yandex.d.ts",
+      "default": "./dist/providers/yandex.js"
+    },
+    "./vk": {
+      "types": "./dist/providers/vk.d.ts",
+      "default": "./dist/providers/vk.js"
+    },
+    "./telegram": {
+      "types": "./dist/providers/telegram.d.ts",
+      "default": "./dist/providers/telegram.js"
+    },
+    "./keycloak": {
+      "types": "./dist/providers/keycloak.d.ts",
+      "default": "./dist/providers/keycloak.js"
+    },
+    "./auth0": {
+      "types": "./dist/providers/auth0.d.ts",
+      "default": "./dist/providers/auth0.js"
+    },
+    "./clerk": {
+      "types": "./dist/providers/clerk.d.ts",
+      "default": "./dist/providers/clerk.js"
+    },
+    "./gosuslugi": {
+      "types": "./dist/providers/gosuslugi.d.ts",
+      "default": "./dist/providers/gosuslugi.js"
+    },
+    "./entra": {
+      "types": "./dist/providers/entra.d.ts",
+      "default": "./dist/providers/entra.js"
+    },
+    "./gitlab": {
+      "types": "./dist/providers/gitlab.d.ts",
+      "default": "./dist/providers/gitlab.js"
+    },
+    "./discord": {
+      "types": "./dist/providers/discord.d.ts",
+      "default": "./dist/providers/discord.js"
+    },
+    "./apple": {
+      "types": "./dist/providers/apple.d.ts",
+      "default": "./dist/providers/apple.js"
+    },
+    "./twitch": {
+      "types": "./dist/providers/twitch.d.ts",
+      "default": "./dist/providers/twitch.js"
+    },
+    "./linkedin": {
+      "types": "./dist/providers/linkedin.d.ts",
+      "default": "./dist/providers/linkedin.js"
+    },
+    "./slack": {
+      "types": "./dist/providers/slack.d.ts",
+      "default": "./dist/providers/slack.js"
+    },
+    "./spotify": {
+      "types": "./dist/providers/spotify.d.ts",
+      "default": "./dist/providers/spotify.js"
+    },
+    "./bitbucket": {
+      "types": "./dist/providers/bitbucket.d.ts",
+      "default": "./dist/providers/bitbucket.js"
+    },
+    "./okta": {
+      "types": "./dist/providers/okta.d.ts",
+      "default": "./dist/providers/okta.js"
+    },
+    "./cognito": {
+      "types": "./dist/providers/cognito.d.ts",
+      "default": "./dist/providers/cognito.js"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "sideEffects": false,
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json",
+    "test": "tsx tests/oauth2.test.ts"
+  },
+  "dependencies": {
+    "@youneed/server": "workspace:*"
+  },
+  "devDependencies": {
+    "@youneed/test": "workspace:*",
+    "@youneed/test-reporter-console": "workspace:*"
+  }
+}

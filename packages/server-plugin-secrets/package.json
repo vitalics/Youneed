@@ -1,0 +1,36 @@
+{
+  "name": "@youneed/server-plugin-secrets",
+  "version": "0.1.0",
+  "description": "@youneed/server plugin + controller provider for @youneed/secrets: request-safe `this.secrets`, SAFE introspection routes (names + masked presence probe — values NEVER exposed), and a devtools Secrets tab.",
+  "type": "module",
+  "license": "ISC",
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": { "types": "./dist/index.d.ts", "default": "./dist/index.js" },
+    "./devtools": { "types": "./dist/devtools.d.ts", "default": "./dist/devtools.js" }
+  },
+  "files": [
+    "dist"
+  ],
+  "sideEffects": [
+    "./dist/devtools.js",
+    "./src/devtools.ts"
+  ],
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json",
+    "test": "tsx tests/secrets.test.ts"
+  },
+  "dependencies": {
+    "@youneed/server": "workspace:*",
+    "@youneed/secrets": "workspace:*"
+  },
+  "devDependencies": {
+    "@youneed/dom": "workspace:*",
+    "@youneed/dom-ui-shad": "workspace:*",
+    "@youneed/server-plugin-devtools": "workspace:*",
+    "@youneed/test": "workspace:*",
+    "@youneed/test-reporter-console": "workspace:*"
+  }
+}

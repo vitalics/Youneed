@@ -1,0 +1,37 @@
+{
+  "name": "@youneed/orm-sql",
+  "version": "0.1.0",
+  "description": "Tiny SQL ORM on standard TC39 decorators (TypeORM-style entities, pluggable DB adapters).",
+  "type": "module",
+  "license": "ISC",
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    },
+    "./devtools": {
+      "types": "./dist/devtools.d.ts",
+      "default": "./dist/devtools.js"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "sideEffects": [
+    "./dist/devtools.js"
+  ],
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json",
+    "test": "tsx tests/orm.test.ts && tsx tests/migrations.test.ts && tsx tests/provider-devtools.test.ts"
+  },
+  "devDependencies": {
+    "@youneed/dom": "workspace:*",
+    "@youneed/server": "workspace:*",
+    "@youneed/server-plugin-devtools": "workspace:*",
+    "@youneed/test": "workspace:*",
+    "@youneed/test-reporter-console": "workspace:*"
+  }
+}

@@ -1,0 +1,58 @@
+{
+  "name": "@youneed/dom",
+  "version": "0.1.0",
+  "description": "Reactive components on native Custom Elements + Shadow DOM.",
+  "type": "module",
+  "license": "ISC",
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    },
+    "./register": {
+      "types": "./dist/register.d.ts",
+      "default": "./dist/register.js"
+    },
+    "./*": {
+      "types": "./dist/*.d.ts",
+      "default": "./dist/*.js"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "sideEffects": false,
+  "dependencies": {
+    "@happy-dom/global-registrator": "^20.10.5",
+    "@youneed/core": "workspace:*",
+    "@youneed/dom-scheduler": "workspace:*",
+    "happy-dom": "^20.10.5"
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json",
+    "test": "tsx tests/dispose.test.ts && tsx tests/attr.test.ts && tsx tests/directives.test.ts && tsx tests/await.test.ts && tsx tests/lazy-styles.test.ts && tsx tests/compile.test.ts && tsx tests/error-boundary.test.ts && tsx tests/events.test.ts && tsx tests/signals.test.ts",
+    "bench": "tsx bench/render.bench.ts && tsx bench/frameworks.bench.ts",
+    "bench:frameworks": "tsx bench/frameworks.bench.ts",
+    "bench:angular": "tsx --tsconfig bench/tsconfig.angular.json bench/angular.bench.ts",
+    "bench:compile": "tsx bench/compile-time.bench.ts"
+  },
+  "devDependencies": {
+    "@youneed/test": "workspace:*",
+    "@youneed/test-plugin-benchmark": "workspace:*",
+    "@youneed/test-reporter-console": "workspace:*",
+    "@angular/common": "^22.0.2",
+    "@angular/compiler": "^22.0.2",
+    "@angular/core": "^22.0.2",
+    "@angular/platform-browser": "^22.0.2",
+    "@types/react": "^19.2.17",
+    "@types/react-dom": "^19.2.3",
+    "lit": "^3.3.3",
+    "react": "^19.2.7",
+    "react-dom": "^19.2.7",
+    "rxjs": "^7.8.2",
+    "vue": "^3.5.38"
+  }
+}

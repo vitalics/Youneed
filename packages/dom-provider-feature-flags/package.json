@@ -1,0 +1,35 @@
+{
+  "name": "@youneed/dom-provider-feature-flags",
+  "version": "0.1.0",
+  "description": "Use @youneed/feature-flags inside @youneed/dom components — evaluate flags in html templates with reactive re-render on flag change, plus SSR hydration.",
+  "type": "module",
+  "license": "ISC",
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "sideEffects": false,
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json",
+    "test": "tsx tests/dom-provider-feature-flags.test.ts"
+  },
+  "dependencies": {
+    "@youneed/feature-flags": "workspace:*"
+  },
+  "peerDependencies": {
+    "@youneed/dom": "workspace:*"
+  },
+  "devDependencies": {
+    "@youneed/dom": "workspace:*",
+    "@youneed/test": "workspace:*",
+    "@youneed/test-reporter-console": "workspace:*"
+  }
+}

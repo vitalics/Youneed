@@ -1,0 +1,34 @@
+{
+  "name": "@youneed/cli-plugin-feature-flags",
+  "version": "0.1.0",
+  "description": "Feature-flag plugin for @youneed/cli: a `flags` command to list/inspect/override flags plus middleware that adds this.flags (isEnabled/variant/value/evaluate) so any command can gate behavior on a flag.",
+  "type": "module",
+  "license": "ISC",
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "sideEffects": false,
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json",
+    "test": "tsx tests/feature-flags.test.ts"
+  },
+  "peerDependencies": {
+    "@youneed/cli": "workspace:*",
+    "@youneed/feature-flags": "workspace:*"
+  },
+  "devDependencies": {
+    "@youneed/cli": "workspace:*",
+    "@youneed/feature-flags": "workspace:*",
+    "@youneed/test": "workspace:*",
+    "@youneed/test-reporter-console": "workspace:*"
+  }
+}

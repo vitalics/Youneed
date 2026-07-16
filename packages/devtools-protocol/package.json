@@ -1,0 +1,47 @@
+{
+  "name": "@youneed/devtools-protocol",
+  "version": "0.1.0",
+  "description": "Universal, CDP-style devtools protocol for every youneed surface (frontend, server, ssr, cli): JSON-RPC 2.0 envelopes, targets, domains, commands + events, pluggable transports, and a domain-keyed UI extension registry (one protocol, per-surface UI).",
+  "type": "module",
+  "license": "ISC",
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    },
+    "./ui": {
+      "types": "./dist/ui.d.ts",
+      "default": "./dist/ui.js"
+    },
+    "./shell": {
+      "types": "./dist/shell.d.ts",
+      "default": "./dist/shell.js"
+    },
+    "./extensions": {
+      "types": "./dist/extensions.d.ts",
+      "default": "./dist/extensions.js"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "sideEffects": [
+    "./dist/shell.js",
+    "./dist/extensions.js"
+  ],
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json",
+    "test": "tsx tests/protocol.test.ts && tsx tests/ui.test.ts"
+  },
+  "dependencies": {
+    "@youneed/schema": "workspace:*",
+    "@youneed/dom": "workspace:*"
+  },
+  "devDependencies": {
+    "@youneed/test": "workspace:*",
+    "@youneed/test-reporter-console": "workspace:*"
+  }
+}

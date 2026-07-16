@@ -1,0 +1,14 @@
+{
+  "name": "@youneed/server-plugin-pubsub-nats",
+  "version": "0.1.0",
+  "description": "NATS adapter for @youneed/server-plugin-pubsub: NatsPubSub over subjects, via the official `nats` (nats.js). Pub/sub only (pair with a KV adapter for state).",
+  "type": "module", "license": "ISC",
+  "main": "./dist/index.js", "module": "./dist/index.js", "types": "./dist/index.d.ts",
+  "exports": { ".": { "types": "./dist/index.d.ts", "default": "./dist/index.js" } },
+  "files": ["dist"], "sideEffects": false,
+  "scripts": { "build": "tsc -p tsconfig.build.json", "test": "tsx tests/nats.test.ts" },
+  "dependencies": { "@youneed/server-plugin-pubsub": "workspace:*" },
+  "peerDependencies": { "nats": ">=2" },
+  "peerDependenciesMeta": { "nats": { "optional": true } },
+  "devDependencies": { "@youneed/test": "workspace:*", "@youneed/test-reporter-console": "workspace:*", "nats": "^2.28.0" }
+}

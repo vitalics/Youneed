@@ -1,0 +1,36 @@
+{
+  "name": "@youneed/server-plugin-feature-flags",
+  "version": "0.1.0",
+  "description": "@youneed/server plugin + controller provider for @youneed/feature-flags: request-scoped `this.flags`, a client-bootstrap snapshot route, dev override toggles, and a devtools Feature Flags tab.",
+  "type": "module",
+  "license": "ISC",
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": { "types": "./dist/index.d.ts", "default": "./dist/index.js" },
+    "./devtools": { "types": "./dist/devtools.d.ts", "default": "./dist/devtools.js" }
+  },
+  "files": [
+    "dist"
+  ],
+  "sideEffects": [
+    "./dist/devtools.js",
+    "./src/devtools.ts"
+  ],
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json",
+    "test": "tsx tests/feature-flags.test.ts"
+  },
+  "dependencies": {
+    "@youneed/server": "workspace:*",
+    "@youneed/feature-flags": "workspace:*"
+  },
+  "devDependencies": {
+    "@youneed/dom": "workspace:*",
+    "@youneed/dom-ui-shad": "workspace:*",
+    "@youneed/server-plugin-devtools": "workspace:*",
+    "@youneed/test": "workspace:*",
+    "@youneed/test-reporter-console": "workspace:*"
+  }
+}

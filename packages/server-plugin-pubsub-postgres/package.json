@@ -1,0 +1,14 @@
+{
+  "name": "@youneed/server-plugin-pubsub-postgres",
+  "version": "0.1.0",
+  "description": "Postgres adapter for @youneed/server-plugin-pubsub + -store: PostgresKV (table) and PostgresPubSub (LISTEN/NOTIFY), via the official `pg` driver.",
+  "type": "module", "license": "ISC",
+  "main": "./dist/index.js", "module": "./dist/index.js", "types": "./dist/index.d.ts",
+  "exports": { ".": { "types": "./dist/index.d.ts", "default": "./dist/index.js" } },
+  "files": ["dist"], "sideEffects": false,
+  "scripts": { "build": "tsc -p tsconfig.build.json", "test": "tsx tests/postgres.test.ts" },
+  "dependencies": { "@youneed/server-plugin-store": "workspace:*", "@youneed/server-plugin-pubsub": "workspace:*" },
+  "peerDependencies": { "pg": ">=8" },
+  "peerDependenciesMeta": { "pg": { "optional": true } },
+  "devDependencies": { "@youneed/test": "workspace:*", "@youneed/test-reporter-console": "workspace:*", "@types/pg": "^8" }
+}

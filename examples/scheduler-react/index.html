@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>@youneed/dom-scheduler ⨉ React</title>
+    <style>
+      :root { color-scheme: light; }
+      body { font: 15px/1.5 system-ui, sans-serif; margin: 28px auto; max-width: 920px; color: #18181b; padding: 0 16px; }
+      h1 { font-size: 1.3rem; margin: 0 0 6px; }
+      .lede { color: #52525b; }
+      b { color: #18181b; }
+      .controls { display: flex; gap: 14px; align-items: center; flex-wrap: wrap; margin: 16px 0 22px; }
+      .controls input[type="range"] { flex: 1; min-width: 220px; accent-color: #4f46e5; }
+      button { font: inherit; padding: 6px 14px; border: 1px solid #d4d4d8; border-radius: 8px; background: #fff; cursor: pointer; }
+      .start { background: #4f46e5; border-color: #4f46e5; color: #fff; }
+      .stop { background: #dc2626; border-color: #dc2626; color: #fff; }
+      .fps { font-variant-numeric: tabular-nums; font-weight: 700; }
+      .fps.good { color: #16a34a; }
+      .fps.bad { color: #dc2626; }
+
+      .section-title { font-weight: 700; color: #3f3f46; margin: 20px 0 8px; padding-bottom: 4px; border-bottom: 1px solid #e4e4e7; }
+      .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 14px; }
+      .block { border: 1px solid #e4e4e7; border-radius: 14px; padding: 14px; text-align: center; }
+      .block .title { font: 12px ui-monospace, monospace; color: #4338ca; font-weight: 700; min-height: 2.4em; }
+      .dial { width: 88px; height: 88px; display: block; margin: 6px auto; }
+      .dial .rim { fill: #f4f4f5; stroke: #d4d4d8; stroke-width: 1.5; }
+      .dial .needle { stroke: #4f46e5; stroke-width: 3; stroke-linecap: round; }
+      .dial .hub { fill: #4f46e5; }
+      .block .value { font-size: 24px; font-weight: 800; font-variant-numeric: tabular-nums; }
+      .block .renders { color: #52525b; font-variant-numeric: tabular-nums; }
+      .block .renders b { color: #18181b; }
+    </style>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script src="./app.js"></script>
+  </body>
+</html>

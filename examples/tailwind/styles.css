@@ -1,0 +1,5 @@
+/* Tailwind v4 entry. `source(none)` disables auto-scanning; we explicitly point
+   it at this example's component file, so the generated CSS only contains the
+   utilities actually used here. */
+@import "tailwindcss" source(none);
+@source "./app.ts";

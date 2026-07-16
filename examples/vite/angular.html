@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Vite × Angular × our Web Component</title>
+    <style>
+      body { font: 15px/1.5 system-ui, sans-serif; margin: 2rem auto; max-width: 980px; color: #18181b; }
+      h1 { font-size: 1.5rem; }
+      .card { border: 1px solid #e4e4e7; border-radius: 12px; padding: 14px 16px; max-width: 320px; }
+      .card h3 { margin: 0 0 6px; }
+    </style>
+  </head>
+  <body>
+    <h1>Angular embeds our &lt;dom-stepper&gt;</h1>
+    <p>
+      The Angular island consumes the very same <code>&lt;dom-stepper&gt;</code>
+      Custom Element as the React/Vue/our cards on the main page — via
+      <code>CUSTOM_ELEMENTS_SCHEMA</code> + <code>[value]</code> / <code>(change)</code>.
+      Click it: Angular's signal state mirrors the component through the
+      <code>change</code> event. <code>start</code> seeds the initial value from
+      the (SSR-friendly) attribute.
+    </p>
+    <!-- the Angular standalone component bootstraps into this host (its selector) -->
+    <ng-island start="3"></ng-island>
+    <script type="module" src="/src/angular.ts"></script>
+  </body>
+</html>

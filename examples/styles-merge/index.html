@@ -1,0 +1,18 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Style merging: static + options + lazy</title>
+    <style>
+      body { font-family: system-ui, sans-serif; margin: 32px auto; max-width: 640px; color: #18181b; }
+      code { background: #eee; padding: 1px 4px; border-radius: 4px; }
+    </style>
+  </head>
+  <body>
+    <h1>Merging styles: options + static + lazy</h1>
+    <p>One component, three style sources. Open devtools → <em>Styles</em> to see every adopted rule.</p>
+    <style-merge></style-merge>
+    <script src="./app.js"></script>
+  </body>
+</html>

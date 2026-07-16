@@ -1,0 +1,35 @@
+{
+  "name": "@youneed/api-client",
+  "version": "0.1.0",
+  "description": "Typed API client runtime + OpenAPI → TypeScript client codegen (consumes the OpenAPI @youneed/server generates). Dependency-free, uses fetch (or @youneed/http-client).",
+  "type": "module",
+  "license": "ISC",
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "bin": {
+    "youneed-api-codegen": "./dist/cli.js"
+  },
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    },
+    "./codegen": {
+      "types": "./dist/codegen.d.ts",
+      "default": "./dist/codegen.js"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "sideEffects": false,
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json",
+    "test": "tsx tests/api-client.test.ts"
+  },
+  "devDependencies": {
+    "@youneed/test": "workspace:*",
+    "@youneed/test-reporter-console": "workspace:*"
+  }
+}

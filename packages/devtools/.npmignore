@@ -1,0 +1,33 @@
+# Only the built output (dist/) ships. Everything below is dev-only and kept out
+# of the published tarball — a defensive blacklist alongside "files": ["dist"].
+
+# Sources & build config
+src/
+tsconfig*.json
+*.tsbuildinfo
+
+# Tests, mocks, coverage (also excluded from the build itself)
+*.test.*
+*.spec.*
+__tests__/
+__mocks__/
+coverage/
+.nyc_output/
+
+# Workspace-local deps & lockfiles
+node_modules/
+pnpm-lock.yaml
+package-lock.json
+yarn.lock
+
+# Editor / OS noise
+.DS_Store
+*.log
+.vscode/
+.idea/
+
+# Tests & benches (dev-only)
+tests/
+bench/
+*.test.*
+*.bench.*

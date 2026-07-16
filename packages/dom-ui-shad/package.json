@@ -1,0 +1,36 @@
+{
+  "name": "@youneed/dom-ui-shad",
+  "version": "0.1.0",
+  "description": "shadcn-style component library on @youneed/dom (Custom Elements + Tailwind), with a copy-the-source CLI.",
+  "type": "module",
+  "license": "ISC",
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    }
+  },
+  "bin": {
+    "shad": "bin/shad.mjs"
+  },
+  "files": [
+    "dist",
+    "bin",
+    "src",
+    "registry.json"
+  ],
+  "sideEffects": [
+    "./dist/ui/*.js",
+    "./src/ui/*.ts"
+  ],
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json",
+    "test": "node bin/shad.mjs list >/dev/null && echo ok"
+  },
+  "dependencies": {
+    "@youneed/dom": "workspace:*"
+  }
+}

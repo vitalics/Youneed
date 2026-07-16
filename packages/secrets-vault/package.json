@@ -1,0 +1,31 @@
+{
+  "name": "@youneed/secrets-vault",
+  "version": "0.1.0",
+  "description": "HashiCorp Vault (KV v2) SecretsProvider for @youneed/secrets — pure fetch, no SDK.",
+  "type": "module",
+  "license": "ISC",
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "sideEffects": false,
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json",
+    "test": "tsx tests/vault.test.ts"
+  },
+  "dependencies": {
+    "@youneed/secrets": "workspace:*"
+  },
+  "devDependencies": {
+    "@youneed/test": "workspace:*",
+    "@youneed/test-reporter-console": "workspace:*"
+  }
+}

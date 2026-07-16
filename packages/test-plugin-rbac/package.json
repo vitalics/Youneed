@@ -1,0 +1,34 @@
+{
+  "name": "@youneed/test-plugin-rbac",
+  "version": "0.1.0",
+  "description": "Deterministic RBAC helpers for @youneed/test: a fresh RBAC fixture that resets role tweaks between tests, ergonomic Subject builders, expectCan/expectCannot assertions, and a scoped withRole(...) helper.",
+  "type": "module",
+  "license": "ISC",
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "sideEffects": false,
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json",
+    "test": "tsx tests/self.test.ts"
+  },
+  "dependencies": {
+    "@youneed/rbac": "workspace:*"
+  },
+  "peerDependencies": {
+    "@youneed/test": "workspace:*"
+  },
+  "devDependencies": {
+    "@youneed/test": "workspace:*",
+    "@youneed/test-reporter-console": "workspace:*"
+  }
+}

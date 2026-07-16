@@ -1,0 +1,37 @@
+{
+  "name": "@youneed/server-plugin-grpc",
+  "version": "0.1.0",
+  "description": "@youneed/server plugin: run a gRPC (HTTP/2) server alongside your @youneed/server app on its lifecycle, with introspection + a unary call-tester over HTTP and a devtools tab.",
+  "type": "module",
+  "license": "ISC",
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": { "types": "./dist/index.d.ts", "default": "./dist/index.js" },
+    "./devtools": { "types": "./dist/devtools.d.ts", "default": "./dist/devtools.js" }
+  },
+  "files": [
+    "dist"
+  ],
+  "sideEffects": [
+    "./dist/devtools.js",
+    "./src/devtools.ts"
+  ],
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json",
+    "test": "tsx tests/grpc.test.ts"
+  },
+  "dependencies": {
+    "@grpc/grpc-js": "^1.12.0",
+    "@grpc/proto-loader": "^0.7.13",
+    "@youneed/server": "workspace:*"
+  },
+  "devDependencies": {
+    "@youneed/dom": "workspace:*",
+    "@youneed/dom-ui-shad": "workspace:*",
+    "@youneed/server-plugin-devtools": "workspace:*",
+    "@youneed/test": "workspace:*",
+    "@youneed/test-reporter-console": "workspace:*"
+  }
+}

@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>WebGL bouncing ball · scheduler game loop</title>
+    <style>
+      body {
+        font-family: system-ui, -apple-system, sans-serif;
+        margin: 24px;
+        max-width: 760px;
+        color: #1b1b1f;
+      }
+      code {
+        background: #eee;
+        padding: 1px 4px;
+        border-radius: 4px;
+      }
+      .row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px;
+        margin-top: 16px;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>WebGL bouncing ball — game loop on the scheduler</h1>
+    <p>
+      Physics runs every frame via <code>this.onFrame(dt)</code>; the ball is
+      drawn with WebGL. Both balls share the same code — only the scheduler FPS
+      differs, so the left one is smooth and the right one is choppy.
+    </p>
+    <div class="row">
+      <smooth-ball></smooth-ball>
+      <choppy-ball></choppy-ball>
+    </div>
+
+    <!-- IIFE bundle (classic script) — works over file:// too -->
+    <script src="./app.js"></script>
+  </body>
+</html>

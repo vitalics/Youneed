@@ -1,0 +1,51 @@
+{
+  "name": "@youneed/dom-provider-a11y",
+  "version": "0.1.0",
+  "description": "Accessibility helpers for @youneed/dom components — a composable provider for screen-reader announcements, focus trapping, and reduced-motion.",
+  "type": "module",
+  "license": "ISC",
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    },
+    "./ts-plugin": {
+      "types": "./ts-plugin.d.cts",
+      "require": "./ts-plugin.cjs",
+      "default": "./ts-plugin.cjs"
+    },
+    "./devtools": {
+      "types": "./dist/devtools.d.ts",
+      "default": "./dist/devtools.js"
+    }
+  },
+  "files": [
+    "dist",
+    "ts-plugin.cjs",
+    "ts-plugin.d.cts"
+  ],
+  "sideEffects": false,
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json",
+    "test": "tsx tests/a11y.test.ts && tsx tests/devtools.test.ts"
+  },
+  "peerDependencies": {
+    "@youneed/dom": "workspace:*",
+    "@youneed/devtools": "workspace:*"
+  },
+  "peerDependenciesMeta": {
+    "@youneed/devtools": {
+      "optional": true
+    }
+  },
+  "devDependencies": {
+    "@youneed/dom": "workspace:*",
+    "@youneed/devtools": "workspace:*",
+    "@youneed/test": "workspace:*",
+    "@youneed/test-reporter-console": "workspace:*",
+    "@youneed/ts-plugin": "workspace:*"
+  }
+}

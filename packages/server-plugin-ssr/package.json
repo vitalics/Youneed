@@ -1,0 +1,46 @@
+{
+  "name": "@youneed/server-plugin-ssr",
+  "version": "0.1.0",
+  "description": "@youneed/server plugin: add SSR pages and satellite SSR modules (robots/sitemap/rss/llms/structured-data) to a server from the outside.",
+  "type": "module",
+  "license": "ISC",
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    },
+    "./devtools": {
+      "types": "./dist/devtools.d.ts",
+      "default": "./dist/devtools.js"
+    },
+    "./protocol": {
+      "types": "./dist/protocol.d.ts",
+      "default": "./dist/protocol.js"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "sideEffects": [
+    "./dist/devtools.js",
+    "./src/devtools.ts"
+  ],
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json",
+    "test": "tsx tests/ssr.test.ts && tsx tests/protocol.test.ts"
+  },
+  "dependencies": {
+    "@youneed/server": "workspace:*",
+    "@youneed/ssr": "workspace:*",
+    "@youneed/devtools-protocol": "workspace:*"
+  },
+  "devDependencies": {
+    "@youneed/dom": "workspace:*",
+    "@youneed/server-plugin-devtools": "workspace:*",
+    "@youneed/test": "workspace:*",
+    "@youneed/test-reporter-console": "workspace:*"
+  }
+}

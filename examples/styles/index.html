@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Dynamic scoped styles</title>
+    <style>
+      body { font-family: system-ui, sans-serif; margin: 24px; max-width: 640px; color: #1b1b1f; }
+      code { background: #eee; padding: 1px 4px; border-radius: 4px; }
+    </style>
+  </head>
+  <body>
+    <h1>Dynamic scoped styles</h1>
+    <p>
+      The component's <code>:host</code> background is a scoped style attached via
+      <code>Component(tag, { styles })</code> (as a raw CSS string). Clicking
+      restyles the live instance with <code>setStyles()</code> /
+      <code>getStyles()[0].replaceSync()</code>.
+    </p>
+    <app-changer></app-changer>
+    <script src="./app.js"></script>
+  </body>
+</html>

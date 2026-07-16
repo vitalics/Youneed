@@ -1,0 +1,501 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Config",
+  "type": "object",
+  "properties": {
+    "cache": {
+      "description": "Smart caching — skip commands whose inputs haven't changed.\n\nSet `enabled: true` here, then add a `cache.inputs` list to each command you want to cache.  The cache key is a SHA-256 of the command script, any extra `cache.key` strings, and the content of every input file.  A cache hit causes the command to be skipped with a \"cached\" message.  Cache entries are stored in `.githops/cache/` (or `cache.dir`).\n\nExample: ```yaml cache: enabled: true\n\nhooks: pre-commit: commands: - name: lint run: cargo clippy -- -D warnings cache: inputs: [\"src/**/*.rs\", \"Cargo.toml\"] - name: test run: cargo test cache: inputs: [\"src/**/*.rs\", \"tests/**/*.rs\"] key: [\"$RUST_TOOLCHAIN\"] ```",
+      "allOf": [
+        {
+          "$ref": "#/definitions/GlobalCache"
+        }
+      ]
+    },
+    "definitions": {
+      "description": "Reusable command definitions for YAML anchors.\n\nDefine command templates here using YAML anchors (&name), then reference them with YAML aliases (*name) inside hook command lists. A list alias is automatically flattened into the parent sequence.\n\nSingle command anchor: ```yaml definitions: lint: &lint name: lint run: cargo clippy -- -D warnings ```\n\nList-of-commands anchor: ```yaml definitions: quality: &quality - name: lint run: cargo clippy - name: audit run: cargo audit ```\n\nUsage in hooks (list aliases are inlined automatically): ```yaml hooks: pre-commit: commands: - name: fmt run: cargo fmt --check - *lint        # single command - *quality     # expands to two commands inline ```",
+      "type": "object",
+      "additionalProperties": {
+        "$ref": "#/definitions/DefinitionEntry"
+      }
+    },
+    "hooks": {
+      "description": "Hook definitions. Keys are git hook names (e.g. pre-commit, commit-msg).",
+      "default": {},
+      "allOf": [
+        {
+          "$ref": "#/definitions/Hooks"
+        }
+      ]
+    },
+    "version": {
+      "description": "Schema version",
+      "default": "1",
+      "type": "string"
+    }
+  },
+  "x-githops-version": "0.1.0",
+  "definitions": {
+    "Command": {
+      "type": "object",
+      "required": [
+        "name",
+        "run"
+      ],
+      "properties": {
+        "cache": {
+          "description": "Cache configuration for this command. Requires `cache.enabled: true` in the top-level config.",
+          "anyOf": [
+            {
+              "$ref": "#/definitions/CommandCache"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "depends": {
+          "description": "Names of commands in this hook that must complete successfully before this command starts. Forms a DAG; cycles are detected and rejected.",
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "env": {
+          "description": "Additional environment variables for this command",
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          }
+        },
+        "name": {
+          "description": "Human-readable label shown in output",
+          "type": "string"
+        },
+        "run": {
+          "description": "Shell command to execute. Hook arguments are available as $1, $2, etc.",
+          "type": "string"
+        },
+        "test": {
+          "description": "Mark this command as a test-only command (informational; not run during normal hooks).",
+          "type": "boolean"
+        }
+      }
+    },
+    "CommandCache": {
+      "description": "Per-command cache configuration.",
+      "type": "object",
+      "properties": {
+        "inputs": {
+          "description": "File glob patterns treated as inputs. The command is re-run only when the content of any matching file changes. Globs are relative to the repository root.  Example: `[\"src/**/*.rs\", \"Cargo.toml\"]`",
+          "default": [],
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "key": {
+          "description": "Extra strings mixed into the cache key (e.g. environment variable values or tool version strings).  Example: `[\"$RUST_TOOLCHAIN\"]`",
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "CommandEntry": {
+      "description": "A command entry in a hook's command list: either an inline command definition or a reference to a named definition (`$ref: name`).\n\nThe `$ref` form lets you reuse commands defined in the `definitions` section without YAML anchors, so changes round-trip correctly through the UI editor.\n\nExample using `$ref`: ```yaml hooks: pre-commit: commands: - name: fmt run: cargo fmt --check - $ref: lint   # references definitions.lint ```",
+      "anyOf": [
+        {
+          "description": "A reference to a named definition. Serialises as `{$ref: name}`.",
+          "allOf": [
+            {
+              "$ref": "#/definitions/RefEntry"
+            }
+          ]
+        },
+        {
+          "description": "An inline command definition.",
+          "allOf": [
+            {
+              "$ref": "#/definitions/Command"
+            }
+          ]
+        }
+      ]
+    },
+    "DefinitionEntry": {
+      "description": "A reusable command definition: a single command mapping or a list of commands.",
+      "anyOf": [
+        {
+          "description": "A list of commands that will be inlined when the anchor is used.",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Command"
+          }
+        },
+        {
+          "description": "A single command.",
+          "allOf": [
+            {
+              "$ref": "#/definitions/Command"
+            }
+          ]
+        }
+      ]
+    },
+    "GlobalCache": {
+      "description": "Global cache settings.",
+      "type": "object",
+      "properties": {
+        "dir": {
+          "description": "Override the cache directory (default: `.githops/cache`).",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "enabled": {
+          "description": "Enable caching.  Commands without a `cache` block are always executed.",
+          "default": false,
+          "type": "boolean"
+        }
+      }
+    },
+    "HookConfig": {
+      "type": "object",
+      "properties": {
+        "commands": {
+          "description": "Commands to run when this hook fires. Each entry is either an inline command or a `$ref` to a definition.",
+          "default": [],
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/CommandEntry"
+          }
+        },
+        "enabled": {
+          "description": "Whether this hook is active. Set to false to temporarily disable.",
+          "default": true,
+          "type": "boolean"
+        },
+        "parallel": {
+          "description": "Run commands concurrently within each dependency wave.\n\nWhen `true`, commands that have no dependency relationship are started at the same time in separate threads.  Commands that share a `depends` link are still serialised — the dependent command waits until all its dependencies finish successfully.\n\nUse this to speed up independent checks (e.g. lint + test) while keeping ordered steps (e.g. build → deploy) sequential.\n\nExample: ```yaml hooks: pre-push: parallel: true commands: - name: lint run: cargo clippy - name: test run: cargo test   # runs at the same time as lint ```",
+          "default": false,
+          "type": "boolean"
+        }
+      }
+    },
+    "Hooks": {
+      "description": "All supported git hooks. Configure any hook by adding its name as a key.",
+      "type": "object",
+      "properties": {
+        "applypatch-msg": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/HookConfig"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "commit-msg": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/HookConfig"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "fsmonitor-watchman": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/HookConfig"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "p4-changelist": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/HookConfig"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "p4-post-changelist": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/HookConfig"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "p4-pre-submit": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/HookConfig"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "p4-prepare-changelist": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/HookConfig"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "post-applypatch": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/HookConfig"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "post-checkout": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/HookConfig"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "post-commit": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/HookConfig"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "post-index-change": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/HookConfig"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "post-merge": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/HookConfig"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "post-receive": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/HookConfig"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "post-rewrite": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/HookConfig"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "post-update": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/HookConfig"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "pre-applypatch": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/HookConfig"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "pre-auto-gc": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/HookConfig"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "pre-commit": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/HookConfig"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "pre-merge-commit": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/HookConfig"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "pre-push": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/HookConfig"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "pre-rebase": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/HookConfig"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "pre-receive": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/HookConfig"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "prepare-commit-msg": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/HookConfig"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "proc-receive": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/HookConfig"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "push-to-checkout": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/HookConfig"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "reference-transaction": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/HookConfig"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "sendemail-validate": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/HookConfig"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "update": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/HookConfig"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      }
+    },
+    "RefEntry": {
+      "description": "A reference to a named definition in the `definitions` section.\n\nSupports two optional overrides that are applied at the point of use, without modifying the shared definition:\n\n```yaml hooks: pre-commit: commands: - $ref: lint                  # use definition as-is - $ref: lint args: \"--fix\"               # appends to the definition's run command name: lint-fix              # overrides the display label ```",
+      "type": "object",
+      "required": [
+        "$ref"
+      ],
+      "properties": {
+        "$ref": {
+          "description": "Name of the definition to reference.",
+          "type": "string"
+        },
+        "args": {
+          "description": "Extra arguments appended to the definition's `run` command.\n\nThe final command executed is `{definition.run} {args}`. For example, if the definition runs `npm run lint`, setting `args: \"--fix\"` produces `npm run lint --fix`.",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "name": {
+          "description": "Override the display name shown in hook output for this specific use. When omitted, the definition's own `name` is used.",
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      }
+    }
+  }
+}

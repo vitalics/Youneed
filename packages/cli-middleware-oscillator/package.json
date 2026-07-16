@@ -1,0 +1,32 @@
+{
+  "name": "@youneed/cli-middleware-oscillator",
+  "version": "0.1.0",
+  "description": "A synthetic spectrum source + cava-style bar renderer for @youneed/cli: adds this.oscillator and spectrumBars() for terminal audio visualisers.",
+  "type": "module",
+  "license": "ISC",
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "sideEffects": false,
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json",
+    "test": "tsx tests/oscillator.test.ts"
+  },
+  "peerDependencies": {
+    "@youneed/cli": "workspace:*"
+  },
+  "devDependencies": {
+    "@youneed/cli": "workspace:*",
+    "@youneed/test": "workspace:*",
+    "@youneed/test-reporter-console": "workspace:*"
+  }
+}

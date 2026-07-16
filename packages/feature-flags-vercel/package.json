@@ -1,0 +1,31 @@
+{
+  "name": "@youneed/feature-flags-vercel",
+  "version": "0.1.0",
+  "description": "Vercel Edge Config source for @youneed/feature-flags: pulls flag definitions from an Edge Config store (plain fetch, no SDK), with polling for live updates.",
+  "type": "module",
+  "license": "ISC",
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "sideEffects": false,
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json",
+    "test": "tsx tests/vercel-source.test.ts"
+  },
+  "dependencies": {
+    "@youneed/feature-flags": "workspace:*"
+  },
+  "devDependencies": {
+    "@youneed/test": "workspace:*",
+    "@youneed/test-reporter-console": "workspace:*"
+  }
+}

@@ -1,0 +1,20 @@
+{
+  "name": "@youneed/cli-plugin-man",
+  "version": "0.1.0",
+  "description": "Man-page plugin: a man command emitting roff documentation from the catalogue.",
+  "type": "module",
+  "license": "ISC",
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": { ".": { "types": "./dist/index.d.ts", "default": "./dist/index.js" } },
+  "files": ["dist"],
+  "sideEffects": false,
+  "scripts": { "build": "tsc -p tsconfig.build.json", "test": "tsx tests/man.test.ts" },
+  "peerDependencies": { "@youneed/cli": "workspace:*" },
+  "devDependencies": {
+    "@youneed/cli": "workspace:*",
+    "@youneed/test": "workspace:*",
+    "@youneed/test-reporter-console": "workspace:*"
+  }
+}

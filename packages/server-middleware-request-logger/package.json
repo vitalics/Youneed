@@ -1,0 +1,32 @@
+{
+  "name": "@youneed/server-middleware-request-logger",
+  "version": "0.1.0",
+  "description": "@youneed/server middleware: per-request access logging.",
+  "type": "module",
+  "license": "ISC",
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "sideEffects": false,
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json",
+    "test": "tsx tests/request-logger.test.ts"
+  },
+  "dependencies": {
+    "@youneed/logger": "workspace:*",
+    "@youneed/server": "workspace:*"
+  },
+  "devDependencies": {
+    "@youneed/test": "workspace:*",
+    "@youneed/test-reporter-console": "workspace:*"
+  }
+}

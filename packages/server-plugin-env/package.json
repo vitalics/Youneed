@@ -1,0 +1,32 @@
+{
+  "name": "@youneed/server-plugin-env",
+  "version": "0.1.0",
+  "description": "Type-safe, fail-fast environment variables for @youneed/server — coerce + validate process.env against a @youneed/schema spec, with a devtools-visible ServerPlugin.",
+  "type": "module",
+  "license": "ISC",
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "sideEffects": false,
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json",
+    "test": "tsx tests/env.test.ts"
+  },
+  "dependencies": {
+    "@youneed/schema": "workspace:*",
+    "@youneed/server": "workspace:*"
+  },
+  "devDependencies": {
+    "@youneed/test": "workspace:*",
+    "@youneed/test-reporter-console": "workspace:*"
+  }
+}

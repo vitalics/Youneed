@@ -1,0 +1,23 @@
+# yaml-language-server: $schema=.githops/githops.schema.json
+version: ''
+hooks:
+  pre-commit:
+    enabled: true
+    parallel: false
+    commands:
+    - name: fmt
+      run: echo "Run your formatter here, e.g. cargo fmt --check"
+    - name: lint
+      run: echo "Run your linter here, e.g. cargo clippy"
+  commit-msg:
+    enabled: true
+    parallel: false
+    commands:
+    - name: validate
+      run: echo "Validate commit message in $1"
+  pre-push:
+    enabled: true
+    parallel: false
+    commands:
+    - name: test
+      run: echo "Run your test suite here, e.g. cargo test"

@@ -1,0 +1,14 @@
+{
+  "name": "@youneed/server-plugin-pubsub-kafka",
+  "version": "0.1.0",
+  "description": "Kafka adapter for @youneed/server-plugin-pubsub: KafkaPubSub over topics, via the official `kafkajs`. Pub/sub only (pair with a KV adapter for state).",
+  "type": "module", "license": "ISC",
+  "main": "./dist/index.js", "module": "./dist/index.js", "types": "./dist/index.d.ts",
+  "exports": { ".": { "types": "./dist/index.d.ts", "default": "./dist/index.js" } },
+  "files": ["dist"], "sideEffects": false,
+  "scripts": { "build": "tsc -p tsconfig.build.json", "test": "tsx tests/kafka.test.ts" },
+  "dependencies": { "@youneed/server-plugin-pubsub": "workspace:*" },
+  "peerDependencies": { "kafkajs": ">=2" },
+  "peerDependenciesMeta": { "kafkajs": { "optional": true } },
+  "devDependencies": { "@youneed/test": "workspace:*", "@youneed/test-reporter-console": "workspace:*" }
+}

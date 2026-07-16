@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Vite × React × Vue × our Web Component (CSR)</title>
+    <style>
+      body { font: 15px/1.5 system-ui, sans-serif; margin: 2rem auto; max-width: 980px; color: #18181b; }
+      h1 { font-size: 1.5rem; }
+      .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+      .card { border: 1px solid #e4e4e7; border-radius: 12px; padding: 14px 16px; }
+      .card h3 { margin: 0 0 6px; }
+    </style>
+  </head>
+  <body>
+    <h1>One page, three frameworks (client-side)</h1>
+    <p>
+      React, Vue and our framework each embed the very same
+      <code>&lt;dom-stepper&gt;</code> custom element. Click any stepper — the
+      host framework's own state mirrors it via the <code>change</code> event.
+    </p>
+    <div class="grid">
+      <div id="react"></div>
+      <div id="vue"></div>
+      <div class="card"><our-island start="8"></our-island></div>
+    </div>
+    <script type="module" src="/src/csr.ts"></script>
+  </body>
+</html>

@@ -1,0 +1,32 @@
+{
+  "name": "@youneed/ssr-plugin-rss",
+  "version": "0.1.0",
+  "description": "SSR module for @youneed/server-plugin-ssr: serve an RSS 2.0 or Atom feed from a list of items.",
+  "type": "module",
+  "license": "ISC",
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "sideEffects": false,
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json",
+    "test": "tsx tests/rss.test.ts"
+  },
+  "dependencies": {
+    "@youneed/server": "workspace:*",
+    "@youneed/server-plugin-ssr": "workspace:*"
+  },
+  "devDependencies": {
+    "@youneed/test": "workspace:*",
+    "@youneed/test-reporter-console": "workspace:*"
+  }
+}

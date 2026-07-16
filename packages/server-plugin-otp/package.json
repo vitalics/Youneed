@@ -1,0 +1,20 @@
+{
+  "name": "@youneed/server-plugin-otp",
+  "version": "0.1.0",
+  "description": "One-time-password login (passwordless / 2FA) for @youneed/server: a ServerPlugin core + pluggable channels — email (built-in SMTP) and SMS.",
+  "type": "module",
+  "license": "ISC",
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": { "types": "./dist/index.d.ts", "default": "./dist/index.js" },
+    "./email": { "types": "./dist/email.d.ts", "default": "./dist/email.js" },
+    "./sms": { "types": "./dist/sms.d.ts", "default": "./dist/sms.js" }
+  },
+  "files": ["dist"],
+  "sideEffects": false,
+  "scripts": { "build": "tsc -p tsconfig.build.json", "test": "tsx tests/otp.test.ts" },
+  "dependencies": { "@youneed/server": "workspace:*" },
+  "devDependencies": { "@youneed/test": "workspace:*", "@youneed/test-reporter-console": "workspace:*" }
+}

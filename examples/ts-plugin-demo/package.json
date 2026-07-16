@@ -1,0 +1,19 @@
+{
+  "name": "@youneed/example-ts-plugin-demo",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "//": "This package.json is what makes editors treat this folder as a project and load the tsconfig `plugins`: tsserver only auto-loads a plugin that's declared as a dependency here. The modules resolve from the repo-root node_modules (this folder isn't a pnpm workspace member, so pnpm ignores this file — no install needed here).",
+  "scripts": {
+    "preview": "node generate-previews.mjs"
+  },
+  "dependencies": {
+    "@youneed/dom": "workspace:*",
+    "@youneed/dom-provider-a11y": "workspace:*",
+    "@youneed/ts-plugin": "workspace:*"
+  },
+  "devDependencies": {
+    "esbuild": "*",
+    "playwright-core": "*"
+  }
+}

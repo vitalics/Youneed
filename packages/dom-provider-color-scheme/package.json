@@ -1,0 +1,32 @@
+{
+  "name": "@youneed/dom-provider-color-scheme",
+  "version": "0.1.0",
+  "description": "Light/dark/auto color scheme for @youneed/dom — a composable provider that reflects CSS color-scheme globally or per component, toggled via this.setColorScheme.",
+  "type": "module",
+  "license": "ISC",
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "sideEffects": false,
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json",
+    "test": "tsx tests/color-scheme.test.ts"
+  },
+  "peerDependencies": {
+    "@youneed/dom": "workspace:*"
+  },
+  "devDependencies": {
+    "@youneed/dom": "workspace:*",
+    "@youneed/test": "workspace:*",
+    "@youneed/test-reporter-console": "workspace:*"
+  }
+}

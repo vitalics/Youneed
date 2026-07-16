@@ -1,0 +1,47 @@
+{
+  "name": "@youneed/dom-provider-zustand",
+  "version": "0.1.0",
+  "description": "Bind a Zustand store to @youneed/dom components — a composable provider for reactive this.store with optional selector-gated re-renders.",
+  "type": "module",
+  "license": "ISC",
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    },
+    "./devtools": {
+      "types": "./dist/devtools.d.ts",
+      "default": "./dist/devtools.js"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "sideEffects": false,
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json",
+    "test": "tsx tests/zustand.test.ts && tsx tests/devtools.test.ts"
+  },
+  "peerDependencies": {
+    "@youneed/dom": "workspace:*",
+    "@youneed/devtools": "workspace:*",
+    "zustand": ">=4"
+  },
+  "peerDependenciesMeta": {
+    "@youneed/devtools": {
+      "optional": true
+    },
+    "zustand": {
+      "optional": true
+    }
+  },
+  "devDependencies": {
+    "@youneed/dom": "workspace:*",
+    "@youneed/devtools": "workspace:*",
+    "@youneed/test": "workspace:*",
+    "@youneed/test-reporter-console": "workspace:*"
+  }
+}

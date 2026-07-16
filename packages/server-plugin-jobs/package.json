@@ -1,0 +1,42 @@
+{
+  "name": "@youneed/server-plugin-jobs",
+  "version": "0.1.0",
+  "description": "@youneed/server plugin: job scheduler (cron, intervals, delays) wired to the server lifecycle, with an optional KV leader-lock for fleets.",
+  "type": "module",
+  "license": "ISC",
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    },
+    "./devtools": {
+      "types": "./dist/devtools.d.ts",
+      "default": "./dist/devtools.js"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "sideEffects": [
+    "./dist/devtools.js",
+    "./src/devtools.ts"
+  ],
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json",
+    "test": "tsx tests/jobs.test.ts"
+  },
+  "dependencies": {
+    "@youneed/server": "workspace:*"
+  },
+  "devDependencies": {
+    "@youneed/test": "workspace:*",
+    "@youneed/test-reporter-console": "workspace:*",
+    "@youneed/kv": "workspace:*",
+    "@youneed/dom": "workspace:*",
+    "@youneed/dom-ui-shad": "workspace:*",
+    "@youneed/server-plugin-devtools": "workspace:*"
+  }
+}

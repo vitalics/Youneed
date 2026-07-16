@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Query router · ?page=/route</title>
+    <style>
+      body { font-family: system-ui, sans-serif; margin: 24px; max-width: 680px; color: #1b1b1f; }
+      code { background: #eee; padding: 1px 4px; border-radius: 4px; }
+      a { color: #4f46e5; }
+    </style>
+  </head>
+  <body>
+    <h1>Query router — <code>?page=/route</code></h1>
+    <p>
+      The route is carried in a query parameter (<code>?page=/users/1</code>). Links are written as plain
+      paths (<code>/users/1</code>); the router intercepts the click and rewrites the query — no reload.
+      Works on a plain static server (the path stays <code>/</code>).
+    </p>
+    <router-app></router-app>
+    <script src="./app.js"></script>
+  </body>
+</html>

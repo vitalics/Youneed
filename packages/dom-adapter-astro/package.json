@@ -1,0 +1,36 @@
+{
+  "name": "@youneed/dom-adapter-astro",
+  "version": "0.1.0",
+  "description": "Render @youneed/dom components to SSR HTML for Astro islands — Declarative Shadow DOM + client hydration, type-safe (pass the component, not a tag string).",
+  "type": "module",
+  "license": "ISC",
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    },
+    "./client": {
+      "types": "./dist/client.d.ts",
+      "default": "./dist/client.js"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "sideEffects": false,
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json",
+    "test": "tsx tests/to-astro.test.ts"
+  },
+  "peerDependencies": {
+    "@youneed/dom": "workspace:*",
+    "@youneed/ssr": "workspace:*"
+  },
+  "devDependencies": {
+    "@youneed/dom": "workspace:*",
+    "@youneed/ssr": "workspace:*"
+  }
+}

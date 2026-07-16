@@ -1,0 +1,20 @@
+{
+  "name": "@youneed/cli-middleware-cache",
+  "version": "0.1.0",
+  "description": "Disk cache middleware: this.cache.get/set/wrap, TTL, JSON on disk.",
+  "type": "module",
+  "license": "ISC",
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": { ".": { "types": "./dist/index.d.ts", "default": "./dist/index.js" } },
+  "files": ["dist"],
+  "sideEffects": false,
+  "scripts": { "build": "tsc -p tsconfig.build.json", "test": "tsx tests/cache.test.ts" },
+  "peerDependencies": { "@youneed/cli": "workspace:*" },
+  "devDependencies": {
+    "@youneed/cli": "workspace:*",
+    "@youneed/test": "workspace:*",
+    "@youneed/test-reporter-console": "workspace:*"
+  }
+}

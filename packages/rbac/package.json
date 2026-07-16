@@ -1,0 +1,28 @@
+{
+  "name": "@youneed/rbac",
+  "version": "0.1.0",
+  "description": "Tiny framework-agnostic authorization engine: roles + permissions (action × resource), role inheritance, ownership/attribute conditions, deny-over-allow, synchronous can().",
+  "type": "module",
+  "license": "ISC",
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "sideEffects": false,
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json",
+    "test": "tsx tests/rbac.test.ts"
+  },
+  "devDependencies": {
+    "@youneed/test": "workspace:*",
+    "@youneed/test-reporter-console": "workspace:*"
+  }
+}

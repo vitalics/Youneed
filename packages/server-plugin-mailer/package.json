@@ -1,0 +1,39 @@
+{
+  "name": "@youneed/server-plugin-mailer",
+  "version": "0.1.0",
+  "description": "@youneed/server plugin: transactional email with pluggable transports — built-in dependency-free SMTP plus AWS SES, SendGrid and Postmark (fetch-based, no SDKs), with a devtools tab.",
+  "type": "module",
+  "license": "ISC",
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": { "types": "./dist/index.d.ts", "default": "./dist/index.js" },
+    "./devtools": { "types": "./dist/devtools.d.ts", "default": "./dist/devtools.js" },
+    "./smtp": { "types": "./dist/smtp.d.ts", "default": "./dist/smtp.js" },
+    "./sendgrid": { "types": "./dist/sendgrid.d.ts", "default": "./dist/sendgrid.js" },
+    "./postmark": { "types": "./dist/postmark.d.ts", "default": "./dist/postmark.js" },
+    "./ses": { "types": "./dist/ses.d.ts", "default": "./dist/ses.js" }
+  },
+  "files": [
+    "dist"
+  ],
+  "sideEffects": [
+    "./dist/devtools.js",
+    "./src/devtools.ts"
+  ],
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json",
+    "test": "tsx tests/mailer.test.ts"
+  },
+  "dependencies": {
+    "@youneed/server": "workspace:*"
+  },
+  "devDependencies": {
+    "@youneed/dom": "workspace:*",
+    "@youneed/dom-ui-shad": "workspace:*",
+    "@youneed/server-plugin-devtools": "workspace:*",
+    "@youneed/test": "workspace:*",
+    "@youneed/test-reporter-console": "workspace:*"
+  }
+}

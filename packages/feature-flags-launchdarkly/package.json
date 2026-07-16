@@ -1,0 +1,32 @@
+{
+  "name": "@youneed/feature-flags-launchdarkly",
+  "version": "0.1.0",
+  "description": "LaunchDarkly provider adapter for @youneed/feature-flags (Node server SDK-backed remote evaluator).",
+  "type": "module",
+  "license": "ISC",
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "sideEffects": false,
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json",
+    "test": "tsx tests/provider.test.ts"
+  },
+  "dependencies": {
+    "@youneed/feature-flags": "workspace:*",
+    "@launchdarkly/node-server-sdk": "^9.7.0"
+  },
+  "devDependencies": {
+    "@youneed/test": "workspace:*",
+    "@youneed/test-reporter-console": "workspace:*"
+  }
+}

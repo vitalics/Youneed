@@ -1,0 +1,14 @@
+{
+  "name": "@youneed/server-plugin-pubsub-rabbitmq",
+  "version": "0.1.0",
+  "description": "RabbitMQ adapter for @youneed/server-plugin-pubsub: RabbitMQPubSub over an AMQP exchange, via the official `amqplib`. Pub/sub only (pair with a KV adapter for state).",
+  "type": "module", "license": "ISC",
+  "main": "./dist/index.js", "module": "./dist/index.js", "types": "./dist/index.d.ts",
+  "exports": { ".": { "types": "./dist/index.d.ts", "default": "./dist/index.js" } },
+  "files": ["dist"], "sideEffects": false,
+  "scripts": { "build": "tsc -p tsconfig.build.json", "test": "tsx tests/rabbitmq.test.ts" },
+  "dependencies": { "@youneed/server-plugin-pubsub": "workspace:*" },
+  "peerDependencies": { "amqplib": ">=0.10" },
+  "peerDependenciesMeta": { "amqplib": { "optional": true } },
+  "devDependencies": { "@youneed/test": "workspace:*", "@youneed/test-reporter-console": "workspace:*", "amqplib": "^0.10.4", "@types/amqplib": "^0.10.5" }
+}

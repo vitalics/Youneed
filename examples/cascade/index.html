@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Async cascade · atomic render</title>
+    <style>
+      body { font-family: system-ui, sans-serif; margin: 24px; max-width: 640px; color: #1b1b1f; }
+      code { background: #eee; padding: 1px 4px; border-radius: 4px; }
+    </style>
+  </head>
+  <body>
+    <h1>Async cascade — render only when it's all done</h1>
+    <p>
+      A <code>task()</code> runs three mocked requests in a waterfall. Intermediate
+      results never touch reactive state, so the component re-renders exactly twice
+      per run (start + finish) — never a half-loaded state. The render counter goes
+      up by 2 per run, not by 1 per request.
+    </p>
+    <cascade-loader></cascade-loader>
+    <script src="./app.js"></script>
+  </body>
+</html>

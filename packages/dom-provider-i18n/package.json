@@ -1,0 +1,46 @@
+{
+  "name": "@youneed/dom-provider-i18n",
+  "version": "0.1.0",
+  "description": "Use @youneed/i18n translations inside @youneed/dom components — i18n() in html templates with reactive re-render on locale change.",
+  "type": "module",
+  "license": "ISC",
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    },
+    "./devtools": {
+      "types": "./dist/devtools.d.ts",
+      "default": "./dist/devtools.js"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "sideEffects": false,
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json",
+    "test": "tsx tests/dom-provider-i18n.test.ts && tsx tests/devtools.test.ts"
+  },
+  "dependencies": {
+    "@youneed/i18n": "workspace:*"
+  },
+  "peerDependencies": {
+    "@youneed/dom": "workspace:*",
+    "@youneed/devtools": "workspace:*"
+  },
+  "peerDependenciesMeta": {
+    "@youneed/devtools": {
+      "optional": true
+    }
+  },
+  "devDependencies": {
+    "@youneed/dom": "workspace:*",
+    "@youneed/devtools": "workspace:*",
+    "@youneed/test": "workspace:*",
+    "@youneed/test-reporter-console": "workspace:*"
+  }
+}

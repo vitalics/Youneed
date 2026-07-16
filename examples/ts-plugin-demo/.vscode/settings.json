@@ -1,0 +1,10 @@
+{
+  // VS Code loads a tsconfig `plugins` entry ONLY when it runs the WORKSPACE
+  // TypeScript (with its bundled TS, plugins resolve only from extension paths,
+  // not the project's node_modules — so @youneed/ts-plugin is never found).
+  // This points at the repo-root TypeScript (this demo folder has no local one),
+  // and prompts to use it. After opening, also run once:
+  //   "TypeScript: Select TypeScript Version" → "Use Workspace Version".
+  "typescript.tsdk": "../../node_modules/typescript/lib",
+  "typescript.enablePromptUseWorkspaceTsdk": true
+}

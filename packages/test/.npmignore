@@ -1,0 +1,5 @@
+src/
+bench/
+tsconfig*.json
+*.test.ts
+.npmignore

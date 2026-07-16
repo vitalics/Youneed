@@ -1,0 +1,1454 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:#09090b;color:#fafafa;font-family:'Inter',-apple-system,sans-serif;font-size:14px;line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+::selection{background:rgba(27,132,255,0.25)}
+a{color:inherit;text-decoration:none}
+@keyframes fadeUp{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:translateY(0)}}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:0}}
+@keyframes shimmer{from{background-position:-200% 0}to{background-position:200% 0}}
+</style>
+</helmet>
+
+<!-- NAV -->
+<nav style="{{ navStyle }}">
+  <div style="display:flex;align-items:center;gap:10px">
+    <div style="width:28px;height:28px;background:#1b84ff;border-radius:7px;display:flex;align-items:center;justify-content:center;flex-shrink:0">
+      <span style="color:#fff;font-weight:800;font-size:12px;font-family:'JetBrains Mono',monospace">@</span>
+    </div>
+    <span style="font-size:15px;font-weight:700;color:#fafafa;letter-spacing:-0.03em">youneed</span>
+  </div>
+  <div style="display:flex;align-items:center;gap:28px">
+    <a href="#features" style="color:#71717a;font-size:13.5px;font-weight:500;transition:color 0.15s" style-hover="color:#fafafa">Features</a>
+    <a href="#examples" style="color:#71717a;font-size:13.5px;font-weight:500;transition:color 0.15s" style-hover="color:#fafafa">Examples</a>
+    <a href="#packages" style="color:#71717a;font-size:13.5px;font-weight:500;transition:color 0.15s" style-hover="color:#fafafa">Packages</a>
+    <a href="#quickstart" style="color:#71717a;font-size:13.5px;font-weight:500;transition:color 0.15s" style-hover="color:#fafafa">Quick start</a>
+    <a href="#comparison" style="color:#71717a;font-size:13.5px;font-weight:500;transition:color 0.15s" style-hover="color:#fafafa">Docs ↗</a>
+  </div>
+  <div style="display:flex;align-items:center;gap:10px">
+    <code style="padding:5px 12px;border:1px solid #27272a;border-radius:7px;background:#111113;font-family:'JetBrains Mono',monospace;font-size:11px;color:#71717a">pnpm add @youneed/dom</code>
+    <a href="#" style="display:flex;align-items:center;gap:6px;padding:6px 14px;border:1px solid #27272a;border-radius:7px;color:#fafafa;font-size:13px;font-weight:500;transition:background 0.15s" style-hover="background:#18181b">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+      GitHub
+    </a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<div style="position:relative;min-height:100vh;display:flex;align-items:center;overflow:hidden;padding-top:60px">
+  <div style="position:absolute;inset:0;background-image:linear-gradient(rgba(27,132,255,0.035) 1px,transparent 1px),linear-gradient(90deg,rgba(27,132,255,0.035) 1px,transparent 1px);background-size:60px 60px;pointer-events:none"></div>
+  <div style="position:absolute;inset:0;background:radial-gradient(ellipse 80% 55% at 50% -5%,rgba(27,132,255,0.09) 0%,transparent 70%);pointer-events:none"></div>
+  <div style="position:absolute;bottom:0;left:0;right:0;height:220px;background:linear-gradient(transparent,#09090b);pointer-events:none;z-index:1"></div>
+
+  <div style="position:relative;z-index:2;max-width:1280px;margin:0 auto;padding:80px 48px;width:100%;display:grid;grid-template-columns:1fr 1fr;gap:72px;align-items:center">
+    <!-- Left -->
+    <div style="animation:fadeUp 0.55s ease both">
+      <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:28px">
+        <div style="display:inline-flex;align-items:center;gap:6px;padding:4px 12px;border:1px solid rgba(27,132,255,0.35);border-radius:20px;background:rgba(27,132,255,0.08);font-size:11.5px;font-weight:500;color:#1b84ff">
+          <span style="width:6px;height:6px;border-radius:50%;background:#1b84ff;display:inline-block;animation:blink 2.2s ease-in-out infinite"></span>
+          140+ packages
+        </div>
+        <div style="display:inline-flex;padding:4px 12px;border:1px solid #27272a;border-radius:20px;font-size:11.5px;font-weight:500;color:#52525b">TypeScript-first</div>
+        <div style="display:inline-flex;padding:4px 12px;border:1px solid #27272a;border-radius:20px;font-size:11.5px;font-weight:500;color:#52525b">MIT</div>
+      </div>
+      <h1 style="font-size:clamp(42px,4.8vw,66px);font-weight:800;line-height:1.07;letter-spacing:-0.04em;color:#fafafa;margin-bottom:24px;text-wrap:balance">
+        This is the<br>
+        <span style="color:#1b84ff">last framework</span><br>
+        you need.
+      </h1>
+      <p style="font-size:17px;line-height:1.68;color:#71717a;margin-bottom:36px;max-width:460px;text-wrap:pretty">
+        TypeScript-first toolkit for fullstack web apps on native platform primitives — Custom Elements, HTTP server, SSR, CLI, and more. One paradigm, everywhere.
+      </p>
+      <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:28px">
+        <a href="#quickstart" style="display:inline-flex;align-items:center;gap:8px;padding:11px 22px;background:#fafafa;color:#09090b;border-radius:8px;font-size:14px;font-weight:600;border:1px solid #fafafa;transition:all 0.15s" style-hover="background:#e4e4e7;border-color:#e4e4e7">
+          Get Started →
+        </a>
+        <a href="#examples" style="display:inline-flex;align-items:center;gap:8px;padding:11px 22px;background:transparent;color:#fafafa;border-radius:8px;font-size:14px;font-weight:500;border:1px solid #27272a;transition:all 0.15s" style-hover="background:#111113">
+          View examples
+        </a>
+      </div>
+      <code style="font-family:'JetBrains Mono',monospace;font-size:12px;color:#52525b;background:#111113;border:1px solid #1c1c1f;padding:8px 14px;border-radius:7px;display:inline-block">
+        pnpm add @youneed/dom @youneed/server @youneed/ssr
+      </code>
+    </div>
+
+    <!-- Right: Code window -->
+    <div style="animation:fadeUp 0.55s 0.12s ease both;position:relative">
+      <div style="position:absolute;inset:-32px;background:radial-gradient(ellipse at 50% 50%,rgba(27,132,255,0.07) 0%,transparent 70%);pointer-events:none"></div>
+      <div style="position:relative;border-radius:12px;border:1px solid #2a2a2e;background:#0d1117;overflow:hidden;box-shadow:0 24px 64px rgba(0,0,0,0.55)">
+        <div style="display:flex;align-items:center;gap:8px;padding:12px 16px;border-bottom:1px solid #1c1f26;background:#111318">
+          <div style="width:11px;height:11px;border-radius:50%;background:#ff5f57"></div>
+          <div style="width:11px;height:11px;border-radius:50%;background:#febc2e"></div>
+          <div style="width:11px;height:11px;border-radius:50%;background:#28c840"></div>
+          <div style="flex:1;text-align:center"><span style="font-family:'JetBrains Mono',monospace;font-size:11px;color:#52525b">app.ts</span></div>
+        </div>
+        {{ heroCodeEl }}
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- STATS STRIP -->
+<div style="border-top:1px solid #1c1c1f;border-bottom:1px solid #1c1c1f;background:#0c0c0e">
+  <div style="max-width:1280px;margin:0 auto;padding:0 48px;display:grid;grid-template-columns:repeat(4,1fr)">
+    <div style="padding:28px 24px;border-right:1px solid #1c1c1f">
+      <div style="font-size:32px;font-weight:800;letter-spacing:-0.04em;color:#fafafa;font-family:'JetBrains Mono',monospace;line-height:1.1">140+</div>
+      <div style="font-size:13px;color:#71717a;margin-top:4px">packages in the ecosystem</div>
+    </div>
+    <div style="padding:28px 24px;border-right:1px solid #1c1c1f">
+      <div style="font-size:32px;font-weight:800;letter-spacing:-0.04em;color:#fafafa;font-family:'JetBrains Mono',monospace;line-height:1.1">0</div>
+      <div style="font-size:13px;color:#71717a;margin-top:4px">external deps in core</div>
+    </div>
+    <div style="padding:28px 24px;border-right:1px solid #1c1c1f">
+      <div style="font-size:32px;font-weight:800;letter-spacing:-0.04em;color:#1b84ff;font-family:'JetBrains Mono',monospace;line-height:1.1">TC39</div>
+      <div style="font-size:13px;color:#71717a;margin-top:4px">standard decorators, Stage 3</div>
+    </div>
+    <div style="padding:28px 24px">
+      <div style="font-size:32px;font-weight:800;letter-spacing:-0.04em;color:#fafafa;font-family:'JetBrains Mono',monospace;line-height:1.1">MIT</div>
+      <div style="font-size:13px;color:#71717a;margin-top:4px">open source, forever free</div>
+    </div>
+  </div>
+</div>
+
+<!-- FEATURES -->
+<div id="features" style="padding:100px 0">
+  <div style="max-width:1280px;margin:0 auto;padding:0 48px">
+    <div style="max-width:540px;margin-bottom:52px">
+      <div style="font-size:11px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:#1b84ff;margin-bottom:14px;font-family:'JetBrains Mono',monospace">The framework</div>
+      <h2 style="font-size:40px;font-weight:800;letter-spacing:-0.035em;color:#fafafa;line-height:1.12;margin-bottom:16px">One paradigm, every layer.</h2>
+      <p style="font-size:16px;color:#71717a;line-height:1.65">Factory → base class → decorators. DOM component, HTTP controller, SSR page, CLI command — always the same mental model.</p>
+    </div>
+
+    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:#1c1c1f;border:1px solid #1c1c1f;border-radius:12px;overflow:hidden">
+
+      <div style="background:#0f0f12;padding:26px 22px;transition:background 0.2s" style-hover="background:#131318">
+        <div style="width:36px;height:36px;border-radius:8px;background:rgba(27,132,255,0.1);border:1px solid rgba(27,132,255,0.2);display:flex;align-items:center;justify-content:center;margin-bottom:16px">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#1b84ff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+        </div>
+        <div style="font-size:10.5px;font-family:'JetBrains Mono',monospace;color:#1b84ff;margin-bottom:8px;font-weight:500">@youneed/dom</div>
+        <div style="font-size:15px;font-weight:700;color:#fafafa;margin-bottom:9px;letter-spacing:-0.02em">Custom Elements</div>
+        <div style="font-size:12.5px;color:#71717a;line-height:1.6">Reactive components on native Shadow DOM. Signals, computed, tasks, schedulers — no virtual DOM.</div>
+      </div>
+
+      <div style="background:#0f0f12;padding:26px 22px;transition:background 0.2s" style-hover="background:#131318">
+        <div style="width:36px;height:36px;border-radius:8px;background:rgba(34,197,94,0.08);border:1px solid rgba(34,197,94,0.18);display:flex;align-items:center;justify-content:center;margin-bottom:16px">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#22c55e" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+        </div>
+        <div style="font-size:10.5px;font-family:'JetBrains Mono',monospace;color:#22c55e;margin-bottom:8px;font-weight:500">@youneed/server</div>
+        <div style="font-size:15px;font-weight:700;color:#fafafa;margin-bottom:9px;letter-spacing:-0.02em">Typed HTTP</div>
+        <div style="font-size:12.5px;color:#71717a;line-height:1.6">Schema validation, guards, HTTP/1.1+2+3, WebSocket, SSE. OpenAPI auto-generated.</div>
+      </div>
+
+      <div style="background:#0f0f12;padding:26px 22px;transition:background 0.2s" style-hover="background:#131318">
+        <div style="width:36px;height:36px;border-radius:8px;background:rgba(139,92,246,0.08);border:1px solid rgba(139,92,246,0.2);display:flex;align-items:center;justify-content:center;margin-bottom:16px">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#8b5cf6" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg>
+        </div>
+        <div style="font-size:10.5px;font-family:'JetBrains Mono',monospace;color:#8b5cf6;margin-bottom:8px;font-weight:500">@youneed/ssr</div>
+        <div style="font-size:15px;font-weight:700;color:#fafafa;margin-bottom:9px;letter-spacing:-0.02em">SSR + Pages</div>
+        <div style="font-size:12.5px;color:#71717a;line-height:1.6">Declarative Shadow DOM. Speculation Rules, islands, SSG — all first-class.</div>
+      </div>
+
+      <div style="background:#0f0f12;padding:26px 22px;transition:background 0.2s" style-hover="background:#131318">
+        <div style="width:36px;height:36px;border-radius:8px;background:rgba(245,158,11,0.08);border:1px solid rgba(245,158,11,0.18);display:flex;align-items:center;justify-content:center;margin-bottom:16px">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#f59e0b" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+        </div>
+        <div style="font-size:10.5px;font-family:'JetBrains Mono',monospace;color:#f59e0b;margin-bottom:8px;font-weight:500">@youneed/dom-router</div>
+        <div style="font-size:15px;font-weight:700;color:#fafafa;margin-bottom:9px;letter-spacing:-0.02em">SPA Router</div>
+        <div style="font-size:12.5px;color:#71717a;line-height:1.6">Hash, history, query routing modes. Zero deps, tiny bundle.</div>
+      </div>
+
+      <div style="background:#0f0f12;padding:26px 22px;transition:background 0.2s" style-hover="background:#131318">
+        <div style="width:36px;height:36px;border-radius:8px;background:rgba(236,72,153,0.08);border:1px solid rgba(236,72,153,0.18);display:flex;align-items:center;justify-content:center;margin-bottom:16px">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#ec4899" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="4 17 10 11 4 5"/><line x1="12" y1="19" x2="20" y2="19"/></svg>
+        </div>
+        <div style="font-size:10.5px;font-family:'JetBrains Mono',monospace;color:#ec4899;margin-bottom:8px;font-weight:500">@youneed/cli</div>
+        <div style="font-size:15px;font-weight:700;color:#fafafa;margin-bottom:9px;letter-spacing:-0.02em">CLI Framework</div>
+        <div style="font-size:12.5px;color:#71717a;line-height:1.6">Terminal apps with 15+ middleware: prompts, hotkeys, progress, i18n, screen.</div>
+      </div>
+
+      <div style="background:#0f0f12;padding:26px 22px;transition:background 0.2s" style-hover="background:#131318">
+        <div style="width:36px;height:36px;border-radius:8px;background:rgba(34,197,94,0.07);border:1px solid rgba(34,197,94,0.14);display:flex;align-items:center;justify-content:center;margin-bottom:16px">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#22c55e" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+        </div>
+        <div style="font-size:10.5px;font-family:'JetBrains Mono',monospace;color:#22c55e;margin-bottom:8px;font-weight:500">@youneed/test</div>
+        <div style="font-size:15px;font-weight:700;color:#fafafa;margin-bottom:9px;letter-spacing:-0.02em">Test Framework</div>
+        <div style="font-size:12.5px;color:#71717a;line-height:1.6">Class + decorator tests, same paradigm. Snapshots, resilience, 5 reporter formats.</div>
+      </div>
+
+      <div style="background:#0f0f12;padding:26px 22px;transition:background 0.2s" style-hover="background:#131318">
+        <div style="width:36px;height:36px;border-radius:8px;background:rgba(27,132,255,0.07);border:1px solid rgba(27,132,255,0.14);display:flex;align-items:center;justify-content:center;margin-bottom:16px">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#1b84ff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
+        </div>
+        <div style="font-size:10.5px;font-family:'JetBrains Mono',monospace;color:#1b84ff;margin-bottom:8px;font-weight:500">@youneed/devtools</div>
+        <div style="font-size:15px;font-weight:700;color:#fafafa;margin-bottom:9px;letter-spacing:-0.02em">DevTools</div>
+        <div style="font-size:12.5px;color:#71717a;line-height:1.6">Floating inspector with component tree, time-travel debugger, scheduler swap.</div>
+      </div>
+
+      <div style="background:#0f0f12;padding:26px 22px;transition:background 0.2s" style-hover="background:#131318">
+        <div style="width:36px;height:36px;border-radius:8px;background:rgba(245,158,11,0.07);border:1px solid rgba(245,158,11,0.14);display:flex;align-items:center;justify-content:center;margin-bottom:16px">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#f59e0b" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/></svg>
+        </div>
+        <div style="font-size:10.5px;font-family:'JetBrains Mono',monospace;color:#f59e0b;margin-bottom:8px;font-weight:500">@youneed/orm · kv</div>
+        <div style="font-size:15px;font-weight:700;color:#fafafa;margin-bottom:9px;letter-spacing:-0.02em">ORM + Storage</div>
+        <div style="font-size:12.5px;color:#71717a;line-height:1.6">SQL + NoSQL ORM (MySQL, MongoDB). KV store with Redis adapter.</div>
+      </div>
+
+      <div style="background:#0f0f12;padding:26px 22px;transition:background 0.2s" style-hover="background:#131318">
+        <div style="width:36px;height:36px;border-radius:8px;background:rgba(139,92,246,0.07);border:1px solid rgba(139,92,246,0.14);display:flex;align-items:center;justify-content:center;margin-bottom:16px">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#8b5cf6" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        </div>
+        <div style="font-size:10.5px;font-family:'JetBrains Mono',monospace;color:#8b5cf6;margin-bottom:8px;font-weight:500">@youneed/schema</div>
+        <div style="font-size:15px;font-weight:700;color:#fafafa;margin-bottom:9px;letter-spacing:-0.02em">Schema + Validation</div>
+        <div style="font-size:12.5px;color:#71717a;line-height:1.6">Type-safe schemas with OpenAPI/AsyncAPI generation. Used across all layers.</div>
+      </div>
+
+      <div style="background:#0f0f12;padding:26px 22px;transition:background 0.2s" style-hover="background:#131318">
+        <div style="width:36px;height:36px;border-radius:8px;background:rgba(56,189,248,0.08);border:1px solid rgba(56,189,248,0.18);display:flex;align-items:center;justify-content:center;margin-bottom:16px">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#38bdf8" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+        </div>
+        <div style="font-size:10.5px;font-family:'JetBrains Mono',monospace;color:#38bdf8;margin-bottom:8px;font-weight:500">@youneed/logger</div>
+        <div style="font-size:15px;font-weight:700;color:#fafafa;margin-bottom:9px;letter-spacing:-0.02em">Logging</div>
+        <div style="font-size:12.5px;color:#71717a;line-height:1.6">Structured logger with pluggable transports (stdout, file, HTTP) and Datadog, i18n plugins.</div>
+      </div>
+
+      <div style="background:#0f0f12;padding:26px 22px;transition:background 0.2s" style-hover="background:#131318">
+        <div style="width:36px;height:36px;border-radius:8px;background:rgba(251,146,60,0.08);border:1px solid rgba(251,146,60,0.18);display:flex;align-items:center;justify-content:center;margin-bottom:16px">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#fb923c" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+        </div>
+        <div style="font-size:10.5px;font-family:'JetBrains Mono',monospace;color:#fb923c;margin-bottom:8px;font-weight:500">@youneed/i18n · dom-provider-a11y</div>
+        <div style="font-size:15px;font-weight:700;color:#fafafa;margin-bottom:9px;letter-spacing:-0.02em">i18n &amp; Accessibility</div>
+        <div style="font-size:12.5px;color:#71717a;line-height:1.6">Internationalization utilities + a11y context provider for DOM components and CLI apps.</div>
+      </div>
+
+      <div style="background:#0f0f12;padding:26px 22px;transition:background 0.2s" style-hover="background:#131318">
+        <div style="width:36px;height:36px;border-radius:8px;background:rgba(250,204,21,0.08);border:1px solid rgba(250,204,21,0.18);display:flex;align-items:center;justify-content:center;margin-bottom:16px">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#facc15" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+        </div>
+        <div style="font-size:10.5px;font-family:'JetBrains Mono',monospace;color:#facc15;margin-bottom:8px;font-weight:500">@youneed/vite-plugin</div>
+        <div style="font-size:15px;font-weight:700;color:#fafafa;margin-bottom:9px;letter-spacing:-0.02em">Vite Integration</div>
+        <div style="font-size:12.5px;color:#71717a;line-height:1.6">Lowers TC39 decorators in Vite builds via esbuild. Works alongside React, Vue, and Svelte plugins.</div>
+      </div>
+
+      <div style="background:#0f0f12;padding:26px 22px;transition:background 0.2s" style-hover="background:#131318">
+        <div style="width:36px;height:36px;border-radius:8px;background:rgba(99,102,241,0.08);border:1px solid rgba(99,102,241,0.18);display:flex;align-items:center;justify-content:center;margin-bottom:16px">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#6366f1" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="4 7 4 4 20 4 20 7"/><line x1="9" y1="20" x2="15" y2="20"/><line x1="12" y1="4" x2="12" y2="20"/></svg>
+        </div>
+        <div style="font-size:10.5px;font-family:'JetBrains Mono',monospace;color:#6366f1;margin-bottom:8px;font-weight:500">@youneed/ts-plugin</div>
+        <div style="font-size:15px;font-weight:700;color:#fafafa;margin-bottom:9px;letter-spacing:-0.02em">TS Language Plugin</div>
+        <div style="font-size:12.5px;color:#71717a;line-height:1.6">TypeScript language service plugin — editor completions and diagnostics for decorators and templates.</div>
+      </div>
+
+      <div style="background:#0f0f12;padding:26px 22px;transition:background 0.2s;position:relative;overflow:hidden" style-hover="background:#131318">
+        <div style="position:absolute;top:0;right:0;padding:4px 10px;background:rgba(167,139,250,0.12);border-bottom-left-radius:8px;border-left:1px solid rgba(167,139,250,0.2);border-bottom:1px solid rgba(167,139,250,0.2)">
+          <span style="font-size:9px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:#a78bfa">new</span>
+        </div>
+        <div style="width:36px;height:36px;border-radius:8px;background:rgba(167,139,250,0.1);border:1px solid rgba(167,139,250,0.22);display:flex;align-items:center;justify-content:center;margin-bottom:16px">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#a78bfa" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a2 2 0 0 1 2 2c0 .74-.4 1.39-1 1.73V7h1a7 7 0 0 1 7 7h1a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1h-1v1a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-1H2a1 1 0 0 1-1-1v-3a1 1 0 0 1 1-1h1a7 7 0 0 1 7-7h1V5.73c-.6-.34-1-.99-1-1.73a2 2 0 0 1 2-2z"/><circle cx="7.5" cy="14.5" r="1.5" fill="#a78bfa" stroke="none"/><circle cx="16.5" cy="14.5" r="1.5" fill="#a78bfa" stroke="none"/></svg>
+        </div>
+        <div style="font-size:10.5px;font-family:'JetBrains Mono',monospace;color:#a78bfa;margin-bottom:8px;font-weight:500">@youneed/ai-skill</div>
+        <div style="font-size:15px;font-weight:700;color:#fafafa;margin-bottom:9px;letter-spacing:-0.02em">AI Skills</div>
+        <div style="font-size:12.5px;color:#71717a;line-height:1.6">LLM/AI integration skill — wire language models into your server controllers and CLI commands with the same decorator API.</div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- CODE EXAMPLES -->
+<div id="examples" style="padding:80px 0 100px;background:#0c0c0e;border-top:1px solid #1c1c1f">
+  <div style="max-width:1280px;margin:0 auto;padding:0 48px">
+    <div style="max-width:540px;margin-bottom:48px">
+      <div style="font-size:11px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:#1b84ff;margin-bottom:14px;font-family:'JetBrains Mono',monospace">Code examples</div>
+      <h2 style="font-size:40px;font-weight:800;letter-spacing:-0.035em;color:#fafafa;line-height:1.12;margin-bottom:16px">Same pattern, every layer.</h2>
+      <p style="font-size:16px;color:#71717a;line-height:1.65">One mental model means zero context switching between DOM, server, SSR and testing.</p>
+    </div>
+
+    <!-- Tabs -->
+    <div style="border-bottom:1px solid #27272a;display:flex;gap:0">
+      <sc-for list="{{ tabItems }}" as="ti">
+        <button onClick="{{ ti.handler }}" style="{{ ti.style }}">{{ ti.label }}</button>
+      </sc-for>
+    </div>
+
+    <!-- Code panel -->
+    <div style="border:1px solid #27272a;border-top:none;border-radius:0 0 12px 12px;background:#0d1117;overflow:hidden;display:grid;grid-template-columns:1fr 260px;min-height:460px">
+      <div style="border-right:1px solid #1c1f26;overflow:auto">{{ codeEl }}</div>
+      <div style="padding:24px;display:flex;flex-direction:column;gap:0">
+        <div style="font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:0.08em;color:#3f3f46;margin-bottom:12px">About</div>
+        <p style="font-size:13px;color:#71717a;line-height:1.65;margin-bottom:20px">{{ tabDesc }}</p>
+        <div style="padding-top:16px;border-top:1px solid #1c1f26;margin-bottom:20px">
+          <div style="font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:0.08em;color:#3f3f46;margin-bottom:10px">Install</div>
+          <div style="background:#111318;border:1px solid #1c1f26;border-radius:6px;padding:10px 12px">
+            <sc-if value="{{ t0 }}" hint-placeholder-val="{{ true }}"><code style="font-family:'JetBrains Mono',monospace;font-size:11px;color:#1b84ff">pnpm add @youneed/dom</code></sc-if>
+            <sc-if value="{{ t1 }}" hint-placeholder-val="{{ false }}"><code style="font-family:'JetBrains Mono',monospace;font-size:11px;color:#22c55e">pnpm add @youneed/server</code></sc-if>
+            <sc-if value="{{ t2 }}" hint-placeholder-val="{{ false }}"><code style="font-family:'JetBrains Mono',monospace;font-size:11px;color:#8b5cf6">pnpm add @youneed/ssr</code></sc-if>
+            <sc-if value="{{ t3 }}" hint-placeholder-val="{{ false }}"><code style="font-family:'JetBrains Mono',monospace;font-size:11px;color:#22c55e">pnpm add @youneed/test</code></sc-if>
+            <sc-if value="{{ t4 }}" hint-placeholder-val="{{ false }}"><code style="font-family:'JetBrains Mono',monospace;font-size:11px;color:#ec4899">pnpm add @youneed/cli</code></sc-if>
+            <sc-if value="{{ t5 }}" hint-placeholder-val="{{ false }}"><code style="font-family:'JetBrains Mono',monospace;font-size:11px;color:#f59e0b">pnpm add @youneed/orm-sql</code></sc-if>
+          </div>
+        </div>
+        <div style="padding-top:16px;border-top:1px solid #1c1f26">
+          <div style="font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:0.08em;color:#3f3f46;margin-bottom:12px">Highlights</div>
+          <div style="display:flex;flex-direction:column;gap:9px">
+            <sc-if value="{{ t0 }}" hint-placeholder-val="{{ true }}">
+              <div style="font-size:12px;color:#71717a;display:flex;gap:8px"><span style="color:#1b84ff;flex-shrink:0">→</span>Fine-grained reactive signals</div>
+              <div style="font-size:12px;color:#71717a;display:flex;gap:8px"><span style="color:#1b84ff;flex-shrink:0">→</span>Native Shadow DOM + scoped styles</div>
+              <div style="font-size:12px;color:#71717a;display:flex;gap:8px"><span style="color:#1b84ff;flex-shrink:0">→</span>SSR hydration built-in</div>
+            </sc-if>
+            <sc-if value="{{ t1 }}" hint-placeholder-val="{{ false }}">
+              <div style="font-size:12px;color:#71717a;display:flex;gap:8px"><span style="color:#22c55e;flex-shrink:0">→</span>Typed ctx.body via schema</div>
+              <div style="font-size:12px;color:#71717a;display:flex;gap:8px"><span style="color:#22c55e;flex-shrink:0">→</span>OpenAPI auto-generated</div>
+              <div style="font-size:12px;color:#71717a;display:flex;gap:8px"><span style="color:#22c55e;flex-shrink:0">→</span>21 middleware packages</div>
+            </sc-if>
+            <sc-if value="{{ t2 }}" hint-placeholder-val="{{ false }}">
+              <div style="font-size:12px;color:#71717a;display:flex;gap:8px"><span style="color:#8b5cf6;flex-shrink:0">→</span>Declarative Shadow DOM output</div>
+              <div style="font-size:12px;color:#71717a;display:flex;gap:8px"><span style="color:#8b5cf6;flex-shrink:0">→</span>Native Speculation Rules API</div>
+              <div style="font-size:12px;color:#71717a;display:flex;gap:8px"><span style="color:#8b5cf6;flex-shrink:0">→</span>Island architecture support</div>
+            </sc-if>
+            <sc-if value="{{ t3 }}" hint-placeholder-val="{{ false }}">
+              <div style="font-size:12px;color:#71717a;display:flex;gap:8px"><span style="color:#22c55e;flex-shrink:0">→</span>Same decorator paradigm</div>
+              <div style="font-size:12px;color:#71717a;display:flex;gap:8px"><span style="color:#22c55e;flex-shrink:0">→</span>Snapshots + resilience utils</div>
+              <div style="font-size:12px;color:#71717a;display:flex;gap:8px"><span style="color:#22c55e;flex-shrink:0">→</span>5 reporter formats incl. JUnit</div>
+            </sc-if>
+            <sc-if value="{{ t4 }}" hint-placeholder-val="{{ false }}">
+              <div style="font-size:12px;color:#71717a;display:flex;gap:8px"><span style="color:#ec4899;flex-shrink:0">→</span>15+ middleware packages</div>
+              <div style="font-size:12px;color:#71717a;display:flex;gap:8px"><span style="color:#ec4899;flex-shrink:0">→</span>Prompts, hotkeys, progress, screen</div>
+              <div style="font-size:12px;color:#71717a;display:flex;gap:8px"><span style="color:#ec4899;flex-shrink:0">→</span>i18n + a11y built-in</div>
+            </sc-if>
+            <sc-if value="{{ t5 }}" hint-placeholder-val="{{ false }}">
+              <div style="font-size:12px;color:#71717a;display:flex;gap:8px"><span style="color:#f59e0b;flex-shrink:0">→</span>SQL + NoSQL (MySQL, Postgres, MongoDB)</div>
+              <div style="font-size:12px;color:#71717a;display:flex;gap:8px"><span style="color:#f59e0b;flex-shrink:0">→</span>Relations, migrations, transactions</div>
+              <div style="font-size:12px;color:#71717a;display:flex;gap:8px"><span style="color:#f59e0b;flex-shrink:0">→</span>Fully typed query builder</div>
+            </sc-if>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ARCHITECTURE -->
+<div id="architecture" style="padding:100px 0;border-top:1px solid #1c1c1f">
+  <div style="max-width:1280px;margin:0 auto;padding:0 48px">
+    <div style="max-width:540px;margin-bottom:52px">
+      <div style="font-size:11px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:#1b84ff;margin-bottom:14px;font-family:'JetBrains Mono',monospace">Architecture</div>
+      <h2 style="font-size:40px;font-weight:800;letter-spacing:-0.035em;color:#fafafa;line-height:1.12;margin-bottom:16px">Shallow dependency graph.</h2>
+      <p style="font-size:16px;color:#71717a;line-height:1.65">Pick only what you need. <code style="font-family:'JetBrains Mono',monospace;color:#e4e4e7;background:#1c1c1f;padding:2px 6px;border-radius:4px">dom</code> has zero deps. <code style="font-family:'JetBrains Mono',monospace;color:#e4e4e7;background:#1c1c1f;padding:2px 6px;border-radius:4px">ssr</code> builds on <code style="font-family:'JetBrains Mono',monospace;color:#e4e4e7;background:#1c1c1f;padding:2px 6px;border-radius:4px">dom</code> + <code style="font-family:'JetBrains Mono',monospace;color:#e4e4e7;background:#1c1c1f;padding:2px 6px;border-radius:4px">server</code>. No forced bundles.</p>
+    </div>
+
+    <div style="display:flex;flex-direction:column;gap:10px;max-width:920px">
+
+      <div style="border:1px solid rgba(27,132,255,0.28);border-left:3px solid #1b84ff;border-radius:10px;background:rgba(27,132,255,0.04);padding:18px 22px">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px">
+          <div style="font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:#1b84ff;font-family:'JetBrains Mono',monospace">Browser</div>
+          <div style="font-size:11px;color:#52525b;font-family:'JetBrains Mono',monospace">Custom Elements · Shadow DOM · Signals</div>
+        </div>
+        <div style="display:flex;gap:7px;flex-wrap:wrap">
+          <span style="padding:3px 9px;border:1px solid rgba(27,132,255,0.35);border-radius:5px;font-size:11px;font-family:'JetBrains Mono',monospace;color:#1b84ff;background:rgba(27,132,255,0.1)">@youneed/dom</span>
+          <span style="padding:3px 9px;border:1px solid rgba(27,132,255,0.15);border-radius:5px;font-size:11px;font-family:'JetBrains Mono',monospace;color:#52525b">dom-router</span>
+          <span style="padding:3px 9px;border:1px solid rgba(27,132,255,0.15);border-radius:5px;font-size:11px;font-family:'JetBrains Mono',monospace;color:#52525b">dom-scheduler</span>
+          <span style="padding:3px 9px;border:1px solid rgba(27,132,255,0.15);border-radius:5px;font-size:11px;font-family:'JetBrains Mono',monospace;color:#52525b">ui-shad</span>
+          <span style="padding:3px 9px;border:1px solid rgba(27,132,255,0.15);border-radius:5px;font-size:11px;font-family:'JetBrains Mono',monospace;color:#52525b">6 framework adapters</span>
+          <span style="padding:3px 9px;border:1px solid rgba(27,132,255,0.15);border-radius:5px;font-size:11px;font-family:'JetBrains Mono',monospace;color:#52525b">7 providers</span>
+        </div>
+      </div>
+
+      <div style="display:flex;align-items:center;gap:10px;padding:0 16px">
+        <div style="width:1px;height:22px;background:linear-gradient(#1b84ff80,#8b5cf680)"></div>
+        <span style="font-size:11px;color:#3f3f46;font-family:'JetBrains Mono',monospace">Declarative Shadow DOM hydration</span>
+      </div>
+
+      <div style="border:1px solid rgba(139,92,246,0.28);border-left:3px solid #8b5cf6;border-radius:10px;background:rgba(139,92,246,0.04);padding:18px 22px">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px">
+          <div style="font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:#8b5cf6;font-family:'JetBrains Mono',monospace">SSR</div>
+          <div style="font-size:11px;color:#52525b;font-family:'JetBrains Mono',monospace">Pages · Speculation Rules · SSG · Islands</div>
+        </div>
+        <div style="display:flex;gap:7px;flex-wrap:wrap">
+          <span style="padding:3px 9px;border:1px solid rgba(139,92,246,0.35);border-radius:5px;font-size:11px;font-family:'JetBrains Mono',monospace;color:#8b5cf6;background:rgba(139,92,246,0.1)">@youneed/ssr</span>
+          <span style="padding:3px 9px;border:1px solid rgba(139,92,246,0.15);border-radius:5px;font-size:11px;font-family:'JetBrains Mono',monospace;color:#52525b">ssr-router</span>
+          <span style="padding:3px 9px;border:1px solid rgba(139,92,246,0.15);border-radius:5px;font-size:11px;font-family:'JetBrains Mono',monospace;color:#52525b">meta · sitemap · robots</span>
+          <span style="padding:3px 9px;border:1px solid rgba(139,92,246,0.15);border-radius:5px;font-size:11px;font-family:'JetBrains Mono',monospace;color:#52525b">csp · rss · llms</span>
+          <span style="padding:3px 9px;border:1px solid rgba(139,92,246,0.15);border-radius:5px;font-size:11px;font-family:'JetBrains Mono',monospace;color:#52525b">+4 plugins</span>
+        </div>
+      </div>
+
+      <div style="display:flex;align-items:center;gap:10px;padding:0 16px">
+        <div style="width:1px;height:22px;background:linear-gradient(#8b5cf680,#22c55e80)"></div>
+        <span style="font-size:11px;color:#3f3f46;font-family:'JetBrains Mono',monospace">HTTP / 1.1 · 2 · 3-ready</span>
+      </div>
+
+      <div style="border:1px solid rgba(34,197,94,0.25);border-left:3px solid #22c55e;border-radius:10px;background:rgba(34,197,94,0.03);padding:18px 22px">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px">
+          <div style="font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:#22c55e;font-family:'JetBrains Mono',monospace">Server</div>
+          <div style="font-size:11px;color:#52525b;font-family:'JetBrains Mono',monospace">Controllers · Guards · Middleware · Plugins</div>
+        </div>
+        <div style="display:flex;gap:7px;flex-wrap:wrap">
+          <span style="padding:3px 9px;border:1px solid rgba(34,197,94,0.3);border-radius:5px;font-size:11px;font-family:'JetBrains Mono',monospace;color:#22c55e;background:rgba(34,197,94,0.08)">@youneed/server</span>
+          <span style="padding:3px 9px;border:1px solid rgba(34,197,94,0.15);border-radius:5px;font-size:11px;font-family:'JetBrains Mono',monospace;color:#52525b">cors · helmet · jwt · csrf</span>
+          <span style="padding:3px 9px;border:1px solid rgba(34,197,94,0.15);border-radius:5px;font-size:11px;font-family:'JetBrains Mono',monospace;color:#52525b">rate-limit · compression</span>
+          <span style="padding:3px 9px;border:1px solid rgba(34,197,94,0.15);border-radius:5px;font-size:11px;font-family:'JetBrains Mono',monospace;color:#52525b">oauth2 · pubsub · jobs · otp</span>
+          <span style="padding:3px 9px;border:1px solid rgba(34,197,94,0.15);border-radius:5px;font-size:11px;font-family:'JetBrains Mono',monospace;color:#52525b">+17 more</span>
+        </div>
+      </div>
+
+      <div style="border:1px solid rgba(245,158,11,0.22);border-left:3px solid #f59e0b;border-radius:10px;background:rgba(245,158,11,0.025);padding:18px 22px">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px">
+          <div style="font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:#f59e0b;font-family:'JetBrains Mono',monospace">Infrastructure</div>
+          <div style="font-size:11px;color:#52525b;font-family:'JetBrains Mono',monospace">ORM · KV · Logger · CLI · Test · i18n</div>
+        </div>
+        <div style="display:flex;gap:7px;flex-wrap:wrap">
+          <span style="padding:3px 9px;border:1px solid rgba(245,158,11,0.2);border-radius:5px;font-size:11px;font-family:'JetBrains Mono',monospace;color:#52525b">schema</span>
+          <span style="padding:3px 9px;border:1px solid rgba(245,158,11,0.2);border-radius:5px;font-size:11px;font-family:'JetBrains Mono',monospace;color:#52525b">orm-sql · orm-nosql</span>
+          <span style="padding:3px 9px;border:1px solid rgba(245,158,11,0.2);border-radius:5px;font-size:11px;font-family:'JetBrains Mono',monospace;color:#52525b">kv · kv-redis</span>
+          <span style="padding:3px 9px;border:1px solid rgba(245,158,11,0.2);border-radius:5px;font-size:11px;font-family:'JetBrains Mono',monospace;color:#52525b">logger (7 pkgs)</span>
+          <span style="padding:3px 9px;border:1px solid rgba(245,158,11,0.2);border-radius:5px;font-size:11px;font-family:'JetBrains Mono',monospace;color:#52525b">cli (22 pkgs)</span>
+          <span style="padding:3px 9px;border:1px solid rgba(245,158,11,0.2);border-radius:5px;font-size:11px;font-family:'JetBrains Mono',monospace;color:#52525b">test (13 pkgs)</span>
+          <span style="padding:3px 9px;border:1px solid rgba(245,158,11,0.2);border-radius:5px;font-size:11px;font-family:'JetBrains Mono',monospace;color:#52525b">devtools · i18n · http-client · ai-skill</span>
+        </div>
+      </div>
+
+      <div style="text-align:center;padding:10px">
+        <div style="display:inline-flex;align-items:center;gap:10px;padding:6px 18px;border:1px solid #27272a;border-radius:20px;background:#111113">
+          <span style="font-size:11px;font-family:'JetBrains Mono',monospace;color:#52525b">@youneed/core</span>
+          <span style="font-size:11px;color:#3f3f46">·</span>
+          <span style="font-size:11px;color:#3f3f46">registry · dispose · types</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- PACKAGES -->
+<div id="packages" style="padding:100px 0;background:#0c0c0e;border-top:1px solid #1c1c1f">
+  <div style="max-width:1280px;margin:0 auto;padding:0 48px">
+    <div style="display:flex;align-items:flex-end;justify-content:space-between;flex-wrap:wrap;gap:24px;margin-bottom:44px">
+      <div>
+        <div style="font-size:11px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:#1b84ff;margin-bottom:14px;font-family:'JetBrains Mono',monospace">Ecosystem</div>
+        <h2 style="font-size:40px;font-weight:800;letter-spacing:-0.035em;color:#fafafa;line-height:1.12;margin-bottom:10px">140+ packages.</h2>
+        <p style="font-size:15px;color:#71717a">Install only what you need. Every package is independently versioned.</p>
+      </div>
+      <div style="display:flex;gap:7px;flex-wrap:wrap">
+        <sc-for list="{{ filterItems }}" as="fi">
+          <button onClick="{{ fi.handler }}" style="{{ fi.style }}">{{ fi.label }}</button>
+        </sc-for>
+      </div>
+    </div>
+
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:#1c1c1f;border:1px solid #1c1c1f;border-radius:12px;overflow:hidden">
+      <sc-for list="{{ filteredPkgs }}" as="pkg" hint-placeholder-count="9">
+        <div style="background:#0f0f12;padding:16px 18px;transition:background 0.15s" style-hover="background:#141418">
+          <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:6px;margin-bottom:5px">
+            <div style="font-size:11.5px;font-family:'JetBrains Mono',monospace;color:#1b84ff;font-weight:500;word-break:break-all;line-height:1.4">{{ pkg.name }}</div>
+            <sc-if value="{{ pkg.core }}" hint-placeholder-val="{{ false }}">
+              <span style="flex-shrink:0;font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:0.06em;padding:2px 6px;border-radius:3px;background:rgba(27,132,255,0.15);color:#1b84ff;border:1px solid rgba(27,132,255,0.3)">core</span>
+            </sc-if>
+          </div>
+          <div style="font-size:12px;color:#52525b;line-height:1.5">{{ pkg.desc }}</div>
+        </div>
+      </sc-for>
+    </div>
+
+    <div style="text-align:center;margin-top:28px">
+      <p style="font-size:13.5px;color:#3f3f46">Showing selected packages — <a href="#" style="color:#1b84ff" style-hover="text-decoration:underline">browse all 140+ on npm →</a></p>
+    </div>
+  </div>
+</div>
+
+<!-- QUICK START -->
+<div id="quickstart" style="padding:100px 0;border-top:1px solid #1c1c1f">
+  <div style="max-width:1280px;margin:0 auto;padding:0 48px">
+    <div style="max-width:540px;margin-bottom:52px">
+      <div style="font-size:11px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:#1b84ff;margin-bottom:14px;font-family:'JetBrains Mono',monospace">Quick start</div>
+      <h2 style="font-size:40px;font-weight:800;letter-spacing:-0.035em;color:#fafafa;line-height:1.12;margin-bottom:16px">Up and running in 3 steps.</h2>
+      <p style="font-size:16px;color:#71717a;line-height:1.65">Works with <code style="font-family:'JetBrains Mono',monospace;color:#e4e4e7;background:#1c1c1f;padding:2px 6px;border-radius:4px">tsx</code> out of the box. Add <code style="font-family:'JetBrains Mono',monospace;color:#e4e4e7;background:#1c1c1f;padding:2px 6px;border-radius:4px">@youneed/vite-plugin</code> for Vite builds.</p>
+    </div>
+
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:24px">
+
+      <div>
+        <div style="display:flex;align-items:center;gap:12px;margin-bottom:16px">
+          <div style="width:26px;height:26px;border-radius:50%;background:#1b84ff;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:#fff;flex-shrink:0">1</div>
+          <div style="font-size:15px;font-weight:700;color:#fafafa;letter-spacing:-0.02em">Install</div>
+        </div>
+        <div style="border:1px solid #27272a;border-radius:10px;background:#0d1117;overflow:hidden">
+          <div style="padding:9px 14px;border-bottom:1px solid #1c1f26;background:#111318;font-family:'JetBrains Mono',monospace;font-size:10px;color:#52525b">terminal</div>
+          <pre style="padding:16px;font-family:'JetBrains Mono',monospace;font-size:12px;color:#abb2bf;line-height:1.75;overflow:auto"><code><span style="color:#636d83"># Pick your packages</span>
+pnpm add <span style="color:#98c379">@youneed/dom</span>
+pnpm add <span style="color:#98c379">@youneed/server</span>
+pnpm add <span style="color:#98c379">@youneed/ssr</span>
+
+<span style="color:#636d83"># Vite support</span>
+pnpm add -D <span style="color:#98c379">@youneed/vite-plugin</span></code></pre>
+        </div>
+      </div>
+
+      <div>
+        <div style="display:flex;align-items:center;gap:12px;margin-bottom:16px">
+          <div style="width:26px;height:26px;border-radius:50%;background:#1b84ff;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:#fff;flex-shrink:0">2</div>
+          <div style="font-size:15px;font-weight:700;color:#fafafa;letter-spacing:-0.02em">Create a component</div>
+        </div>
+        <div style="border:1px solid #27272a;border-radius:10px;background:#0d1117;overflow:hidden">
+          <div style="padding:9px 14px;border-bottom:1px solid #1c1f26;background:#111318;font-family:'JetBrains Mono',monospace;font-size:10px;color:#52525b">app.ts</div>
+          <pre style="padding:16px;font-family:'JetBrains Mono',monospace;font-size:12px;color:#abb2bf;line-height:1.75;overflow:auto"><code><span style="color:#c678dd">import</span> { <span style="color:#e5c07b">Component</span>, html }
+  <span style="color:#c678dd">from</span> <span style="color:#98c379">"@youneed/dom"</span>;
+
+<span style="color:#e06c75">@Component.define</span>()
+<span style="color:#c678dd">class</span> <span style="color:#e5c07b">MyApp</span>
+  <span style="color:#c678dd">extends</span> <span style="color:#e5c07b">Component</span>(<span style="color:#98c379">"my-app"</span>) {
+
+  count = <span style="color:#c678dd">this</span>.signal(<span style="color:#d19a66">0</span>);
+
+  render() {
+    <span style="color:#c678dd">return</span> html<span style="color:#98c379">`&lt;button
+      @click=\${() =&gt;
+        this.count.update(n =&gt; n+1)
+      }&gt;\${this.count()}&lt;/button&gt;`</span>;
+  }
+}</code></pre>
+        </div>
+      </div>
+
+      <div>
+        <div style="display:flex;align-items:center;gap:12px;margin-bottom:16px">
+          <div style="width:26px;height:26px;border-radius:50%;background:#1b84ff;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:#fff;flex-shrink:0">3</div>
+          <div style="font-size:15px;font-weight:700;color:#fafafa;letter-spacing:-0.02em">Start the server</div>
+        </div>
+        <div style="border:1px solid #27272a;border-radius:10px;background:#0d1117;overflow:hidden">
+          <div style="padding:9px 14px;border-bottom:1px solid #1c1f26;background:#111318;font-family:'JetBrains Mono',monospace;font-size:10px;color:#52525b">server.ts</div>
+          <pre style="padding:16px;font-family:'JetBrains Mono',monospace;font-size:12px;color:#abb2bf;line-height:1.75;overflow:auto"><code><span style="color:#c678dd">import</span> { <span style="color:#e5c07b">Application</span>,
+  <span style="color:#e5c07b">Controller</span> }
+  <span style="color:#c678dd">from</span> <span style="color:#98c379">"@youneed/server"</span>;
+
+<span style="color:#c678dd">class</span> <span style="color:#e5c07b">Api</span>
+  <span style="color:#c678dd">extends</span> <span style="color:#e5c07b">Controller</span>(<span style="color:#98c379">"/api"</span>) {
+
+  <span style="color:#e06c75">@Controller.get</span>(<span style="color:#98c379">"/ping"</span>)
+  ping() {
+    <span style="color:#c678dd">return</span> { ok: <span style="color:#c678dd">true</span> };
+  }
+}
+
+<span style="color:#e5c07b">Application</span>(<span style="color:#e5c07b">Api</span>)
+  .listen(<span style="color:#d19a66">3000</span>);</code></pre>
+        </div>
+      </div>
+
+    </div>
+
+    <div style="margin-top:28px;display:flex;align-items:center;gap:14px;padding:12px 16px;border:1px solid #27272a;border-radius:8px;background:#0d1117;width:fit-content">
+      <span style="font-family:'JetBrains Mono',monospace;font-size:13px;color:#52525b">$</span>
+      <span style="font-family:'JetBrains Mono',monospace;font-size:13px;color:#98c379">tsx</span>
+      <span style="font-family:'JetBrains Mono',monospace;font-size:13px;color:#abb2bf">server.ts</span>
+      <span style="font-size:12px;color:#3f3f46;margin-left:8px">→ http://localhost:3000</span>
+    </div>
+  </div>
+</div>
+
+<!-- COMPARISON -->
+<div id="comparison" style="padding:100px 0;background:#0c0c0e;border-top:1px solid #1c1c1f">
+  <div style="max-width:1280px;margin:0 auto;padding:0 48px">
+    <div style="max-width:540px;margin-bottom:52px">
+      <div style="font-size:11px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:#1b84ff;margin-bottom:14px;font-family:'JetBrains Mono',monospace">Comparison</div>
+      <h2 style="font-size:40px;font-weight:800;letter-spacing:-0.035em;color:#fafafa;line-height:1.12;margin-bottom:16px">Why @youneed?</h2>
+      <p style="font-size:16px;color:#71717a;line-height:1.65">Most frameworks cover one layer. @youneed covers all of them — with one consistent paradigm.</p>
+    </div>
+
+    <div style="margin-bottom:16px">
+      <div style="font-size:11px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:#1b84ff;margin-bottom:10px;font-family:'JetBrains Mono',monospace">vs. server frameworks</div>
+      <h3 style="font-size:24px;font-weight:700;letter-spacing:-0.03em;color:#fafafa;margin-bottom:8px">@youneed/server vs Node.js frameworks</h3>
+      <p style="font-size:15px;color:#71717a;line-height:1.6;max-width:560px">@youneed brings fullstack cohesion — same decorator paradigm from HTTP controller to DOM component to test suite.</p>
+    </div>
+
+    <div style="border:1px solid #27272a;border-radius:12px;overflow:hidden">
+      <div style="display:grid;grid-template-columns:210px repeat(4,1fr);background:#111113;border-bottom:1px solid #27272a">
+        <div style="padding:14px 20px"></div>
+        <div style="padding:14px 16px;border-left:1px solid #27272a;background:rgba(27,132,255,0.07)">
+          <div style="font-size:12px;font-weight:700;color:#fafafa">@youneed</div>
+          <div style="font-size:10px;color:#1b84ff;font-family:'JetBrains Mono',monospace;margin-top:2px">/server</div>
+        </div>
+        <div style="padding:14px 16px;border-left:1px solid #27272a">
+          <div style="font-size:12px;font-weight:500;color:#71717a">NestJS</div>
+          <div style="font-size:10px;color:#3f3f46;font-family:'JetBrains Mono',monospace;margin-top:2px">10</div>
+        </div>
+        <div style="padding:14px 16px;border-left:1px solid #27272a">
+          <div style="font-size:12px;font-weight:500;color:#71717a">Express</div>
+          <div style="font-size:10px;color:#3f3f46;font-family:'JetBrains Mono',monospace;margin-top:2px">5</div>
+        </div>
+        <div style="padding:14px 16px;border-left:1px solid #27272a">
+          <div style="font-size:12px;font-weight:500;color:#71717a">Elysia</div>
+          <div style="font-size:10px;color:#3f3f46;font-family:'JetBrains Mono',monospace;margin-top:2px">1</div>
+        </div>
+      </div>
+
+      <div style="display:grid;grid-template-columns:210px repeat(4,1fr);border-bottom:1px solid #1c1c1f" style-hover="background:rgba(255,255,255,0.015)">
+        <div style="padding:12px 20px;font-size:13px;color:#71717a">DOM components</div>
+        <div style="padding:12px 16px;border-left:1px solid #1c1c1f;background:rgba(27,132,255,0.04);font-size:13px;color:#22c55e;font-weight:500">✓ Built-in</div>
+        <div style="padding:12px 16px;border-left:1px solid #1c1c1f;font-size:13px;color:#3f3f46">—</div>
+        <div style="padding:12px 16px;border-left:1px solid #1c1c1f;font-size:13px;color:#3f3f46">—</div>
+        <div style="padding:12px 16px;border-left:1px solid #1c1c1f;font-size:13px;color:#3f3f46">—</div>
+      </div>
+      <div style="display:grid;grid-template-columns:210px repeat(4,1fr);border-bottom:1px solid #1c1c1f" style-hover="background:rgba(255,255,255,0.015)">
+        <div style="padding:12px 20px;font-size:13px;color:#71717a">HTTP server</div>
+        <div style="padding:12px 16px;border-left:1px solid #1c1c1f;background:rgba(27,132,255,0.04);font-size:13px;color:#22c55e;font-weight:500">✓ Built-in</div>
+        <div style="padding:12px 16px;border-left:1px solid #1c1c1f;font-size:13px;color:#22c55e">✓</div>
+        <div style="padding:12px 16px;border-left:1px solid #1c1c1f;font-size:13px;color:#22c55e">✓</div>
+        <div style="padding:12px 16px;border-left:1px solid #1c1c1f;font-size:13px;color:#22c55e">✓</div>
+      </div>
+      <div style="display:grid;grid-template-columns:210px repeat(4,1fr);border-bottom:1px solid #1c1c1f" style-hover="background:rgba(255,255,255,0.015)">
+        <div style="padding:12px 20px;font-size:13px;color:#71717a">Native SSR</div>
+        <div style="padding:12px 16px;border-left:1px solid #1c1c1f;background:rgba(27,132,255,0.04);font-size:13px;color:#22c55e;font-weight:500">✓ Decl. Shadow DOM</div>
+        <div style="padding:12px 16px;border-left:1px solid #1c1c1f;font-size:13px;color:#eab308">△ External</div>
+        <div style="padding:12px 16px;border-left:1px solid #1c1c1f;font-size:13px;color:#3f3f46">—</div>
+        <div style="padding:12px 16px;border-left:1px solid #1c1c1f;font-size:13px;color:#3f3f46">—</div>
+      </div>
+      <div style="display:grid;grid-template-columns:210px repeat(4,1fr);border-bottom:1px solid #1c1c1f" style-hover="background:rgba(255,255,255,0.015)">
+        <div style="padding:12px 20px;font-size:13px;color:#71717a">Schema validation</div>
+        <div style="padding:12px 16px;border-left:1px solid #1c1c1f;background:rgba(27,132,255,0.04);font-size:13px;color:#22c55e;font-weight:500">✓ Built-in</div>
+        <div style="padding:12px 16px;border-left:1px solid #1c1c1f;font-size:13px;color:#eab308">△ External</div>
+        <div style="padding:12px 16px;border-left:1px solid #1c1c1f;font-size:13px;color:#3f3f46">—</div>
+        <div style="padding:12px 16px;border-left:1px solid #1c1c1f;font-size:13px;color:#22c55e">✓ Eden</div>
+      </div>
+      <div style="display:grid;grid-template-columns:210px repeat(4,1fr);border-bottom:1px solid #1c1c1f" style-hover="background:rgba(255,255,255,0.015)">
+        <div style="padding:12px 20px;font-size:13px;color:#71717a">TC39 decorators</div>
+        <div style="padding:12px 16px;border-left:1px solid #1c1c1f;background:rgba(27,132,255,0.04);font-size:13px;color:#22c55e;font-weight:500">✓ Stage 3</div>
+        <div style="padding:12px 16px;border-left:1px solid #1c1c1f;font-size:13px;color:#eab308">△ Legacy</div>
+        <div style="padding:12px 16px;border-left:1px solid #1c1c1f;font-size:13px;color:#3f3f46">—</div>
+        <div style="padding:12px 16px;border-left:1px solid #1c1c1f;font-size:13px;color:#3f3f46">—</div>
+      </div>
+      <div style="display:grid;grid-template-columns:210px repeat(4,1fr);border-bottom:1px solid #1c1c1f" style-hover="background:rgba(255,255,255,0.015)">
+        <div style="padding:12px 20px;font-size:13px;color:#71717a">Speculation Rules</div>
+        <div style="padding:12px 16px;border-left:1px solid #1c1c1f;background:rgba(27,132,255,0.04);font-size:13px;color:#22c55e;font-weight:500">✓ First-class</div>
+        <div style="padding:12px 16px;border-left:1px solid #1c1c1f;font-size:13px;color:#3f3f46">—</div>
+        <div style="padding:12px 16px;border-left:1px solid #1c1c1f;font-size:13px;color:#3f3f46">—</div>
+        <div style="padding:12px 16px;border-left:1px solid #1c1c1f;font-size:13px;color:#3f3f46">—</div>
+      </div>
+      <div style="display:grid;grid-template-columns:210px repeat(4,1fr);border-bottom:1px solid #1c1c1f" style-hover="background:rgba(255,255,255,0.015)">
+        <div style="padding:12px 20px;font-size:13px;color:#71717a">DevTools</div>
+        <div style="padding:12px 16px;border-left:1px solid #1c1c1f;background:rgba(27,132,255,0.04);font-size:13px;color:#22c55e;font-weight:500">✓ Time-travel</div>
+        <div style="padding:12px 16px;border-left:1px solid #1c1c1f;font-size:13px;color:#eab308">△ External</div>
+        <div style="padding:12px 16px;border-left:1px solid #1c1c1f;font-size:13px;color:#3f3f46">—</div>
+        <div style="padding:12px 16px;border-left:1px solid #1c1c1f;font-size:13px;color:#3f3f46">—</div>
+      </div>
+      <div style="display:grid;grid-template-columns:210px repeat(4,1fr)" style-hover="background:rgba(255,255,255,0.015)">
+        <div style="padding:12px 20px;font-size:13px;color:#71717a">Test framework</div>
+        <div style="padding:12px 16px;border-left:1px solid #1c1c1f;background:rgba(27,132,255,0.04);font-size:13px;color:#22c55e;font-weight:500">✓ Built-in</div>
+        <div style="padding:12px 16px;border-left:1px solid #1c1c1f;font-size:13px;color:#eab308">△ External</div>
+        <div style="padding:12px 16px;border-left:1px solid #1c1c1f;font-size:13px;color:#3f3f46">—</div>
+        <div style="padding:12px 16px;border-left:1px solid #1c1c1f;font-size:13px;color:#3f3f46">—</div>
+      </div>
+    </div>
+    <div style="margin-top:14px;font-size:12px;color:#3f3f46">✓ Built-in &nbsp;·&nbsp; △ Available via external package &nbsp;·&nbsp; — Not applicable</div>
+
+    <!-- CLI comparison -->
+    <div style="margin-top:60px">
+      <div style="margin-bottom:28px">
+        <div style="font-size:11px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:#ec4899;margin-bottom:12px;font-family:'JetBrains Mono',monospace">vs. cli frameworks</div>
+        <h3 style="font-size:24px;font-weight:700;letter-spacing:-0.03em;color:#fafafa;margin-bottom:8px">@youneed/cli vs CLI libraries</h3>
+        <p style="font-size:15px;color:#71717a;line-height:1.6;max-width:560px">15+ middleware packages for prompts, hotkeys, progress, screen management — same decorator pattern as your server.</p>
+      </div>
+      <div style="border:1px solid #27272a;border-radius:12px;overflow:hidden">
+        <div style="display:grid;grid-template-columns:220px repeat(5,1fr);background:#111113;border-bottom:1px solid #27272a">
+          <div style="padding:13px 20px"></div>
+          <div style="padding:13px 14px;border-left:1px solid #27272a;background:rgba(236,72,153,0.07)">
+            <div style="font-size:12px;font-weight:700;color:#fafafa">@youneed</div>
+            <div style="font-size:10px;color:#ec4899;font-family:'JetBrains Mono',monospace;margin-top:2px">/cli</div>
+          </div>
+          <div style="padding:13px 14px;border-left:1px solid #27272a"><div style="font-size:12px;font-weight:500;color:#71717a">Commander</div><div style="font-size:10px;color:#3f3f46;font-family:'JetBrains Mono',monospace;margin-top:2px">12</div></div>
+          <div style="padding:13px 14px;border-left:1px solid #27272a"><div style="font-size:12px;font-weight:500;color:#71717a">Yargs</div><div style="font-size:10px;color:#3f3f46;font-family:'JetBrains Mono',monospace;margin-top:2px">17</div></div>
+          <div style="padding:13px 14px;border-left:1px solid #27272a"><div style="font-size:12px;font-weight:500;color:#71717a">Ink</div><div style="font-size:10px;color:#3f3f46;font-family:'JetBrains Mono',monospace;margin-top:2px">5</div></div>
+          <div style="padding:13px 14px;border-left:1px solid #27272a"><div style="font-size:12px;font-weight:500;color:#71717a">Clack</div><div style="font-size:10px;color:#3f3f46;font-family:'JetBrains Mono',monospace;margin-top:2px">0.7</div></div>
+        </div>
+        <div style="display:grid;grid-template-columns:220px repeat(5,1fr);border-bottom:1px solid #1c1c1f" style-hover="background:rgba(255,255,255,0.012)">
+          <div style="padding:11px 20px;font-size:13px;color:#71717a">Decorator-based commands</div>
+          <div style="padding:11px 14px;border-left:1px solid #1c1c1f;background:rgba(236,72,153,0.03);font-size:13px;color:#22c55e;font-weight:500">✓ Built-in</div>
+          <div style="padding:11px 14px;border-left:1px solid #1c1c1f;font-size:13px;color:#3f3f46">—</div>
+          <div style="padding:11px 14px;border-left:1px solid #1c1c1f;font-size:13px;color:#3f3f46">—</div>
+          <div style="padding:11px 14px;border-left:1px solid #1c1c1f;font-size:13px;color:#3f3f46">—</div>
+          <div style="padding:11px 14px;border-left:1px solid #1c1c1f;font-size:13px;color:#3f3f46">—</div>
+        </div>
+        <div style="display:grid;grid-template-columns:220px repeat(5,1fr);border-bottom:1px solid #1c1c1f" style-hover="background:rgba(255,255,255,0.012)">
+          <div style="padding:11px 20px;font-size:13px;color:#71717a">Interactive prompts</div>
+          <div style="padding:11px 14px;border-left:1px solid #1c1c1f;background:rgba(236,72,153,0.03);font-size:13px;color:#22c55e;font-weight:500">✓ Middleware</div>
+          <div style="padding:11px 14px;border-left:1px solid #1c1c1f;font-size:13px;color:#eab308">△ External</div>
+          <div style="padding:11px 14px;border-left:1px solid #1c1c1f;font-size:13px;color:#eab308">△ External</div>
+          <div style="padding:11px 14px;border-left:1px solid #1c1c1f;font-size:13px;color:#3f3f46">—</div>
+          <div style="padding:11px 14px;border-left:1px solid #1c1c1f;font-size:13px;color:#22c55e">✓ Core</div>
+        </div>
+        <div style="display:grid;grid-template-columns:220px repeat(5,1fr);border-bottom:1px solid #1c1c1f" style-hover="background:rgba(255,255,255,0.012)">
+          <div style="padding:11px 20px;font-size:13px;color:#71717a">Progress bars / spinners</div>
+          <div style="padding:11px 14px;border-left:1px solid #1c1c1f;background:rgba(236,72,153,0.03);font-size:13px;color:#22c55e;font-weight:500">✓ Middleware</div>
+          <div style="padding:11px 14px;border-left:1px solid #1c1c1f;font-size:13px;color:#3f3f46">—</div>
+          <div style="padding:11px 14px;border-left:1px solid #1c1c1f;font-size:13px;color:#3f3f46">—</div>
+          <div style="padding:11px 14px;border-left:1px solid #1c1c1f;font-size:13px;color:#eab308">△ External</div>
+          <div style="padding:11px 14px;border-left:1px solid #1c1c1f;font-size:13px;color:#eab308">△ External</div>
+        </div>
+        <div style="display:grid;grid-template-columns:220px repeat(5,1fr);border-bottom:1px solid #1c1c1f" style-hover="background:rgba(255,255,255,0.012)">
+          <div style="padding:11px 20px;font-size:13px;color:#71717a">Hotkey bindings</div>
+          <div style="padding:11px 14px;border-left:1px solid #1c1c1f;background:rgba(236,72,153,0.03);font-size:13px;color:#22c55e;font-weight:500">✓ Middleware</div>
+          <div style="padding:11px 14px;border-left:1px solid #1c1c1f;font-size:13px;color:#3f3f46">—</div>
+          <div style="padding:11px 14px;border-left:1px solid #1c1c1f;font-size:13px;color:#3f3f46">—</div>
+          <div style="padding:11px 14px;border-left:1px solid #1c1c1f;font-size:13px;color:#22c55e">✓ useInput</div>
+          <div style="padding:11px 14px;border-left:1px solid #1c1c1f;font-size:13px;color:#3f3f46">—</div>
+        </div>
+        <div style="display:grid;grid-template-columns:220px repeat(5,1fr);border-bottom:1px solid #1c1c1f" style-hover="background:rgba(255,255,255,0.012)">
+          <div style="padding:11px 20px;font-size:13px;color:#71717a">Screen management</div>
+          <div style="padding:11px 14px;border-left:1px solid #1c1c1f;background:rgba(236,72,153,0.03);font-size:13px;color:#22c55e;font-weight:500">✓ Middleware</div>
+          <div style="padding:11px 14px;border-left:1px solid #1c1c1f;font-size:13px;color:#3f3f46">—</div>
+          <div style="padding:11px 14px;border-left:1px solid #1c1c1f;font-size:13px;color:#3f3f46">—</div>
+          <div style="padding:11px 14px;border-left:1px solid #1c1c1f;font-size:13px;color:#22c55e">✓ Ink</div>
+          <div style="padding:11px 14px;border-left:1px solid #1c1c1f;font-size:13px;color:#3f3f46">—</div>
+        </div>
+        <div style="display:grid;grid-template-columns:220px repeat(5,1fr);border-bottom:1px solid #1c1c1f" style-hover="background:rgba(255,255,255,0.012)">
+          <div style="padding:11px 20px;font-size:13px;color:#71717a">i18n support</div>
+          <div style="padding:11px 14px;border-left:1px solid #1c1c1f;background:rgba(236,72,153,0.03);font-size:13px;color:#22c55e;font-weight:500">✓ Middleware</div>
+          <div style="padding:11px 14px;border-left:1px solid #1c1c1f;font-size:13px;color:#3f3f46">—</div>
+          <div style="padding:11px 14px;border-left:1px solid #1c1c1f;font-size:13px;color:#3f3f46">—</div>
+          <div style="padding:11px 14px;border-left:1px solid #1c1c1f;font-size:13px;color:#3f3f46">—</div>
+          <div style="padding:11px 14px;border-left:1px solid #1c1c1f;font-size:13px;color:#3f3f46">—</div>
+        </div>
+        <div style="display:grid;grid-template-columns:220px repeat(5,1fr)" style-hover="background:rgba(255,255,255,0.012)">
+          <div style="padding:11px 20px;font-size:13px;color:#71717a">Same paradigm as server</div>
+          <div style="padding:11px 14px;border-left:1px solid #1c1c1f;background:rgba(236,72,153,0.03);font-size:13px;color:#22c55e;font-weight:500">✓ Always</div>
+          <div style="padding:11px 14px;border-left:1px solid #1c1c1f;font-size:13px;color:#3f3f46">—</div>
+          <div style="padding:11px 14px;border-left:1px solid #1c1c1f;font-size:13px;color:#3f3f46">—</div>
+          <div style="padding:11px 14px;border-left:1px solid #1c1c1f;font-size:13px;color:#3f3f46">—</div>
+          <div style="padding:11px 14px;border-left:1px solid #1c1c1f;font-size:13px;color:#3f3f46">—</div>
+        </div>
+      </div>
+      <div style="margin-top:14px;font-size:12px;color:#3f3f46">✓ Built-in &nbsp;·&nbsp; △ Available via external package &nbsp;·&nbsp; — Not applicable</div>
+    </div>
+
+    <!-- Test frameworks comparison -->
+    <div style="margin-top:60px">
+      <div style="margin-bottom:28px">
+        <div style="font-size:11px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:#22c55e;margin-bottom:12px;font-family:'JetBrains Mono',monospace">vs. test frameworks</div>
+        <h3 style="font-size:24px;font-weight:700;letter-spacing:-0.03em;color:#fafafa;margin-bottom:8px">@youneed/test vs testing tools</h3>
+        <p style="font-size:15px;color:#71717a;line-height:1.6;max-width:560px">Class + decorator tests that feel like the rest of your codebase. No config files, no separate runner binary.</p>
+      </div>
+      <div style="border:1px solid #27272a;border-radius:12px;overflow:hidden">
+        <div style="display:grid;grid-template-columns:220px repeat(5,1fr);background:#111113;border-bottom:1px solid #27272a">
+          <div style="padding:13px 20px"></div>
+          <div style="padding:13px 14px;border-left:1px solid #27272a;background:rgba(34,197,94,0.06)">
+            <div style="font-size:12px;font-weight:700;color:#fafafa">@youneed</div>
+            <div style="font-size:10px;color:#22c55e;font-family:'JetBrains Mono',monospace;margin-top:2px">/test</div>
+          </div>
+          <div style="padding:13px 14px;border-left:1px solid #27272a"><div style="font-size:12px;font-weight:500;color:#71717a">Vitest</div><div style="font-size:10px;color:#3f3f46;font-family:'JetBrains Mono',monospace;margin-top:2px">2</div></div>
+          <div style="padding:13px 14px;border-left:1px solid #27272a"><div style="font-size:12px;font-weight:500;color:#71717a">Jest</div><div style="font-size:10px;color:#3f3f46;font-family:'JetBrains Mono',monospace;margin-top:2px">29</div></div>
+          <div style="padding:13px 14px;border-left:1px solid #27272a"><div style="font-size:12px;font-weight:500;color:#71717a">Mocha</div><div style="font-size:10px;color:#3f3f46;font-family:'JetBrains Mono',monospace;margin-top:2px">10</div></div>
+          <div style="padding:13px 14px;border-left:1px solid #27272a"><div style="font-size:12px;font-weight:500;color:#71717a">node:test</div><div style="font-size:10px;color:#3f3f46;font-family:'JetBrains Mono',monospace;margin-top:2px">native</div></div>
+        </div>
+        <div style="display:grid;grid-template-columns:220px repeat(5,1fr);border-bottom:1px solid #1c1c1f" style-hover="background:rgba(255,255,255,0.012)">
+          <div style="padding:11px 20px;font-size:13px;color:#71717a">Decorator-based tests</div>
+          <div style="padding:11px 14px;border-left:1px solid #1c1c1f;background:rgba(34,197,94,0.03);font-size:13px;color:#22c55e;font-weight:500">✓ Built-in</div>
+          <div style="padding:11px 14px;border-left:1px solid #1c1c1f;font-size:13px;color:#3f3f46">—</div>
+          <div style="padding:11px 14px;border-left:1px solid #1c1c1f;font-size:13px;color:#3f3f46">—</div>
+          <div style="padding:11px 14px;border-left:1px solid #1c1c1f;font-size:13px;color:#3f3f46">—</div>
+          <div style="padding:11px 14px;border-left:1px solid #1c1c1f;font-size:13px;color:#3f3f46">—</div>
+        </div>
+        <div style="display:grid;grid-template-columns:220px repeat(5,1fr);border-bottom:1px solid #1c1c1f" style-hover="background:rgba(255,255,255,0.012)">
+          <div style="padding:11px 20px;font-size:13px;color:#71717a">No config required</div>
+          <div style="padding:11px 14px;border-left:1px solid #1c1c1f;background:rgba(34,197,94,0.03);font-size:13px;color:#22c55e;font-weight:500">✓ Zero config</div>
+          <div style="padding:11px 14px;border-left:1px solid #1c1c1f;font-size:13px;color:#22c55e">✓ Near zero</div>
+          <div style="padding:11px 14px;border-left:1px solid #1c1c1f;font-size:13px;color:#eab308">△ Some</div>
+          <div style="padding:11px 14px;border-left:1px solid #1c1c1f;font-size:13px;color:#eab308">△ Some</div>
+          <div style="padding:11px 14px;border-left:1px solid #1c1c1f;font-size:13px;color:#22c55e">✓ Zero config</div>
+        </div>
+        <div style="display:grid;grid-template-columns:220px repeat(5,1fr);border-bottom:1px solid #1c1c1f" style-hover="background:rgba(255,255,255,0.012)">
+          <div style="padding:11px 20px;font-size:13px;color:#71717a">TypeScript native</div>
+          <div style="padding:11px 14px;border-left:1px solid #1c1c1f;background:rgba(34,197,94,0.03);font-size:13px;color:#22c55e;font-weight:500">✓ Native</div>
+          <div style="padding:11px 14px;border-left:1px solid #1c1c1f;font-size:13px;color:#22c55e">✓</div>
+          <div style="padding:11px 14px;border-left:1px solid #1c1c1f;font-size:13px;color:#eab308">△ Transform</div>
+          <div style="padding:11px 14px;border-left:1px solid #1c1c1f;font-size:13px;color:#eab308">△ External</div>
+          <div style="padding:11px 14px;border-left:1px solid #1c1c1f;font-size:13px;color:#eab308">△ Transform</div>
+        </div>
+        <div style="display:grid;grid-template-columns:220px repeat(5,1fr);border-bottom:1px solid #1c1c1f" style-hover="background:rgba(255,255,255,0.012)">
+          <div style="padding:11px 20px;font-size:13px;color:#71717a">Snapshot testing</div>
+          <div style="padding:11px 14px;border-left:1px solid #1c1c1f;background:rgba(34,197,94,0.03);font-size:13px;color:#22c55e;font-weight:500">✓ Built-in</div>
+          <div style="padding:11px 14px;border-left:1px solid #1c1c1f;font-size:13px;color:#22c55e">✓</div>
+          <div style="padding:11px 14px;border-left:1px solid #1c1c1f;font-size:13px;color:#22c55e">✓</div>
+          <div style="padding:11px 14px;border-left:1px solid #1c1c1f;font-size:13px;color:#eab308">△ External</div>
+          <div style="padding:11px 14px;border-left:1px solid #1c1c1f;font-size:13px;color:#eab308">△ External</div>
+        </div>
+        <div style="display:grid;grid-template-columns:220px repeat(5,1fr);border-bottom:1px solid #1c1c1f" style-hover="background:rgba(255,255,255,0.012)">
+          <div style="padding:11px 20px;font-size:13px;color:#71717a">Resilience utils</div>
+          <div style="padding:11px 14px;border-left:1px solid #1c1c1f;background:rgba(34,197,94,0.03);font-size:13px;color:#22c55e;font-weight:500">✓ Built-in</div>
+          <div style="padding:11px 14px;border-left:1px solid #1c1c1f;font-size:13px;color:#eab308">△ Plugin</div>
+          <div style="padding:11px 14px;border-left:1px solid #1c1c1f;font-size:13px;color:#3f3f46">—</div>
+          <div style="padding:11px 14px;border-left:1px solid #1c1c1f;font-size:13px;color:#3f3f46">—</div>
+          <div style="padding:11px 14px;border-left:1px solid #1c1c1f;font-size:13px;color:#3f3f46">—</div>
+        </div>
+        <div style="display:grid;grid-template-columns:220px repeat(5,1fr);border-bottom:1px solid #1c1c1f" style-hover="background:rgba(255,255,255,0.012)">
+          <div style="padding:11px 20px;font-size:13px;color:#71717a">Multiple reporters</div>
+          <div style="padding:11px 14px;border-left:1px solid #1c1c1f;background:rgba(34,197,94,0.03);font-size:13px;color:#22c55e;font-weight:500">✓ 5 formats</div>
+          <div style="padding:11px 14px;border-left:1px solid #1c1c1f;font-size:13px;color:#22c55e">✓</div>
+          <div style="padding:11px 14px;border-left:1px solid #1c1c1f;font-size:13px;color:#22c55e">✓</div>
+          <div style="padding:11px 14px;border-left:1px solid #1c1c1f;font-size:13px;color:#22c55e">✓</div>
+          <div style="padding:11px 14px;border-left:1px solid #1c1c1f;font-size:13px;color:#eab308">△ Basic</div>
+        </div>
+        <div style="display:grid;grid-template-columns:220px repeat(5,1fr)" style-hover="background:rgba(255,255,255,0.012)">
+          <div style="padding:11px 20px;font-size:13px;color:#71717a">Same paradigm as app code</div>
+          <div style="padding:11px 14px;border-left:1px solid #1c1c1f;background:rgba(34,197,94,0.03);font-size:13px;color:#22c55e;font-weight:500">✓ Always</div>
+          <div style="padding:11px 14px;border-left:1px solid #1c1c1f;font-size:13px;color:#3f3f46">—</div>
+          <div style="padding:11px 14px;border-left:1px solid #1c1c1f;font-size:13px;color:#3f3f46">—</div>
+          <div style="padding:11px 14px;border-left:1px solid #1c1c1f;font-size:13px;color:#3f3f46">—</div>
+          <div style="padding:11px 14px;border-left:1px solid #1c1c1f;font-size:13px;color:#3f3f46">—</div>
+        </div>
+      </div>
+      <div style="margin-top:14px;font-size:12px;color:#3f3f46">✓ Supported &nbsp;·&nbsp; △ Partial / external &nbsp;·&nbsp; — Not applicable</div>
+    </div>
+
+    <!-- Client-side comparison -->
+    <div style="margin-top:60px">
+      <div style="margin-bottom:28px">
+        <div style="font-size:11px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:#8b5cf6;margin-bottom:12px;font-family:'JetBrains Mono',monospace">vs. client-side libraries</div>
+        <h3 style="font-size:24px;font-weight:700;letter-spacing:-0.03em;color:#fafafa;margin-bottom:10px">@youneed/dom vs UI frameworks</h3>
+        <p style="font-size:15px;color:#71717a;line-height:1.6;max-width:560px">@youneed/dom is a drop-in for any existing framework — mount it alongside React or inside Astro. Or replace them entirely.</p>
+      </div>
+
+      <div style="border:1px solid #27272a;border-radius:12px;overflow:hidden">
+        <!-- Header -->
+        <div style="display:grid;grid-template-columns:220px repeat(6,1fr);background:#111113;border-bottom:1px solid #27272a">
+          <div style="padding:13px 20px"></div>
+          <div style="padding:13px 14px;border-left:1px solid #27272a;background:rgba(139,92,246,0.07)">
+            <div style="font-size:12px;font-weight:700;color:#fafafa">@youneed</div>
+            <div style="font-size:10px;color:#8b5cf6;font-family:'JetBrains Mono',monospace;margin-top:2px">/dom</div>
+          </div>
+          <div style="padding:13px 14px;border-left:1px solid #27272a">
+            <div style="font-size:12px;font-weight:500;color:#71717a">React</div>
+            <div style="font-size:10px;color:#3f3f46;font-family:'JetBrains Mono',monospace;margin-top:2px">19</div>
+          </div>
+          <div style="padding:13px 14px;border-left:1px solid #27272a">
+            <div style="font-size:12px;font-weight:500;color:#71717a">Vue</div>
+            <div style="font-size:10px;color:#3f3f46;font-family:'JetBrains Mono',monospace;margin-top:2px">3</div>
+          </div>
+          <div style="padding:13px 14px;border-left:1px solid #27272a">
+            <div style="font-size:12px;font-weight:500;color:#71717a">Svelte</div>
+            <div style="font-size:10px;color:#3f3f46;font-family:'JetBrains Mono',monospace;margin-top:2px">5</div>
+          </div>
+          <div style="padding:13px 14px;border-left:1px solid #27272a">
+            <div style="font-size:12px;font-weight:500;color:#71717a">Lit</div>
+            <div style="font-size:10px;color:#3f3f46;font-family:'JetBrains Mono',monospace;margin-top:2px">3</div>
+          </div>
+          <div style="padding:13px 14px;border-left:1px solid #27272a">
+            <div style="font-size:12px;font-weight:500;color:#71717a">Angular</div>
+            <div style="font-size:10px;color:#3f3f46;font-family:'JetBrains Mono',monospace;margin-top:2px">18</div>
+          </div>
+        </div>
+
+        <!-- Native Custom Elements -->
+        <div style="display:grid;grid-template-columns:220px repeat(6,1fr);border-bottom:1px solid #1c1c1f" style-hover="background:rgba(255,255,255,0.012)">
+          <div style="padding:11px 20px;font-size:13px;color:#71717a">Native Custom Elements</div>
+          <div style="padding:11px 14px;border-left:1px solid #1c1c1f;background:rgba(139,92,246,0.03);font-size:13px;color:#22c55e;font-weight:500">✓ Native</div>
+          <div style="padding:11px 14px;border-left:1px solid #1c1c1f;font-size:13px;color:#eab308">△ Partial</div>
+          <div style="padding:11px 14px;border-left:1px solid #1c1c1f;font-size:13px;color:#eab308">△ Partial</div>
+          <div style="padding:11px 14px;border-left:1px solid #1c1c1f;font-size:13px;color:#eab308">△ Compiler</div>
+          <div style="padding:11px 14px;border-left:1px solid #1c1c1f;font-size:13px;color:#22c55e">✓ Native</div>
+          <div style="padding:11px 14px;border-left:1px solid #1c1c1f;font-size:13px;color:#eab308">△ Partial</div>
+        </div>
+
+        <!-- Shadow DOM -->
+        <div style="display:grid;grid-template-columns:220px repeat(6,1fr);border-bottom:1px solid #1c1c1f" style-hover="background:rgba(255,255,255,0.012)">
+          <div style="padding:11px 20px;font-size:13px;color:#71717a">Native Shadow DOM</div>
+          <div style="padding:11px 14px;border-left:1px solid #1c1c1f;background:rgba(139,92,246,0.03);font-size:13px;color:#22c55e;font-weight:500">✓ Built-in</div>
+          <div style="padding:11px 14px;border-left:1px solid #1c1c1f;font-size:13px;color:#3f3f46">—</div>
+          <div style="padding:11px 14px;border-left:1px solid #1c1c1f;font-size:13px;color:#3f3f46">—</div>
+          <div style="padding:11px 14px;border-left:1px solid #1c1c1f;font-size:13px;color:#3f3f46">—</div>
+          <div style="padding:11px 14px;border-left:1px solid #1c1c1f;font-size:13px;color:#22c55e">✓ Built-in</div>
+          <div style="padding:11px 14px;border-left:1px solid #1c1c1f;font-size:13px;color:#3f3f46">—</div>
+        </div>
+
+        <!-- Reactive signals -->
+        <div style="display:grid;grid-template-columns:220px repeat(6,1fr);border-bottom:1px solid #1c1c1f" style-hover="background:rgba(255,255,255,0.012)">
+          <div style="padding:11px 20px;font-size:13px;color:#71717a">Fine-grained signals</div>
+          <div style="padding:11px 14px;border-left:1px solid #1c1c1f;background:rgba(139,92,246,0.03);font-size:13px;color:#22c55e;font-weight:500">✓ Built-in</div>
+          <div style="padding:11px 14px;border-left:1px solid #1c1c1f;font-size:13px;color:#3f3f46">—</div>
+          <div style="padding:11px 14px;border-left:1px solid #1c1c1f;font-size:13px;color:#22c55e">✓</div>
+          <div style="padding:11px 14px;border-left:1px solid #1c1c1f;font-size:13px;color:#22c55e">✓ Runes</div>
+          <div style="padding:11px 14px;border-left:1px solid #1c1c1f;font-size:13px;color:#3f3f46">—</div>
+          <div style="padding:11px 14px;border-left:1px solid #1c1c1f;font-size:13px;color:#22c55e">✓ Signals</div>
+        </div>
+
+        <!-- Virtual DOM -->
+        <div style="display:grid;grid-template-columns:220px repeat(6,1fr);border-bottom:1px solid #1c1c1f" style-hover="background:rgba(255,255,255,0.012)">
+          <div style="padding:11px 20px;font-size:13px;color:#71717a">No virtual DOM</div>
+          <div style="padding:11px 14px;border-left:1px solid #1c1c1f;background:rgba(139,92,246,0.03);font-size:13px;color:#22c55e;font-weight:500">✓ None</div>
+          <div style="padding:11px 14px;border-left:1px solid #1c1c1f;font-size:13px;color:#dc2626">✗ vDOM</div>
+          <div style="padding:11px 14px;border-left:1px solid #1c1c1f;font-size:13px;color:#dc2626">✗ vDOM</div>
+          <div style="padding:11px 14px;border-left:1px solid #1c1c1f;font-size:13px;color:#22c55e">✓ Compiled</div>
+          <div style="padding:11px 14px;border-left:1px solid #1c1c1f;font-size:13px;color:#dc2626">✗ vDOM</div>
+          <div style="padding:11px 14px;border-left:1px solid #1c1c1f;font-size:13px;color:#dc2626">✗ vDOM</div>
+        </div>
+
+        <!-- External framework adapters -->
+        <div style="display:grid;grid-template-columns:220px repeat(6,1fr);border-bottom:1px solid #1c1c1f" style-hover="background:rgba(255,255,255,0.012)">
+          <div style="padding:11px 20px;font-size:13px;color:#71717a">Works inside React / Vue</div>
+          <div style="padding:11px 14px;border-left:1px solid #1c1c1f;background:rgba(139,92,246,0.03);font-size:13px;color:#22c55e;font-weight:500">✓ 6 adapters</div>
+          <div style="padding:11px 14px;border-left:1px solid #1c1c1f;font-size:13px;color:#3f3f46">—</div>
+          <div style="padding:11px 14px;border-left:1px solid #1c1c1f;font-size:13px;color:#3f3f46">—</div>
+          <div style="padding:11px 14px;border-left:1px solid #1c1c1f;font-size:13px;color:#3f3f46">—</div>
+          <div style="padding:11px 14px;border-left:1px solid #1c1c1f;font-size:13px;color:#22c55e">✓ Native</div>
+          <div style="padding:11px 14px;border-left:1px solid #1c1c1f;font-size:13px;color:#3f3f46">—</div>
+        </div>
+
+        <!-- Zero deps -->
+        <div style="display:grid;grid-template-columns:220px repeat(6,1fr);border-bottom:1px solid #1c1c1f" style-hover="background:rgba(255,255,255,0.012)">
+          <div style="padding:11px 20px;font-size:13px;color:#71717a">Zero external deps</div>
+          <div style="padding:11px 14px;border-left:1px solid #1c1c1f;background:rgba(139,92,246,0.03);font-size:13px;color:#22c55e;font-weight:500">✓ 0 deps</div>
+          <div style="padding:11px 14px;border-left:1px solid #1c1c1f;font-size:13px;color:#eab308">△ Some</div>
+          <div style="padding:11px 14px;border-left:1px solid #1c1c1f;font-size:13px;color:#22c55e">✓ Near zero</div>
+          <div style="padding:11px 14px;border-left:1px solid #1c1c1f;font-size:13px;color:#22c55e">✓ 0 deps</div>
+          <div style="padding:11px 14px;border-left:1px solid #1c1c1f;font-size:13px;color:#22c55e">✓ 0 deps</div>
+          <div style="padding:11px 14px;border-left:1px solid #1c1c1f;font-size:13px;color:#eab308">△ Heavy</div>
+        </div>
+
+        <!-- Fullstack paradigm -->
+        <div style="display:grid;grid-template-columns:220px repeat(6,1fr);border-bottom:1px solid #1c1c1f" style-hover="background:rgba(255,255,255,0.012)">
+          <div style="padding:11px 20px;font-size:13px;color:#71717a">Fullstack paradigm</div>
+          <div style="padding:11px 14px;border-left:1px solid #1c1c1f;background:rgba(139,92,246,0.03);font-size:13px;color:#22c55e;font-weight:500">✓ All layers</div>
+          <div style="padding:11px 14px;border-left:1px solid #1c1c1f;font-size:13px;color:#3f3f46">—</div>
+          <div style="padding:11px 14px;border-left:1px solid #1c1c1f;font-size:13px;color:#3f3f46">—</div>
+          <div style="padding:11px 14px;border-left:1px solid #1c1c1f;font-size:13px;color:#3f3f46">—</div>
+          <div style="padding:11px 14px;border-left:1px solid #1c1c1f;font-size:13px;color:#3f3f46">—</div>
+          <div style="padding:11px 14px;border-left:1px solid #1c1c1f;font-size:13px;color:#3f3f46">—</div>
+        </div>
+
+        <!-- SSR -->
+        <div style="display:grid;grid-template-columns:220px repeat(6,1fr);border-bottom:1px solid #1c1c1f" style-hover="background:rgba(255,255,255,0.012)">
+          <div style="padding:11px 20px;font-size:13px;color:#71717a">Decl. Shadow DOM SSR</div>
+          <div style="padding:11px 14px;border-left:1px solid #1c1c1f;background:rgba(139,92,246,0.03);font-size:13px;color:#22c55e;font-weight:500">✓ First-class</div>
+          <div style="padding:11px 14px;border-left:1px solid #1c1c1f;font-size:13px;color:#3f3f46">—</div>
+          <div style="padding:11px 14px;border-left:1px solid #1c1c1f;font-size:13px;color:#3f3f46">—</div>
+          <div style="padding:11px 14px;border-left:1px solid #1c1c1f;font-size:13px;color:#3f3f46">—</div>
+          <div style="padding:11px 14px;border-left:1px solid #1c1c1f;font-size:13px;color:#eab308">△ Partial</div>
+          <div style="padding:11px 14px;border-left:1px solid #1c1c1f;font-size:13px;color:#3f3f46">—</div>
+        </div>
+
+        <!-- TC39 decorators -->
+        <div style="display:grid;grid-template-columns:220px repeat(6,1fr)" style-hover="background:rgba(255,255,255,0.012)">
+          <div style="padding:11px 20px;font-size:13px;color:#71717a">TC39 Stage 3 decorators</div>
+          <div style="padding:11px 14px;border-left:1px solid #1c1c1f;background:rgba(139,92,246,0.03);font-size:13px;color:#22c55e;font-weight:500">✓ Stage 3</div>
+          <div style="padding:11px 14px;border-left:1px solid #1c1c1f;font-size:13px;color:#3f3f46">—</div>
+          <div style="padding:11px 14px;border-left:1px solid #1c1c1f;font-size:13px;color:#3f3f46">—</div>
+          <div style="padding:11px 14px;border-left:1px solid #1c1c1f;font-size:13px;color:#3f3f46">—</div>
+          <div style="padding:11px 14px;border-left:1px solid #1c1c1f;font-size:13px;color:#3f3f46">—</div>
+          <div style="padding:11px 14px;border-left:1px solid #1c1c1f;font-size:13px;color:#eab308">△ Legacy</div>
+        </div>
+      </div>
+
+      <div style="margin-top:14px;font-size:12px;color:#3f3f46">✓ Supported &nbsp;·&nbsp; △ Partial / external &nbsp;·&nbsp; ✗ Uses alternative &nbsp;·&nbsp; — Not applicable</div>
+    </div>
+
+  </div>
+</div>
+
+<!-- CTA -->
+<div style="padding:100px 0;border-top:1px solid #1c1c1f;position:relative;overflow:hidden">
+  <div style="position:absolute;inset:0;background:radial-gradient(ellipse 60% 70% at 50% 110%,rgba(27,132,255,0.07) 0%,transparent 65%);pointer-events:none"></div>
+  <div style="max-width:740px;margin:0 auto;padding:0 48px;text-align:center;position:relative">
+    <h2 style="font-size:clamp(36px,4vw,54px);font-weight:800;letter-spacing:-0.04em;color:#fafafa;line-height:1.1;margin-bottom:22px">The last framework you'll ever need.</h2>
+    <p style="font-size:17px;color:#71717a;line-height:1.65;margin-bottom:36px">One paradigm from browser to server. Pick what you need, leave the rest. Zero compromise.</p>
+    <div style="display:flex;align-items:center;justify-content:center;gap:12px;flex-wrap:wrap">
+      <a href="#quickstart" style="display:inline-flex;align-items:center;gap:8px;padding:13px 28px;background:#fafafa;color:#09090b;border-radius:8px;font-size:15px;font-weight:600;border:1px solid #fafafa;transition:all 0.15s" style-hover="background:#e4e4e7">
+        Start building →
+      </a>
+      <a href="#" style="display:inline-flex;align-items:center;gap:8px;padding:13px 28px;background:transparent;color:#fafafa;border-radius:8px;font-size:15px;font-weight:500;border:1px solid #27272a;transition:all 0.15s" style-hover="background:#111113">
+        View on GitHub
+      </a>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<div style="border-top:1px solid #1c1c1f">
+  <div style="max-width:1280px;margin:0 auto;padding:28px 48px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:14px">
+    <div style="display:flex;align-items:center;gap:10px">
+      <div style="width:20px;height:20px;background:#1b84ff;border-radius:5px;display:flex;align-items:center;justify-content:center"><span style="color:#fff;font-weight:800;font-size:9px;font-family:'JetBrains Mono',monospace">@</span></div>
+      <span style="font-size:13px;font-weight:600;color:#52525b">youneed</span>
+      <span style="font-size:12px;color:#27272a">·</span>
+      <span style="font-size:12px;color:#3f3f46">MIT License</span>
+    </div>
+    <div style="display:flex;align-items:center;gap:22px">
+      <a href="#" style="font-size:13px;color:#3f3f46;transition:color 0.15s" style-hover="color:#71717a">Docs</a>
+      <a href="#" style="font-size:13px;color:#3f3f46;transition:color 0.15s" style-hover="color:#71717a">GitHub</a>
+      <a href="#" style="font-size:13px;color:#3f3f46;transition:color 0.15s" style-hover="color:#71717a">npm</a>
+      <a href="#" style="font-size:13px;color:#3f3f46;transition:color 0.15s" style-hover="color:#71717a">Changelog</a>
+    </div>
+  </div>
+</div>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  state = { tab: 0, filter: 'All', navScrolled: false };
+  _onScroll = null;
+
+  componentDidMount() {
+    this._onScroll = () => {
+      const sc = window.scrollY > 10;
+      if (sc !== this.state.navScrolled) this.setState({ navScrolled: sc });
+    };
+    window.addEventListener('scroll', this._onScroll, { passive: true });
+  }
+
+  componentWillUnmount() {
+    if (this._onScroll) window.removeEventListener('scroll', this._onScroll);
+  }
+
+  hl(code) {
+    const KW = new Set(['import','export','from','class','extends','const','let','var','return','async','await','new','static','this','if','else','true','false','null','void','override','typeof','instanceof','of','in']);
+    const TY = new Set(['Component','Controller','Application','Page','Test','Context','Guard','HttpError','RssFeed','UserRepository','UserService','Api']);
+    let i = 0, out = '';
+    while (i < code.length) {
+      const c = code[i];
+      if (c === '/' && code[i+1] === '/') {
+        let j = i; while (j < code.length && code[j] !== '\n') j++;
+        out += `<span style="color:#636d83;font-style:italic">${code.slice(i,j).replace(/</g,'&lt;').replace(/>/g,'&gt;')}</span>`;
+        i = j; continue;
+      }
+      if (c === '"' || c === "'") {
+        let j = i+1; while (j < code.length && code[j] !== c) { if (code[j]==='\\') j++; j++; } j++;
+        out += `<span style="color:#98c379">${code.slice(i,j).replace(/</g,'&lt;').replace(/>/g,'&gt;')}</span>`;
+        i = j; continue;
+      }
+      if (c === '`') {
+        let j = i+1;
+        while (j < code.length && code[j] !== '`') { if (code[j]==='\\') j++; j++; } j++;
+        const inner = code.slice(i,j).replace(/</g,'&lt;').replace(/>/g,'&gt;');
+        out += `<span style="color:#98c379">${inner}</span>`;
+        i = j; continue;
+      }
+      if (c === '@') {
+        let j = i+1; while (j < code.length && /[\w.]/.test(code[j])) j++;
+        out += `<span style="color:#e06c75">${code.slice(i,j)}</span>`;
+        i = j; continue;
+      }
+      if (/[0-9]/.test(c) && (i === 0 || !/\w/.test(code[i-1]))) {
+        let j = i; while (j < code.length && /[0-9_]/.test(code[j])) j++;
+        out += `<span style="color:#d19a66">${code.slice(i,j)}</span>`;
+        i = j; continue;
+      }
+      if (/[a-zA-Z_$]/.test(c)) {
+        let j = i; while (j < code.length && /[\w$]/.test(code[j])) j++;
+        const w = code.slice(i,j);
+        if (KW.has(w)) out += `<span style="color:#c678dd">${w}</span>`;
+        else if (TY.has(w)) out += `<span style="color:#e5c07b">${w}</span>`;
+        else out += w;
+        i = j; continue;
+      }
+      if (c === '<') { out += '&lt;'; i++; continue; }
+      if (c === '>') { out += '&gt;'; i++; continue; }
+      if (c === '&') { out += '&amp;'; i++; continue; }
+      out += c; i++;
+    }
+    return out;
+  }
+
+  codes = [
+`// @youneed/dom — Custom Elements, no virtual DOM
+import { Component, html, css } from "@youneed/dom";
+
+@Component.define()
+class Counter extends Component("x-counter") {
+  static styles = css\`button { font: inherit; padding: 8px 16px }\`;
+
+  @Component.prop() label = "Count";
+
+  count = this.signal(0);
+  doubled = this.computed(() => this.count() * 2);
+
+  render() {
+    return html\`
+      <div>
+        <p>\${this.label}: \${this.count()}</p>
+        <p>Doubled: \${this.doubled()}</p>
+        <button @click=\${() => this.count.update(n => n + 1)}>
+          Increment
+        </button>
+      </div>
+    \`;
+  }
+}`,
+`// @youneed/server — typed HTTP, schema, guards, OpenAPI
+import { Application, Controller, t } from "@youneed/server";
+import { cors } from "@youneed/server-middleware-cors";
+import { rateLimit } from "@youneed/server-middleware-rate-limit";
+
+const User = t.object({ name: t.string(), email: t.string() });
+
+class Users extends Controller("/users") {
+  @Controller.get("/", { response: { 200: t.array(User) } })
+  async list(ctx) {
+    return db.users.findAll(); // auto-validated & serialized
+  }
+
+  @Controller.post("/", { body: User, response: { 201: User } })
+  async create(ctx) {
+    return db.users.create(ctx.body); // ctx.body is fully typed
+  }
+}
+
+Application(Users)
+  .use(cors())
+  .use(rateLimit({ strategy: "sliding", max: 100, windowMs: 60000 }))
+  .openapi({ title: "Users API", version: "1.0.0" })
+  .listen(3000, () => console.log("Running on :3000"));`,
+`// @youneed/ssr — Declarative Shadow DOM + Speculation Rules
+import { Page, mountPages } from "@youneed/ssr";
+import { Application } from "@youneed/server";
+import { HomeApp, BlogApp } from "./components";
+
+class Home extends Page("/", {
+  title: "My App",
+  clientScript: () => import("./client.ts"),
+  speculation: {
+    prerender: [{ source: "list", urls: [Blog.url], eagerness: "moderate" }],
+  },
+}) {
+  render() { return HomeApp; }
+}
+
+class Blog extends Page("/blog", { title: "Blog" }) {
+  render() { return BlogApp; }
+
+  @Page.get("/feed.rss")
+  async rss(ctx) {
+    return new RssFeed({ title: "Blog RSS", items: await getItems() });
+  }
+}
+
+mountPages(Application(), Home, Blog).listen(3010);`,
+`// @youneed/test — class + decorator test framework
+import { Test, expect } from "@youneed/test";
+import { UserService } from "./user.service";
+import { UserRepository } from "./user.repository";
+
+class UserServiceTest extends Test() {
+  repo = new UserRepository();
+  service = new UserService(this.repo);
+
+  @Test.before()
+  async setup() {
+    await this.repo.clear();
+  }
+
+  @Test.it("creates a user")
+  async create() {
+    const user = await this.service.create({ name: "Alice" });
+    expect(user.id).toBeDefined();
+    expect(user.name).toBe("Alice");
+  }
+
+  @Test.it("lists all users")
+  async list() {
+    await this.service.create({ name: "Bob" });
+    const users = await this.service.list();
+    expect(users).toHaveLength(1);
+  }
+}`,
+`// @youneed/cli — terminal app framework with middleware
+import { Cli, Command, Context } from "@youneed/cli";
+import { prompt } from "@youneed/cli-middleware-prompt";
+import { progress } from "@youneed/cli-middleware-progress";
+import { hotkeys } from "@youneed/cli-middleware-hotkeys";
+import { screen } from "@youneed/cli-middleware-screen";
+
+class Deploy extends Command("deploy", {
+  description: "Deploy your application to a target environment",
+}) {
+  @Command.option("--env", { default: "production" })
+  env!: string;
+
+  @Command.option("--dry-run", { type: "boolean", default: false })
+  dryRun!: boolean;
+
+  async run(ctx: Context) {
+    // Interactive prompts
+    const { confirmed } = await ctx.prompt({
+      confirmed: { type: "confirm",
+        message: \`Deploy to \${this.env}?\` },
+    });
+    if (!confirmed) return;
+
+    // Progress bar
+    const bar = ctx.progress({ total: 4, label: "Deploying" });
+    bar.tick("Building assets...");
+    await build();
+    bar.tick("Uploading...");
+    await upload({ dryRun: this.dryRun });
+    bar.tick("Restarting workers...");
+    await restart();
+    bar.done("Deploy complete ✓");
+  }
+}
+
+Cli(Deploy)
+  .use(prompt())
+  .use(progress())
+  .use(hotkeys())
+  .use(screen())
+  .run();`,
+`// @youneed/orm-sql — typed SQL ORM with decorators
+import { Repository, Entity, Column, Relation } from "@youneed/orm-sql";
+import { t } from "@youneed/schema";
+
+@Entity("users")
+class User {
+  @Column.primary() id!: number;
+  @Column() name!: string;
+  @Column() email!: string;
+  @Column({ default: false }) active!: boolean;
+  @Relation.hasMany(() => Post) posts!: Post[];
+}
+
+@Entity("posts")
+class Post {
+  @Column.primary() id!: number;
+  @Column() title!: string;
+  @Column() body!: string;
+  @Relation.belongsTo(() => User) author!: User;
+}
+
+class UserRepository extends Repository(User) {
+  // find all active users with their posts
+  async findActive() {
+    return this.query()
+      .where({ active: true })
+      .with("posts")
+      .orderBy("name", "asc")
+      .all();
+  }
+
+  // typed transaction
+  async createWithPost(data: { name: string; title: string }) {
+    return this.transaction(async (trx) => {
+      const user = await trx.create(User, {
+        name: data.name, email: \`\${data.name}@example.com\`, active: true,
+      });
+      await trx.create(Post, { title: data.title, author: user });
+      return user;
+    });
+  }
+}`
+  ];
+
+  tabLabels = ['Component', 'Server', 'SSR', 'Test', 'CLI', 'ORM'];
+  tabDescs = [
+    'Reactive Custom Elements with Shadow DOM, signals, and fine-grained updates. Drops into any stack — React, Vue, Angular, Astro, Svelte.',
+    'Typed HTTP controllers, schema validation, guards, and middleware. 21 middleware packages. OpenAPI docs auto-generated.',
+    'Server-side rendering to Declarative Shadow DOM with native Speculation Rules for prerendering. SSG and island architecture supported.',
+    'Same class + decorator paradigm as the rest. Multiple reporters (Console, HTML, JUnit, TAP), snapshots, and resilience utilities.',
+    'Full-featured terminal app framework — 15+ middleware packages covering prompts, hotkeys, progress bars, i18n, screen management and more.',
+    'Typed ORM for SQL (MySQL, Postgres) and NoSQL (MongoDB). Same decorator pattern — repository classes, relations, migrations, and transactions.',
+  ];
+
+  packages = [
+    { name: '@youneed/dom', desc: 'Custom Elements + Shadow DOM reactive components', cat: 'DOM', core: true },
+    { name: '@youneed/dom-router', desc: 'SPA routing — hash, history, query modes', cat: 'DOM' },
+    { name: '@youneed/dom-scheduler', desc: 'RAF, sync, idle, fps schedulers', cat: 'DOM' },
+    { name: '@youneed/dom-ui-shad', desc: 'shadcn/ui components for youneed/dom', cat: 'DOM' },
+    { name: '@youneed/dom-adapter-react', desc: 'Mount youneed components inside React', cat: 'DOM' },
+    { name: '@youneed/dom-adapter-vue', desc: 'Mount youneed components inside Vue', cat: 'DOM' },
+    { name: '@youneed/dom-adapter-angular', desc: 'Mount youneed components inside Angular', cat: 'DOM' },
+    { name: '@youneed/dom-adapter-svelte', desc: 'Mount youneed components inside Svelte', cat: 'DOM' },
+    { name: '@youneed/dom-adapter-astro', desc: 'Mount youneed components inside Astro', cat: 'DOM' },
+    { name: '@youneed/dom-adapter-preact', desc: 'Mount youneed components inside Preact', cat: 'DOM' },
+    { name: '@youneed/dom-provider-a11y', desc: 'Accessibility context provider', cat: 'DOM' },
+    { name: '@youneed/dom-provider-i18n', desc: 'Internationalization provider', cat: 'DOM' },
+    { name: '@youneed/dom-provider-zustand', desc: 'Zustand state bridge', cat: 'DOM' },
+    { name: '@youneed/server', desc: 'Typed HTTP server — decorators, schema, guards', cat: 'Server', core: true },
+    { name: '@youneed/server-middleware-cors', desc: 'CORS headers and preflight', cat: 'Server' },
+    { name: '@youneed/server-middleware-rate-limit', desc: 'Rate limiting (fixed, sliding, token bucket)', cat: 'Server' },
+    { name: '@youneed/server-middleware-jwt', desc: 'JWT authentication middleware', cat: 'Server' },
+    { name: '@youneed/server-middleware-helmet', desc: 'Security response headers', cat: 'Server' },
+    { name: '@youneed/server-middleware-compression', desc: 'gzip / brotli response compression', cat: 'Server' },
+    { name: '@youneed/server-middleware-csrf', desc: 'CSRF protection (double-submit cookie)', cat: 'Server' },
+    { name: '@youneed/server-middleware-session', desc: 'Session management', cat: 'Server' },
+    { name: '@youneed/server-plugin-oauth2', desc: 'OAuth2 server plugin', cat: 'Server' },
+    { name: '@youneed/server-plugin-pubsub', desc: 'Pub/sub (Redis, Kafka, Postgres)', cat: 'Server' },
+    { name: '@youneed/server-plugin-jobs', desc: 'Background job scheduler', cat: 'Server' },
+    { name: '@youneed/server-plugin-jsonrpc', desc: 'JSON-RPC 2.0 protocol', cat: 'Server' },
+    { name: '@youneed/server-plugin-otp', desc: 'OTP / TOTP authentication', cat: 'Server' },
+    { name: '@youneed/server-plugin-cluster', desc: 'Node.js cluster mode', cat: 'Server' },
+    { name: '@youneed/ssr', desc: 'SSR to Declarative Shadow DOM + Speculation Rules', cat: 'SSR', core: true },
+    { name: '@youneed/ssr-router', desc: 'SSR route matching layer', cat: 'SSR' },
+    { name: '@youneed/ssr-plugin-meta', desc: 'Open Graph + Twitter meta tags', cat: 'SSR' },
+    { name: '@youneed/ssr-plugin-sitemap', desc: 'Auto-generated XML sitemap', cat: 'SSR' },
+    { name: '@youneed/ssr-plugin-llms', desc: 'LLMs.txt for AI crawlers', cat: 'SSR' },
+    { name: '@youneed/ssr-plugin-csp', desc: 'Content Security Policy headers', cat: 'SSR' },
+    { name: '@youneed/ssr-plugin-rss', desc: 'RSS / Atom feed generation', cat: 'SSR' },
+    { name: '@youneed/ssr-plugin-robots', desc: 'robots.txt generation', cat: 'SSR' },
+    { name: '@youneed/ssr-plugin-canonical', desc: 'Canonical URL injection', cat: 'SSR' },
+    { name: '@youneed/cli', desc: 'Terminal app framework with middleware', cat: 'CLI', core: true },
+    { name: '@youneed/cli-middleware-prompt', desc: 'Interactive prompts', cat: 'CLI' },
+    { name: '@youneed/cli-middleware-hotkeys', desc: 'Keyboard shortcut bindings', cat: 'CLI' },
+    { name: '@youneed/cli-middleware-progress', desc: 'Progress bars and spinners', cat: 'CLI' },
+    { name: '@youneed/cli-middleware-i18n', desc: 'CLI internationalization', cat: 'CLI' },
+    { name: '@youneed/cli-middleware-screen', desc: 'Terminal screen management', cat: 'CLI' },
+    { name: '@youneed/cli-plugin-devtools', desc: 'CLI devtools inspector', cat: 'CLI' },
+    { name: '@youneed/test', desc: 'Class + decorator test framework', cat: 'Test', core: true },
+    { name: '@youneed/test-resilience', desc: 'Retry, flaky, timeout utilities', cat: 'Test' },
+    { name: '@youneed/test-snapshot', desc: 'Snapshot testing', cat: 'Test' },
+    { name: '@youneed/test-reporter-html', desc: 'HTML test report', cat: 'Test' },
+    { name: '@youneed/test-reporter-junit', desc: 'JUnit XML for CI', cat: 'Test' },
+    { name: '@youneed/test-reporter-tap', desc: 'TAP protocol output', cat: 'Test' },
+    { name: '@youneed/schema', desc: 'Schema validation + OpenAPI/AsyncAPI generation', cat: 'Tools', core: true },
+    { name: '@youneed/devtools', desc: 'Browser inspector + time-travel debugger', cat: 'Tools' },
+    { name: '@youneed/vite-plugin', desc: 'TC39 decorator support in Vite builds', cat: 'Tools' },
+    { name: '@youneed/ts-plugin', desc: 'TypeScript language service plugin', cat: 'Tools' },
+    { name: '@youneed/orm-sql', desc: 'SQL ORM (MySQL, Postgres)', cat: 'Tools' },
+    { name: '@youneed/orm-nosql', desc: 'NoSQL ORM (MongoDB)', cat: 'Tools' },
+    { name: '@youneed/kv', desc: 'Key-value store interface', cat: 'Tools' },
+    { name: '@youneed/kv-redis', desc: 'Redis adapter for @youneed/kv', cat: 'Tools' },
+    { name: '@youneed/logger', desc: 'Structured logger with transports and plugins', cat: 'Tools' },
+    { name: '@youneed/i18n', desc: 'Internationalization utilities', cat: 'Tools' },
+    { name: '@youneed/http-client', desc: 'Typed HTTP client', cat: 'Tools' },
+    { name: '@youneed/ai-skill', desc: 'AI/LLM skill integration', cat: 'Tools' },
+  ];
+
+  filterCats = ['All', 'DOM', 'Server', 'SSR', 'CLI', 'Test', 'Tools'];
+
+  renderVals() {
+    const { tab, filter, navScrolled } = this.state;
+
+    const filteredPkgs = filter === 'All'
+      ? this.packages
+      : this.packages.filter(p => p.cat === filter);
+
+    // Hero code
+    const heroHighlighted = this.hl(
+`// Browser: Custom Elements + reactive signals
+import { Component, html } from "@youneed/dom";
+
+@Component.define()
+class App extends Component("my-app") {
+  count = this.signal(0);
+  render() {
+    return html\`
+      <button @click=\${() => this.count.update(n => n + 1)}>
+        Clicked \${this.count()} times
+      </button>
+    \`;
+  }
+}
+
+// Server: typed HTTP + schema validation
+import { Application, Controller, t } from "@youneed/server";
+
+class Api extends Controller("/api") {
+  @Controller.get("/ping", {
+    response: { 200: t.object({ ok: t.boolean() }) }
+  })
+  ping() { return { ok: true }; }
+}
+
+Application(Api).listen(3000);`
+    );
+
+    const heroCodeEl = React.createElement('pre', {
+      style: {
+        margin: 0,
+        fontFamily: "'JetBrains Mono', monospace",
+        fontSize: '12.5px',
+        lineHeight: '1.72',
+        color: '#abb2bf',
+        padding: '20px 24px',
+        background: 'transparent',
+        overflow: 'hidden',
+      }
+    }, React.createElement('code', {
+      dangerouslySetInnerHTML: { __html: heroHighlighted }
+    }));
+
+    // Interactive code block
+    const highlighted = this.hl(this.codes[tab]);
+    const codeEl = React.createElement('pre', {
+      style: {
+        margin: 0,
+        fontFamily: "'JetBrains Mono', monospace",
+        fontSize: '13px',
+        lineHeight: '1.76',
+        color: '#abb2bf',
+        padding: '24px',
+        background: 'transparent',
+        overflow: 'auto',
+        minHeight: '440px',
+      }
+    }, React.createElement('code', {
+      dangerouslySetInnerHTML: { __html: highlighted }
+    }));
+
+    const tabItems = this.tabLabels.map((label, i) => ({
+      label,
+      handler: () => this.setState({ tab: i }),
+      style: {
+        padding: '10px 20px',
+        background: 'transparent',
+        border: 'none',
+        borderBottom: tab === i ? '2px solid #1b84ff' : '2px solid transparent',
+        color: tab === i ? '#fafafa' : '#71717a',
+        cursor: 'pointer',
+        fontFamily: "'JetBrains Mono', monospace",
+        fontSize: '13px',
+        fontWeight: tab === i ? '600' : '400',
+        transition: 'color 0.15s, border-color 0.15s',
+        whiteSpace: 'nowrap',
+      }
+    }));
+
+    const filterItems = this.filterCats.map(f => ({
+      label: f,
+      handler: () => this.setState({ filter: f }),
+      style: {
+        padding: '5px 14px',
+        borderRadius: '20px',
+        border: f === filter ? '1px solid rgba(27,132,255,0.5)' : '1px solid #27272a',
+        background: f === filter ? 'rgba(27,132,255,0.1)' : 'transparent',
+        color: f === filter ? '#1b84ff' : '#71717a',
+        cursor: 'pointer',
+        fontSize: '12px',
+        fontWeight: '500',
+        transition: 'all 0.15s',
+        fontFamily: "'Inter', sans-serif",
+      }
+    }));
+
+    const navStyle = {
+      position: 'fixed', top: 0, left: 0, right: 0, zIndex: 100,
+      display: 'flex', alignItems: 'center', justifyContent: 'space-between',
+      padding: '0 32px', height: '60px',
+      background: navScrolled ? 'rgba(9,9,11,0.88)' : 'transparent',
+      borderBottom: navScrolled ? '1px solid rgba(39,39,42,0.7)' : '1px solid transparent',
+      backdropFilter: navScrolled ? 'blur(12px)' : 'none',
+      WebkitBackdropFilter: navScrolled ? 'blur(12px)' : 'none',
+      transition: 'all 0.2s ease',
+    };
+
+    return {
+      tab, filter, navScrolled,
+      filteredPkgs, codeEl, heroCodeEl, tabItems, filterItems,
+      navStyle,
+      tabDesc: this.tabDescs[tab],
+      t0: tab === 0,
+      t1: tab === 1,
+      t2: tab === 2,
+      t3: tab === 3,
+      t4: tab === 4,
+      t5: tab === 5,
+    };
+  }
+}
+</script>
+</body>
+</html>

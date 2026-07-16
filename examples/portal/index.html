@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>portal + classMap</title>
+    <style>
+      body { font-family: system-ui, sans-serif; margin: 24px; max-width: 640px; color: #18181b; }
+      code { background: #eee; padding: 1px 4px; border-radius: 4px; }
+    </style>
+  </head>
+  <body>
+    <h1>portal + classMap directives</h1>
+    <p>
+      Open the dialog: it's rendered with <code>portal(document.body, …)</code>, so
+      it escapes the card's <code>overflow: hidden</code> / transform and covers the
+      viewport. Toggle <em>danger variant</em> to see <code>classMap</code> flip the
+      button and dialog styling.
+    </p>
+    <portal-demo></portal-demo>
+    <script src="./app.js"></script>
+  </body>
+</html>

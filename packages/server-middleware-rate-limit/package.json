@@ -1,0 +1,32 @@
+{
+  "name": "@youneed/server-middleware-rate-limit",
+  "version": "0.1.0",
+  "description": "@youneed/server middleware: rate limiting with pluggable strategies (fixed/sliding/token-bucket/exponential).",
+  "type": "module",
+  "license": "ISC",
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "sideEffects": false,
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json",
+    "test": "tsx tests/rate-limit.test.ts"
+  },
+  "dependencies": {
+    "@youneed/kv": "workspace:*",
+    "@youneed/server": "workspace:*"
+  },
+  "devDependencies": {
+    "@youneed/test": "workspace:*",
+    "@youneed/test-reporter-console": "workspace:*"
+  }
+}

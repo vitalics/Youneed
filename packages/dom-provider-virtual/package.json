@@ -1,0 +1,30 @@
+{
+  "name": "@youneed/dom-provider-virtual",
+  "version": "0.1.0",
+  "description": "Composable @youneed/dom provider for IntersectionObserver-driven list virtualization (this.virtual) — only visible chunks render.",
+  "type": "module",
+  "license": "ISC",
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json",
+    "test": "tsx tests/dom-provider-virtual.test.ts"
+  },
+  "dependencies": {
+    "@youneed/dom": "workspace:*"
+  },
+  "devDependencies": {
+    "@youneed/test": "workspace:*",
+    "@youneed/test-reporter-console": "workspace:*"
+  }
+}

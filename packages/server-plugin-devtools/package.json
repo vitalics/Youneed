@@ -1,0 +1,92 @@
+{
+  "name": "@youneed/server-plugin-devtools",
+  "version": "0.1.0",
+  "description": "@youneed/server plugin: dev-time topology, OWASP security audit, OpenAPI generation and microbenchmarks — mounts a devtools UI on a live app.",
+  "type": "module",
+  "license": "ISC",
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    },
+    "./ui": {
+      "types": "./dist/ui.d.ts",
+      "default": "./dist/ui.js"
+    },
+    "./serve": {
+      "types": "./dist/serve.d.ts",
+      "default": "./dist/serve.js"
+    },
+    "./registry": {
+      "types": "./dist/registry.d.ts",
+      "default": "./dist/registry.js"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "sideEffects": [
+    "./src/web.ts",
+    "./src/ext.ts",
+    "./src/apidocs.ts",
+    "./src/flow.tsx"
+  ],
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json",
+    "build:web": "node build-web.mjs",
+    "test": "tsx tests/server-devtools.test.ts"
+  },
+  "dependencies": {
+    "@youneed/devtools-protocol": "workspace:*",
+    "@youneed/schema": "workspace:*"
+  },
+  "peerDependencies": {
+    "@youneed/dom": "workspace:*",
+    "@youneed/dom-ui-shad": "workspace:*",
+    "@youneed/server": "workspace:*"
+  },
+  "peerDependenciesMeta": {
+    "@youneed/dom": {
+      "optional": true
+    },
+    "@youneed/dom-ui-shad": {
+      "optional": true
+    },
+    "@youneed/server": {
+      "optional": true
+    }
+  },
+  "devDependencies": {
+    "@youneed/dom": "workspace:*",
+    "@youneed/server": "workspace:*",
+    "@youneed/dom-ui-shad": "workspace:*",
+    "@youneed/dom-adapter-react": "workspace:*",
+    "@youneed/test": "workspace:*",
+    "@youneed/test-reporter-console": "workspace:*",
+    "@xyflow/react": "^12.3.5",
+    "react": "^19.2.0",
+    "react-dom": "^19.2.0",
+    "@types/react": "^19.2.17",
+    "@types/react-dom": "^19.2.3",
+    "@youneed/server-plugin-pubsub": "workspace:*",
+    "@youneed/server-plugin-kv": "workspace:*",
+    "@youneed/server-plugin-jobs": "workspace:*",
+    "@youneed/server-plugin-queue": "workspace:*",
+    "@youneed/server-plugin-storage": "workspace:*",
+    "@youneed/server-plugin-mailer": "workspace:*",
+    "@youneed/server-plugin-graphql": "workspace:*",
+    "@youneed/server-plugin-grpc": "workspace:*",
+    "@youneed/server-plugin-otlp": "workspace:*",
+    "@youneed/server-plugin-feature-flags": "workspace:*",
+    "@youneed/server-plugin-rbac": "workspace:*",
+    "@youneed/server-plugin-secrets": "workspace:*",
+    "@youneed/server-plugin-ssr": "workspace:*",
+    "@youneed/server-plugin-jsonrpc": "workspace:*",
+    "@youneed/orm-sql": "workspace:*",
+    "@youneed/orm-nosql": "workspace:*",
+    "@youneed/server-plugin-docker": "workspace:*"
+  }
+}

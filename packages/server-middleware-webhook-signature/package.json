@@ -1,0 +1,17 @@
+{
+  "name": "@youneed/server-middleware-webhook-signature",
+  "version": "0.1.0",
+  "description": "@youneed/server middleware: verify inbound webhook HMAC signatures over the raw body. Pure verify function + generic builder + per-provider subpaths (stripe/github/shopify).",
+  "type": "module", "license": "ISC",
+  "main": "./dist/index.js", "module": "./dist/index.js", "types": "./dist/index.d.ts",
+  "exports": {
+    ".": { "types": "./dist/index.d.ts", "default": "./dist/index.js" },
+    "./stripe": { "types": "./dist/stripe.d.ts", "default": "./dist/stripe.js" },
+    "./github": { "types": "./dist/github.d.ts", "default": "./dist/github.js" },
+    "./shopify": { "types": "./dist/shopify.d.ts", "default": "./dist/shopify.js" }
+  },
+  "files": ["dist"], "sideEffects": false,
+  "scripts": { "build": "tsc -p tsconfig.build.json", "test": "tsx tests/webhook-signature.test.ts" },
+  "dependencies": { "@youneed/server": "workspace:*" },
+  "devDependencies": { "@youneed/test": "workspace:*", "@youneed/test-reporter-console": "workspace:*" }
+}

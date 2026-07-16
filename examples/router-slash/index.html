@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Slash router · /route (History API)</title>
+    <style>
+      body { font-family: system-ui, sans-serif; margin: 24px; max-width: 680px; color: #1b1b1f; }
+      code { background: #eee; padding: 1px 4px; border-radius: 4px; }
+      a { color: #4f46e5; }
+    </style>
+  </head>
+  <body>
+    <h1>Slash router — <code>/route</code> (History API)</h1>
+    <p>
+      Routes are real paths (<code>/users/1</code>) pushed with the History API. The router intercepts
+      internal link clicks so navigation never reloads. Deep links / refresh need a server that serves
+      <code>index.html</code> for unknown paths — run with the static server's <code>--spa</code> flag.
+    </p>
+    <router-app></router-app>
+    <script src="./app.js"></script>
+  </body>
+</html>

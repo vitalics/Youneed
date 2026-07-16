@@ -1,0 +1,12 @@
+{
+  "name": "@youneed/server-plugin-pubsub-sqs",
+  "version": "0.1.0",
+  "description": "AWS SQS adapter for @youneed/server-plugin-pubsub: SqsPubSub over SQS queues (channel = queue), pure fetch + SigV4 (no aws-sdk). Long-poll consumer.",
+  "type": "module", "license": "ISC",
+  "main": "./dist/index.js", "module": "./dist/index.js", "types": "./dist/index.d.ts",
+  "exports": { ".": { "types": "./dist/index.d.ts", "default": "./dist/index.js" } },
+  "files": ["dist"], "sideEffects": false,
+  "scripts": { "build": "tsc -p tsconfig.build.json", "test": "tsx tests/sqs.test.ts" },
+  "dependencies": { "@youneed/server-plugin-pubsub": "workspace:*" },
+  "devDependencies": { "@youneed/test": "workspace:*", "@youneed/test-reporter-console": "workspace:*" }
+}

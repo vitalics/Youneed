@@ -1,0 +1,33 @@
+{
+  "name": "@youneed/orm-adapter-mongo",
+  "version": "0.1.0",
+  "description": "MongoDB adapter for @youneed/orm-nosql (official mongodb driver).",
+  "type": "module",
+  "license": "ISC",
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "sideEffects": false,
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json",
+    "test": "tsx tests/translate.test.ts",
+    "test:live": "tsx tests/live.test.ts"
+  },
+  "dependencies": {
+    "@youneed/orm-nosql": "workspace:*",
+    "mongodb": "^6.12.0"
+  },
+  "devDependencies": {
+    "@youneed/test": "workspace:*",
+    "@youneed/test-reporter-console": "workspace:*"
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "name": "create-youneedpackage",
+  "version": "0.1.0",
+  "description": "Internal scaffolder for @youneed/* workspace packages.",
+  "type": "module",
+  "private": true,
+  "bin": {
+    "create-youneedpackage": "index.mjs"
+  },
+  "files": [
+    "index.mjs"
+  ]
+}

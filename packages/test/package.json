@@ -1,0 +1,40 @@
+{
+  "name": "@youneed/test",
+  "version": "0.1.0",
+  "description": "you need test framework",
+  "type": "module",
+  "license": "ISC",
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    },
+    "./cli": "./dist/cli.js"
+  },
+  "bin": {
+    "youneed-test": "./dist/cli.js"
+  },
+  "files": [
+    "dist"
+  ],
+  "sideEffects": false,
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json",
+    "test": "tsx tests/self.test.ts && tsx tests/mock.test.ts",
+    "demo": "tsx src/bin.ts",
+    "bench": "node bench/bench.mjs",
+    "bench:quick": "node bench/bench.mjs --quick",
+    "bench:gen": "node bench/gen.mjs"
+  },
+  "dependencies": {
+    "@youneed/core": "workspace:*"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.61.0",
+    "jest": "^30.4.2",
+    "vitest": "^4.1.9"
+  }
+}

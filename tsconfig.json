@@ -1,0 +1,8 @@
+{
+  "extends": "./tsconfig.base.json",
+  "compilerOptions": {
+    "noEmit": true
+  },
+  "include": ["packages/*/src/**/*.ts", "examples/**/*.ts"],
+  "exclude": ["node_modules", "**/dist", "examples/vite", "packages/ts-plugin"]
+}

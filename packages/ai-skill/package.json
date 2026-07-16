@@ -1,0 +1,25 @@
+{
+  "name": "@youneed/ai-skill",
+  "version": "0.1.0",
+  "description": "Agent Skills that turn Claude into a youneed-framework expert: the `youneed` skill (components, server, organization, performance, server-optimizations/security/best-practices, middleware, realtime/pub-sub, plugins & infra, a11y, i18n, auth/login (OAuth2/OTP/JWT/webhooks), migration) plus focused skills for the CLI framework (cli), server-side rendering & static generation (ssr), devtools/ts-plugin (develop), logger/transports/config (logging), orm-sql/kv (orm), writing/running tests (testing), migrating an existing app onto the youneed stack — frontend/backend/data/tests + build switch + interop adapters (migration), authorization + secrets (security), feature flags (feature-flags), application server plugins graphql/grpc/mailer/storage/queue/otlp (server-plugins), the shad UI library + component providers (ui), typed API client / resilient fetch / runtime adapters (clients), and the shared @youneed/core primitives + build tooling (foundation).",
+  "type": "module",
+  "license": "ISC",
+  "private": true,
+  "files": [
+    "SKILL.md",
+    "references",
+    "cli",
+    "ssr",
+    "develop",
+    "logging",
+    "orm",
+    "testing",
+    "migration",
+    "security",
+    "feature-flags",
+    "server-plugins",
+    "ui",
+    "clients",
+    "foundation"
+  ]
+}

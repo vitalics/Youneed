@@ -1,0 +1,52 @@
+{
+  "name": "@youneed/ts-plugin",
+  "version": "0.1.0",
+  "description": "TypeScript language-service plugin: completions inside html`` / css`` for @youneed/dom — custom-element tags, .props and @events.",
+  "license": "ISC",
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    },
+    "./audit": {
+      "types": "./dist/audit.d.ts",
+      "default": "./dist/audit.js"
+    },
+    "./dom": {
+      "types": "./dist/audits/dom.d.ts",
+      "default": "./dist/audits/dom.js"
+    },
+    "./preview": {
+      "types": "./preview.d.mts",
+      "default": "./preview.mjs"
+    }
+  },
+  "files": [
+    "dist",
+    "preview.mjs",
+    "preview.d.mts"
+  ],
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json && node -e \"require('fs').writeFileSync('dist/package.json', '{\\\"type\\\":\\\"commonjs\\\"}\\n')\"",
+    "test": "tsx tests/completions.test.ts && tsx tests/audits.test.ts",
+    "watch": "tsx src/watch.ts"
+  },
+  "peerDependencies": {
+    "esbuild": ">=0.20",
+    "playwright-core": ">=1.40",
+    "typescript": ">=5"
+  },
+  "peerDependenciesMeta": {
+    "esbuild": { "optional": true },
+    "playwright-core": { "optional": true },
+    "typescript": { "optional": true }
+  },
+  "devDependencies": {
+    "@youneed/test": "workspace:*",
+    "@youneed/test-reporter-console": "workspace:*",
+    "typescript": "^5.9.2"
+  }
+}

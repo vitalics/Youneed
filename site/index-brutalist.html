@@ -1,0 +1,568 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>youneed — the browser already shipped your framework</title>
+<meta name="description" content="youneed is a TypeScript-first toolkit built on native platform primitives — Custom Elements, Shadow DOM, the HTTP server, Speculation Rules. No virtual DOM. Minimal runtime.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Space+Grotesk:wght@400;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+/* Hallmark · macrostructure: Manifesto · theme: Brutal · genre: editorial · nav: N7 · footer: Ft4 · tone: brutalist · anchor hue: warm-red */
+/* knobs · rule: 3px · radius: 0 · display cap: 7.5rem (42-char statement) · type scale: 1.25 · motion: 2 primitives (load reveal ×0.75, button press) · accent share: <3% · faces: Archivo Black / Space Grotesk / JetBrains Mono (mono role: machine-set text — code, command, colophon per Ft4 spec) */
+/* Hallmark · pre-emit critique: P4 H4 E3 S4 R4 V4 → revision pass on E (accent block →ink, hero padding, states, contrast on dark) → P4 H4 E4 S4 R4 V4 */
+/* slop-test · contrast: pass (40–41) · nav: N7 · footer: Ft4 · slop: pass (42–45) · honest: pass (46) · chrome: pass (47) · tokens: pass (48) · responsive: pass (49) · icons: pass (30) · mobile: pass (34, 49, 50–57) · variety vs prior stamps (Narrative, Workbench): distinct */
+
+:root {
+  /* color — OKLCH only, warm-red anchor (hue 30), neutrals tinted warm */
+  --color-paper:    oklch(96.5% 0.009 60);
+  --color-paper-2:  oklch(93%   0.012 60);
+  --color-ink:      oklch(18%   0.012 40);
+  --color-ink-soft: oklch(30%   0.010 40);
+  --color-neutral:  oklch(44%   0.010 45);
+  --color-on-ink:   oklch(94%   0.008 60);
+  --color-on-ink-2: oklch(78%   0.010 55);
+  --color-accent:   oklch(52%   0.20  30);
+  --color-focus:    oklch(50%   0.19  30);
+  --color-focus-dark: oklch(72% 0.16  35); /* focus ring on ink surfaces, ≥3:1 */
+
+  /* type — 2+1 rule: display + body + mono outlier (machine text role) */
+  --font-display: "Archivo Black", "Arial Black", sans-serif;
+  --font-body:    "Space Grotesk", ui-sans-serif, sans-serif;
+  --font-mono:    "JetBrains Mono", ui-monospace, monospace;
+
+  /* scale 1.25 */
+  --text-sm:   0.8rem;
+  --text-base: 1rem;
+  --text-md:   1.25rem;
+  --text-lg:   1.5625rem;
+  --text-xl:   1.9531rem;
+  --text-2xl:  2.4414rem;
+  --text-3xl:  3.0518rem;
+  --text-display:   clamp(2.375rem, 9vw + 0.25rem, 7.5rem); /* "framework." fits one line at 320 px */
+  --text-display-s: clamp(2.25rem, 5vw + 1rem, 4.25rem);
+
+  /* space — 4pt scale */
+  --space-2xs: 0.25rem;
+  --space-xs:  0.5rem;
+  --space-sm:  0.75rem;
+  --space-md:  1rem;
+  --space-lg:  1.5rem;
+  --space-xl:  2.5rem;
+  --space-2xl: 4rem;
+  --space-3xl: 6rem;
+  --space-4xl: 9rem;
+
+  --rule-w: 3px;
+  --page-gutter: clamp(1rem, 4vw, 3.5rem);
+
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in:  cubic-bezier(0.7, 0, 0.84, 0);
+  --dur-micro: 90ms;   /* brutal ×0.75 */
+  --dur-long:  320ms;  /* brutal ×0.75 */
+
+  --z-sticky: 200;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+html, body { overflow-x: clip; }
+html { color-scheme: light; }
+body {
+  margin: 0;
+  background: var(--color-paper);
+  color: var(--color-ink);
+  font-family: var(--font-body);
+  font-size: var(--text-base);
+  line-height: 1.55;
+}
+h1, h2, h3 { font-style: normal; margin: 0; } /* headings roman, never italic */
+p { margin: 0; }
+a { color: inherit; }
+:focus-visible {
+  outline: var(--rule-w) solid var(--color-focus);
+  outline-offset: 2px;
+  transition: none; /* focus ring is instant, always */
+}
+.manifesto :focus-visible, .foot-dense :focus-visible { outline-color: var(--color-focus-dark); }
+button:disabled { opacity: 0.55; cursor: not-allowed; }
+::selection { background: var(--color-ink); color: var(--color-paper); }
+
+.skip-link {
+  position: absolute; left: var(--space-md); top: -100%;
+  background: var(--color-ink); color: var(--color-on-ink);
+  padding: var(--space-sm) var(--space-md);
+  font-family: var(--font-body); font-weight: 700; text-decoration: none;
+  z-index: var(--z-sticky);
+}
+.skip-link:focus-visible { top: var(--space-md); }
+
+/* ---------- N7 · brutal slab nav ---------- */
+.nav-slab {
+  display: flex; align-items: center; gap: var(--space-lg);
+  padding: var(--space-sm) var(--page-gutter);
+  border-bottom: var(--rule-w) solid var(--color-ink);
+  background: var(--color-paper);
+}
+.slab-mark {
+  font-family: var(--font-display);
+  font-size: var(--text-md);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  text-decoration: none;
+  min-height: 44px;
+  display: inline-flex; align-items: center;
+}
+.slab-nav { margin-left: auto; }
+.slab-nav ul { display: flex; gap: var(--space-lg); list-style: none; padding: 0; margin: 0; }
+.slab-nav a {
+  display: inline-flex; align-items: center; min-height: 44px;
+  text-transform: uppercase; letter-spacing: 0.09em;
+  font-size: var(--text-sm); font-weight: 700; line-height: 1;
+  text-decoration: none; white-space: nowrap;
+}
+.slab-nav a:hover, .slab-nav a:active { color: var(--color-accent); }
+.slab-gh {
+  display: inline-flex; align-items: center; min-height: 44px;
+  padding: 0 var(--space-md);
+  border: var(--rule-w) solid var(--color-ink);
+  text-transform: uppercase; letter-spacing: 0.09em;
+  font-size: var(--text-sm); font-weight: 700; line-height: 1;
+  text-decoration: none; white-space: nowrap;
+}
+.slab-gh:hover { background: var(--color-ink); color: var(--color-on-ink); }
+.slab-gh:active { transform: translateY(1px); }
+.nav-toggle {
+  display: none;
+  margin-left: auto;
+  min-width: 44px; min-height: 44px;
+  border: var(--rule-w) solid var(--color-ink);
+  background: var(--color-paper); color: var(--color-ink);
+  font-family: var(--font-body); font-weight: 700; line-height: 1;
+  font-size: var(--text-sm); text-transform: uppercase; letter-spacing: 0.09em;
+  cursor: pointer;
+}
+.nav-toggle:hover { background: var(--color-paper-2); }
+.nav-toggle:active { transform: translateY(1px); }
+.gh-mobile { display: none; } /* GitHub lives in the slab chip on desktop */
+
+@media (max-width: 40rem) {
+  .gh-mobile { display: block; }
+  .nav-toggle { display: inline-flex; align-items: center; justify-content: center; padding: 0 var(--space-sm); }
+  .slab-gh { display: none; }
+  .slab-nav {
+    display: none;
+    position: absolute; left: 0; right: 0; top: 100%;
+    margin: 0;
+    background: var(--color-paper);
+    border-bottom: var(--rule-w) solid var(--color-ink);
+    z-index: var(--z-sticky);
+  }
+  .nav-slab { position: relative; }
+  .nav-slab.is-open .slab-nav { display: block; }
+  .slab-nav ul { flex-direction: column; gap: 0; padding: var(--space-xs) var(--page-gutter) var(--space-md); }
+  .slab-nav a { width: 100%; min-height: 48px; }
+}
+
+/* ---------- H1 · marquee hero ---------- */
+.hero-marquee {
+  min-height: 82dvh;
+  display: grid; align-content: end;
+  /* bottom padding ≥ 1.3× top — hero sits into the ink block below */
+  padding: var(--space-xl) var(--page-gutter) var(--space-2xl);
+}
+.display-xxl {
+  font-family: var(--font-display);
+  font-weight: 400;               /* Archivo Black ships one weight */
+  font-size: var(--text-display); /* ≤50-char statement → Brutal ceiling ok */
+  line-height: 1.02;              /* all-caps floor ≥1.0 */
+  letter-spacing: -0.01em;
+  text-transform: uppercase;
+  max-width: 16ch;
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+.block-ink { /* colour-block on the verb — ink, so accent stays <3% of the fold */
+  font-style: normal;
+  background: var(--color-ink);
+  color: var(--color-on-ink);
+  padding: 0 0.08em; /* optical inset on the text band */
+  box-decoration-break: clone;
+  -webkit-box-decoration-break: clone;
+}
+.reveal {
+  opacity: 0;
+  transform: translateY(10px);
+  animation: reveal var(--dur-long) var(--ease-out) forwards;
+}
+@keyframes reveal { to { opacity: 1; transform: none; } }
+
+/* ---------- manifesto · ink bleed block ---------- */
+.manifesto {
+  background: var(--color-ink);
+  color: var(--color-on-ink);
+  padding: var(--space-4xl) var(--page-gutter) var(--space-3xl);
+}
+.manifesto-head {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: var(--text-display-s);
+  line-height: 1.04;
+  text-transform: uppercase;
+  letter-spacing: -0.01em;
+  max-width: 14ch;
+  min-width: 0;
+  overflow-wrap: anywhere;
+  transform: rotate(-2deg);
+  transform-origin: left bottom;
+  margin-bottom: var(--space-2xl);
+}
+.claims { display: grid; gap: var(--space-lg); }
+.claim { font-size: var(--text-lg); line-height: 1.35; font-weight: 400; max-width: 46ch; }
+.claim b { font-weight: 700; }
+.claim-close {
+  margin-top: var(--space-xl);
+  max-width: 58ch;
+  font-size: var(--text-md);
+  line-height: 1.5;
+  color: var(--color-on-ink-2);
+}
+.claim-close code { font-family: var(--font-mono); font-size: 0.9em; color: var(--color-on-ink); }
+
+/* S5 · bottom-anchored section label */
+.num-label {
+  margin-top: var(--space-2xl);
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-size: var(--text-sm);
+  text-transform: uppercase;
+  letter-spacing: 0.09em;
+}
+.manifesto .num-label { color: var(--color-on-ink-2); }
+section:not(.manifesto) .num-label { color: var(--color-neutral); }
+
+/* ---------- code · plain pre, thick border, no fake chrome ---------- */
+.proof {
+  padding: var(--space-3xl) var(--page-gutter) var(--space-2xl);
+  display: grid;
+  grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
+  gap: var(--space-2xl);
+  align-items: start;
+}
+.proof-code {
+  margin: 0;
+  border: var(--rule-w) solid var(--color-ink);
+  padding: var(--space-lg);
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+  line-height: 1.6;
+  overflow-x: auto;
+  background: var(--color-paper-2);
+}
+.proof-copy { padding-top: var(--space-md); }
+.proof-copy p { font-size: var(--text-md); line-height: 1.5; max-width: 52ch; }
+.proof-copy p + p { margin-top: var(--space-lg); }
+.proof-copy code { font-family: var(--font-mono); font-size: 0.88em; }
+.proof .num-label { grid-column: 1 / -1; margin-top: var(--space-xl); }
+@media (max-width: 60rem) {
+  .proof { grid-template-columns: minmax(0, 1fr); gap: var(--space-xl); }
+}
+
+/* ---------- F4 · step sequence ---------- */
+.steps-wrap { padding: var(--space-2xl) var(--page-gutter) var(--space-3xl); }
+.steps { list-style: none; margin: 0; padding: 0; }
+.steps li {
+  border-top: var(--rule-w) solid var(--color-ink);
+  padding: var(--space-xl) 0 var(--space-2xl);
+}
+.steps li:nth-child(2) { padding-left: clamp(0rem, 8vw, 7rem); }
+.steps li:nth-child(3) { padding-left: clamp(0rem, 4vw, 3.5rem); }
+.stage {
+  display: block;
+  font-family: var(--font-display);
+  font-size: var(--text-2xl);
+  line-height: 1;
+  color: var(--color-accent);
+}
+.steps h3 {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: var(--text-xl);
+  line-height: 1.06;
+  text-transform: uppercase;
+  margin: var(--space-sm) 0 var(--space-md);
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+.steps p { max-width: 52ch; font-size: var(--text-md); line-height: 1.5; }
+.steps p code { font-family: var(--font-mono); font-size: 0.88em; }
+.pkg-list {
+  margin-top: var(--space-md);
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+  color: var(--color-ink-soft);
+  max-width: 60ch;
+}
+
+/* ---------- T4 · numbered stat strip ---------- */
+.stat-strip {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  border-top: var(--rule-w) solid var(--color-ink);
+  border-bottom: var(--rule-w) solid var(--color-ink);
+  font-variant-numeric: tabular-nums;
+}
+.stat-strip > div { padding: var(--space-lg) var(--page-gutter) var(--space-lg) var(--space-lg); }
+.stat-strip > div:first-child { padding-left: var(--page-gutter); }
+.stat-strip > div + div { border-left: var(--rule-w) solid var(--color-ink); }
+.stat-strip b {
+  display: block;
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: var(--text-2xl);
+  line-height: 1.05;
+  overflow-wrap: anywhere;
+  min-width: 0;
+}
+.stat-strip span {
+  display: block; margin-top: var(--space-2xs);
+  font-size: var(--text-sm); font-weight: 700;
+  text-transform: uppercase; letter-spacing: 0.09em;
+  color: var(--color-neutral);
+}
+@media (max-width: 40rem) {
+  .stat-strip { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .stat-strip > div { padding: var(--space-md); border-left: none; }
+  .stat-strip > div:nth-child(even) { border-left: var(--rule-w) solid var(--color-ink); }
+  .stat-strip > div:nth-child(n+3) { border-top: var(--rule-w) solid var(--color-ink); }
+}
+
+/* ---------- install · C1 slab chip + copyable command ---------- */
+.install { padding: var(--space-3xl) var(--page-gutter) var(--space-4xl); }
+.install h2 {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: var(--text-display-s);
+  line-height: 1.05;
+  text-transform: uppercase;
+  min-width: 0;
+  overflow-wrap: anywhere;
+  margin-bottom: var(--space-xl);
+  max-width: 14ch;
+}
+.cmd-row {
+  display: flex; flex-wrap: wrap; align-items: stretch; gap: var(--space-md);
+  margin-bottom: var(--space-xl);
+}
+.cmd {
+  display: inline-flex; align-items: center;
+  border: var(--rule-w) solid var(--color-ink);
+  background: var(--color-paper-2);
+  padding: var(--space-sm) var(--space-lg);
+  font-family: var(--font-mono);
+  font-size: var(--text-md);
+  min-height: 52px;
+  white-space: nowrap;
+  overflow-x: auto;
+  max-width: 100%;
+}
+.copy-btn {
+  display: inline-flex; align-items: center; justify-content: center;
+  min-height: 52px; min-width: 44px;
+  padding: 0 var(--space-lg);
+  border: var(--rule-w) solid var(--color-ink);
+  background: var(--color-ink); color: var(--color-on-ink);
+  font-family: var(--font-body); font-weight: 700; line-height: 1;
+  font-size: var(--text-sm); text-transform: uppercase; letter-spacing: 0.09em;
+  cursor: pointer; white-space: nowrap;
+}
+.copy-btn:hover { background: var(--color-ink-soft); }
+.copy-btn:active { transform: translateY(1px); }
+.copy-btn[data-state="copied"] { background: var(--color-accent); border-color: var(--color-accent); color: var(--color-paper); }
+.cta-row { display: flex; flex-wrap: wrap; gap: var(--space-md); }
+.cta-outline {
+  display: inline-flex; align-items: center; gap: 0.4em;
+  padding: var(--space-sm) var(--space-lg);
+  min-height: 48px;
+  border: var(--rule-w) solid var(--color-ink);
+  font-weight: 700; font-size: var(--text-base); line-height: 1;
+  text-transform: uppercase; letter-spacing: 0.06em;
+  text-decoration: none; white-space: nowrap;
+}
+.cta-outline:hover { background: var(--color-ink); color: var(--color-on-ink); }
+.cta-outline:active { transform: translateY(1px); }
+.cta-quiet {
+  display: inline-flex; align-items: center;
+  min-height: 48px; padding: var(--space-sm) var(--space-xs);
+  font-weight: 700; font-size: var(--text-base); line-height: 1;
+  text-transform: uppercase; letter-spacing: 0.06em;
+  text-decoration: underline; text-underline-offset: 2px;
+  text-decoration-thickness: 2px;
+  white-space: nowrap;
+}
+.cta-quiet:hover, .cta-quiet:active { text-decoration-color: var(--color-accent); }
+.install-note { margin-top: var(--space-lg); max-width: 52ch; color: var(--color-ink-soft); }
+.install-note code { font-family: var(--font-mono); font-size: 0.88em; }
+@media (max-width: 26rem) {
+  .cmd { font-size: var(--text-base); } /* command fits 320 px without inner scroll */
+}
+
+/* ---------- Ft4 · dense typographic colophon ---------- */
+.foot-dense {
+  border-top: var(--rule-w) solid var(--color-ink);
+  background: var(--color-ink);
+  color: var(--color-on-ink-2);
+  padding: var(--space-2xl) var(--page-gutter);
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+  line-height: 1.7;
+}
+.foot-dense p { max-width: 72ch; }
+.foot-dense a { color: var(--color-on-ink); text-underline-offset: 2px; text-decoration-thickness: 1px; }
+.foot-dense a:hover, .foot-dense a:active { text-decoration-color: var(--color-focus-dark); }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 150ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0ms !important;
+  }
+  .reveal { animation: reveal-reduced 150ms linear forwards; }
+  @keyframes reveal-reduced { to { opacity: 1; transform: none; } }
+  .copy-btn:active, .nav-toggle:active, .slab-gh:active, .cta-outline:active { transform: none; }
+}
+</style>
+</head>
+<body>
+<a class="skip-link" href="#manifesto">Skip to manifesto</a>
+
+<header class="nav-slab" id="nav">
+  <a class="slab-mark" href="#">youneed</a>
+  <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="primary-nav">Menu</button>
+  <nav class="slab-nav" id="primary-nav" aria-label="Primary">
+    <ul>
+      <li><a href="#manifesto">Manifesto</a></li>
+      <li><a href="#stack">Stack</a></li>
+      <li><a href="#install">Install</a></li>
+      <li><a href="./docs">Docs</a></li>
+      <li class="gh-mobile"><a href="#">GitHub</a></li>
+    </ul>
+  </nav>
+  <a class="slab-gh" href="#">GitHub</a>
+</header>
+
+<main>
+  <!-- H1 marquee · one statement fills the fold, no CTA in view -->
+  <section class="hero-marquee" aria-label="Statement">
+    <h1 class="display-xxl reveal">The browser already <span class="block-ink">shipped</span> your framework.</h1>
+  </section>
+
+  <!-- Manifesto · ink bleed, one assertion per paragraph -->
+  <section class="manifesto" id="manifesto">
+    <h2 class="manifesto-head">Wrap. Don&rsquo;t replace.</h2>
+    <div class="claims">
+      <p class="claim">Components? <b>Custom Elements</b> are in every engine.</p>
+      <p class="claim">Scoped styles? <b>Shadow DOM</b> does it without a compiler.</p>
+      <p class="claim">Server rendering? <b>Declarative Shadow DOM</b> streams markup the parser understands &mdash; before any bundle lands.</p>
+      <p class="claim">Prefetching? <b>Speculation Rules</b> are an API, not a plugin.</p>
+      <p class="claim">youneed wraps these primitives instead of re-inventing them. No virtual DOM. Minimal runtime. TypeScript first.</p>
+    </div>
+    <p class="claim-close">And one paradigm everywhere: a factory returns a base class, TC39 standard decorators mark the parts, a fluent builder wires the rest. <code>Component(tag)</code>, <code>Controller(path)</code>, <code>Page(url)</code>, <code>Test()</code> &mdash; they all feel the same.</p>
+    <p class="num-label">&mdash; end of 01 &middot; the argument</p>
+  </section>
+
+  <!-- Proof · real code, plain pre, thick border -->
+  <section class="proof" aria-label="Code sample">
+    <pre class="proof-code"><code>@Component.define()
+class Counter extends Component("x-counter") {
+  @Component.prop() count = 0;
+  @Component.event() inc() { this.count++; }
+  render() {
+    return html`&lt;button @click=${this.inc}&gt;${this.count}&lt;/button&gt;`;
+  }
+}</code></pre>
+    <div class="proof-copy">
+      <p>This is the whole component. A factory returns the base class, decorators declare the reactive surface, and the template compiles against the real DOM &mdash; there is no virtual one to diff.</p>
+      <p>The same shape runs the backend: <code>Controller(path)</code> classes on the built-in HTTP server hold ~50k&nbsp;req/s on the repo&rsquo;s local autocannon bench.</p>
+    </div>
+    <p class="num-label">&mdash; end of 02 &middot; the proof</p>
+  </section>
+
+  <!-- F4 · step sequence -->
+  <section class="steps-wrap" id="stack">
+    <ol class="steps">
+      <li>
+        <span class="stage" aria-hidden="true">01</span>
+        <h3>Define</h3>
+        <p><code>Component(tag)</code> gives you Custom Elements with Shadow DOM scoping. <code>@youneed/dom</code> carries <b>zero dependencies</b> &mdash; the platform is the dependency.</p>
+      </li>
+      <li>
+        <span class="stage" aria-hidden="true">02</span>
+        <h3>Serve &amp; stream</h3>
+        <p><code>Controller(path)</code> runs on the native HTTP server; <code>ssr</code> builds on <code>dom</code> + <code>server</code> and streams Declarative Shadow DOM; <code>devtools</code> builds on <code>dom</code> + <code>ssr</code>. The graph stays shallow on purpose.</p>
+      </li>
+      <li>
+        <span class="stage" aria-hidden="true">03</span>
+        <h3>Take only what you need</h3>
+        <p>~170 packages in one monorepo, each installable alone. No meta-package, no kitchen sink.</p>
+        <p class="pkg-list">dom &middot; server &middot; ssr &middot; dom-router &middot; devtools &middot; test &middot; orm-sql &middot; cli &middot; schema &middot; logger</p>
+      </li>
+    </ol>
+    <p class="num-label">&mdash; end of 03 &middot; the stack</p>
+  </section>
+
+  <!-- T4 · stat strip · honest numbers only -->
+  <section class="stat-strip" aria-label="Facts">
+    <div><b>~170</b><span>packages</span></div>
+    <div><b>0</b><span>deps in @youneed/dom</span></div>
+    <div><b>50k</b><span>req/s, local bench</span></div>
+    <div><b>MIT</b><span>license</span></div>
+  </section>
+
+  <!-- C1 · slab outlined chip + copyable install -->
+  <section class="install" id="install">
+    <h2>Start with one package.</h2>
+    <div class="cmd-row">
+      <code class="cmd" id="install-cmd">pnpm add @youneed/dom</code>
+      <button class="copy-btn" type="button" data-cmd="pnpm add @youneed/dom">Copy</button>
+    </div>
+    <div class="cta-row">
+      <a class="cta-outline" href="./docs">Quick start &rarr;</a>
+      <a class="cta-quiet" href="#">GitHub</a>
+    </div>
+    <p class="install-note">Add <code>server</code>, <code>ssr</code>, or <code>test</code> when you need them &mdash; not before.</p>
+  </section>
+</main>
+
+<!-- Ft4 · dense typographic colophon -->
+<footer class="foot-dense">
+  <p>youneed &mdash; a TypeScript-first toolkit on platform primitives: Custom Elements, Shadow DOM, the HTTP server, Speculation Rules. ~170 packages in one monorepo; @youneed/dom depends on nothing. 50k&nbsp;req/s measured on the repo&rsquo;s local autocannon bench. MIT licensed. Set in Archivo Black, Space Grotesk and JetBrains Mono. One HTML file. <a href="#">GitHub</a> &middot; <a href="./docs">Docs</a></p>
+</footer>
+
+<script>
+// copy-to-clipboard — label swap is the feedback, no toast
+document.querySelector(".copy-btn").addEventListener("click", async (e) => {
+  const btn = e.currentTarget;
+  try {
+    await navigator.clipboard.writeText(btn.dataset.cmd);
+    btn.dataset.state = "copied";
+    btn.textContent = "Copied";
+    setTimeout(() => { delete btn.dataset.state; btn.textContent = "Copy"; }, 2500);
+  } catch { /* clipboard unavailable — command stays selectable */ }
+});
+// N7 mobile menu — instant, brutalist
+const nav = document.getElementById("nav");
+const toggle = nav.querySelector(".nav-toggle");
+toggle.addEventListener("click", () => {
+  const open = nav.classList.toggle("is-open");
+  toggle.setAttribute("aria-expanded", String(open));
+});
+nav.querySelectorAll(".slab-nav a").forEach(a =>
+  a.addEventListener("click", () => {
+    nav.classList.remove("is-open");
+    toggle.setAttribute("aria-expanded", "false");
+  })
+);
+</script>
+</body>
+</html>

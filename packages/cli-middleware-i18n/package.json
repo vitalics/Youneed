@@ -1,0 +1,21 @@
+{
+  "name": "@youneed/cli-middleware-i18n",
+  "version": "0.1.0",
+  "description": "i18n middleware for @youneed/cli: this.i18n (translate/locale) backed by @youneed/i18n.",
+  "type": "module",
+  "license": "ISC",
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": { ".": { "types": "./dist/index.d.ts", "default": "./dist/index.js" } },
+  "files": ["dist"],
+  "sideEffects": false,
+  "scripts": { "build": "tsc -p tsconfig.build.json", "test": "tsx tests/i18n.test.ts" },
+  "peerDependencies": { "@youneed/cli": "workspace:*", "@youneed/i18n": "workspace:*" },
+  "devDependencies": {
+    "@youneed/cli": "workspace:*",
+    "@youneed/i18n": "workspace:*",
+    "@youneed/test": "workspace:*",
+    "@youneed/test-reporter-console": "workspace:*"
+  }
+}

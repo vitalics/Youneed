@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>SPA router · mount a component per route</title>
+    <style>
+      body { font-family: system-ui, sans-serif; margin: 24px; max-width: 680px; color: #1b1b1f; }
+      code { background: #eee; padding: 1px 4px; border-radius: 4px; }
+      a { color: #4f46e5; }
+    </style>
+  </head>
+  <body>
+    <h1>SPA router — no page reloads</h1>
+    <p>
+      A hash router mounts a component for each route (<code>#/</code>,
+      <code>#/users/:id</code>, <code>#/files/*</code>). Route <code>params</code>
+      and <code>query</code> arrive as reactive props; navigating just swaps the
+      mounted component.
+    </p>
+    <router-app></router-app>
+    <script src="./app.js"></script>
+  </body>
+</html>

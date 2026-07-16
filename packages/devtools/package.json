@@ -1,0 +1,38 @@
+{
+  "name": "@youneed/devtools",
+  "version": "0.1.0",
+  "description": "Inspector panel (component tree, time-travel, schedulers) + Page devtools.",
+  "type": "module",
+  "license": "ISC",
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    },
+    "./protocol": {
+      "types": "./dist/protocol.d.ts",
+      "default": "./dist/protocol.js"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "sideEffects": false,
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json",
+    "test": "tsx tests/capture.test.ts && tsx tests/styles.test.ts && tsx tests/page-devtools.test.ts && tsx tests/protocol.test.ts"
+  },
+  "dependencies": {
+    "@youneed/dom": "workspace:*",
+    "@youneed/ssr": "workspace:*",
+    "@youneed/devtools-protocol": "workspace:*",
+    "@youneed/schema": "workspace:*"
+  },
+  "devDependencies": {
+    "@youneed/test": "workspace:*",
+    "@youneed/test-reporter-console": "workspace:*"
+  }
+}

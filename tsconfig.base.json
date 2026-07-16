@@ -1,0 +1,655 @@
+{
+  "compilerOptions": {
+    "target": "ES2022",
+    "module": "ESNext",
+    "lib": [
+      "ES2022",
+      "DOM",
+      "DOM.Iterable",
+      "ESNext.Disposable"
+    ],
+    "useDefineForClassFields": true,
+    "strict": true,
+    "noImplicitOverride": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "moduleResolution": "bundler",
+    "allowImportingTsExtensions": true,
+    "verbatimModuleSyntax": false,
+    "types": [],
+    "plugins": [
+      {
+        "name": "@youneed/ts-plugin"
+      }
+    ],
+    "paths": {
+      "@youneed/core": [
+        "./packages/core/src/index.ts"
+      ],
+      "@youneed/dom-scheduler": [
+        "./packages/dom-scheduler/src/index.ts"
+      ],
+      "@youneed/dom": [
+        "./packages/dom/src/index.ts"
+      ],
+      "@youneed/dom/register": [
+        "./packages/dom/src/register.ts"
+      ],
+      "@youneed/dom-adapter-react": [
+        "./packages/dom-adapter-react/src/index.ts"
+      ],
+      "@youneed/dom-provider-direction": [
+        "./packages/dom-provider-direction/src/index.ts"
+      ],
+      "@youneed/dom-provider-color-scheme": [
+        "./packages/dom-provider-color-scheme/src/index.ts"
+      ],
+      "@youneed/dom-provider-a11y": [
+        "./packages/dom-provider-a11y/src/index.ts"
+      ],
+      "@youneed/dom-provider-a11y/devtools": [
+        "./packages/dom-provider-a11y/src/devtools.ts"
+      ],
+      "@youneed/dom-provider-logger": [
+        "./packages/dom-provider-logger/src/index.ts"
+      ],
+      "@youneed/dom-provider-zustand": [
+        "./packages/dom-provider-zustand/src/index.ts"
+      ],
+      "@youneed/dom-provider-zustand/devtools": [
+        "./packages/dom-provider-zustand/src/devtools.ts"
+      ],
+      "@youneed/dom-adapter-angular": [
+        "./packages/dom-adapter-angular/src/index.ts"
+      ],
+      "@youneed/dom-adapter-vue": [
+        "./packages/dom-adapter-vue/src/index.ts"
+      ],
+      "@youneed/dom-adapter-preact": [
+        "./packages/dom-adapter-preact/src/index.ts"
+      ],
+      "@youneed/dom-adapter-svelte": [
+        "./packages/dom-adapter-svelte/src/index.ts"
+      ],
+      "@youneed/dom-adapter-astro": [
+        "./packages/dom-adapter-astro/src/index.ts"
+      ],
+      "@youneed/dom-adapter-astro/client": [
+        "./packages/dom-adapter-astro/src/client.ts"
+      ],
+      "@youneed/dom-provider-virtual": [
+        "./packages/dom-provider-virtual/src/index.ts"
+      ],
+      "@youneed/server": [
+        "./packages/server/src/index.ts"
+      ],
+      "@youneed/schema": [
+        "./packages/schema/src/index.ts"
+      ],
+      "@youneed/dom-provider-env": [
+        "./packages/dom-provider-env/src/index.ts"
+      ],
+      "@youneed/dom-provider-env/devtools": [
+        "./packages/dom-provider-env/src/devtools.ts"
+      ],
+      "@youneed/server-plugin-env": [
+        "./packages/server-plugin-env/src/index.ts"
+      ],
+      "@youneed/orm-sql": [
+        "./packages/orm-sql/src/index.ts"
+      ],
+      "@youneed/orm-adapter-mysql": [
+        "./packages/orm-adapter-mysql/src/index.ts"
+      ],
+      "@youneed/orm-adapter-postgres": [
+        "./packages/orm-adapter-postgres/src/index.ts"
+      ],
+      "@youneed/orm-nosql": [
+        "./packages/orm-nosql/src/index.ts"
+      ],
+      "@youneed/orm-nosql/devtools": [
+        "./packages/orm-nosql/src/devtools.ts"
+      ],
+      "@youneed/orm-adapter-mongo": [
+        "./packages/orm-adapter-mongo/src/index.ts"
+      ],
+      "@youneed/server-adapter": [
+        "./packages/server-adapter/src/index.ts"
+      ],
+      "@youneed/server-plugin-docker": [
+        "./packages/server-plugin-docker/src/index.ts"
+      ],
+      "@youneed/server-plugin-docker/devtools": [
+        "./packages/server-plugin-docker/src/devtools.ts"
+      ],
+      "@youneed/server-middleware-bearer": [
+        "./packages/server-middleware-bearer/src/index.ts"
+      ],
+      "@youneed/server-middleware-jwt": [
+        "./packages/server-middleware-jwt/src/index.ts"
+      ],
+      "@youneed/server-middleware-authorization": [
+        "./packages/server-middleware-authorization/src/index.ts"
+      ],
+      "@youneed/server-middleware-api-key": [
+        "./packages/server-middleware-api-key/src/index.ts"
+      ],
+      "@youneed/server-middleware-ip-filter": [
+        "./packages/server-middleware-ip-filter/src/index.ts"
+      ],
+      "@youneed/server-middleware-webhook-signature": [
+        "./packages/server-middleware-webhook-signature/src/index.ts"
+      ],
+      "@youneed/server-middleware-webhook-signature/stripe": [
+        "./packages/server-middleware-webhook-signature/src/stripe.ts"
+      ],
+      "@youneed/server-middleware-webhook-signature/github": [
+        "./packages/server-middleware-webhook-signature/src/github.ts"
+      ],
+      "@youneed/server-middleware-webhook-signature/shopify": [
+        "./packages/server-middleware-webhook-signature/src/shopify.ts"
+      ],
+      "@youneed/server-middleware-request-id": [
+        "./packages/server-middleware-request-id/src/index.ts"
+      ],
+      "@youneed/server-upload": [
+        "./packages/server-upload/src/index.ts"
+      ],
+      "@youneed/server-plugin-oauth2": [
+        "./packages/server-plugin-oauth2/src/index.ts"
+      ],
+      "@youneed/server-plugin-oauth2/github": [
+        "./packages/server-plugin-oauth2/src/providers/github.ts"
+      ],
+      "@youneed/server-plugin-oauth2/google": [
+        "./packages/server-plugin-oauth2/src/providers/google.ts"
+      ],
+      "@youneed/server-plugin-oauth2/facebook": [
+        "./packages/server-plugin-oauth2/src/providers/facebook.ts"
+      ],
+      "@youneed/server-plugin-oauth2/yandex": [
+        "./packages/server-plugin-oauth2/src/providers/yandex.ts"
+      ],
+      "@youneed/server-plugin-oauth2/vk": [
+        "./packages/server-plugin-oauth2/src/providers/vk.ts"
+      ],
+      "@youneed/server-plugin-oauth2/telegram": [
+        "./packages/server-plugin-oauth2/src/providers/telegram.ts"
+      ],
+      "@youneed/server-plugin-oauth2/keycloak": [
+        "./packages/server-plugin-oauth2/src/providers/keycloak.ts"
+      ],
+      "@youneed/server-plugin-oauth2/auth0": [
+        "./packages/server-plugin-oauth2/src/providers/auth0.ts"
+      ],
+      "@youneed/server-plugin-oauth2/clerk": [
+        "./packages/server-plugin-oauth2/src/providers/clerk.ts"
+      ],
+      "@youneed/server-plugin-oauth2/gosuslugi": [
+        "./packages/server-plugin-oauth2/src/providers/gosuslugi.ts"
+      ],
+      "@youneed/server-plugin-oauth2/entra": [
+        "./packages/server-plugin-oauth2/src/providers/entra.ts"
+      ],
+      "@youneed/server-plugin-oauth2/gitlab": [
+        "./packages/server-plugin-oauth2/src/providers/gitlab.ts"
+      ],
+      "@youneed/server-plugin-oauth2/discord": [
+        "./packages/server-plugin-oauth2/src/providers/discord.ts"
+      ],
+      "@youneed/server-plugin-oauth2/apple": [
+        "./packages/server-plugin-oauth2/src/providers/apple.ts"
+      ],
+      "@youneed/server-plugin-oauth2/twitch": [
+        "./packages/server-plugin-oauth2/src/providers/twitch.ts"
+      ],
+      "@youneed/server-plugin-oauth2/linkedin": [
+        "./packages/server-plugin-oauth2/src/providers/linkedin.ts"
+      ],
+      "@youneed/server-plugin-oauth2/slack": [
+        "./packages/server-plugin-oauth2/src/providers/slack.ts"
+      ],
+      "@youneed/server-plugin-oauth2/spotify": [
+        "./packages/server-plugin-oauth2/src/providers/spotify.ts"
+      ],
+      "@youneed/server-plugin-oauth2/bitbucket": [
+        "./packages/server-plugin-oauth2/src/providers/bitbucket.ts"
+      ],
+      "@youneed/server-plugin-oauth2/okta": [
+        "./packages/server-plugin-oauth2/src/providers/okta.ts"
+      ],
+      "@youneed/server-plugin-oauth2/cognito": [
+        "./packages/server-plugin-oauth2/src/providers/cognito.ts"
+      ],
+      "@youneed/server-plugin-otp": [
+        "./packages/server-plugin-otp/src/index.ts"
+      ],
+      "@youneed/server-plugin-otp/email": [
+        "./packages/server-plugin-otp/src/email.ts"
+      ],
+      "@youneed/server-plugin-otp/sms": [
+        "./packages/server-plugin-otp/src/sms.ts"
+      ],
+      "@youneed/server-middleware-cors": [
+        "./packages/server-middleware-cors/src/index.ts"
+      ],
+      "@youneed/server-middleware-rate-limit": [
+        "./packages/server-middleware-rate-limit/src/index.ts"
+      ],
+      "@youneed/server-middleware-http2-guard": [
+        "./packages/server-middleware-http2-guard/src/index.ts"
+      ],
+      "@youneed/server-middleware-compression": [
+        "./packages/server-middleware-compression/src/index.ts"
+      ],
+      "@youneed/server-middleware-request-logger": [
+        "./packages/server-middleware-request-logger/src/index.ts"
+      ],
+      "@youneed/server-middleware-helmet": [
+        "./packages/server-middleware-helmet/src/index.ts"
+      ],
+      "@youneed/server-middleware-csrf": [
+        "./packages/server-middleware-csrf/src/index.ts"
+      ],
+      "@youneed/server-middleware-body-limit": [
+        "./packages/server-middleware-body-limit/src/index.ts"
+      ],
+      "@youneed/server-middleware-timeout": [
+        "./packages/server-middleware-timeout/src/index.ts"
+      ],
+      "@youneed/server-middleware-etag": [
+        "./packages/server-middleware-etag/src/index.ts"
+      ],
+      "@youneed/server-middleware-server-timing": [
+        "./packages/server-middleware-server-timing/src/index.ts"
+      ],
+      "@youneed/server-middleware-keep-alive": [
+        "./packages/server-middleware-keep-alive/src/index.ts"
+      ],
+      "@youneed/server-middleware-static": [
+        "./packages/server-middleware-static/src/index.ts"
+      ],
+      "@youneed/server-middleware-load-shed": [
+        "./packages/server-middleware-load-shed/src/index.ts"
+      ],
+      "@youneed/server-middleware-health": [
+        "./packages/server-middleware-health/src/index.ts"
+      ],
+      "@youneed/server-middleware-metrics": [
+        "./packages/server-middleware-metrics/src/index.ts"
+      ],
+      "@youneed/server-middleware-trace": [
+        "./packages/server-middleware-trace/src/index.ts"
+      ],
+      "@youneed/server-middleware-https-redirect": [
+        "./packages/server-middleware-https-redirect/src/index.ts"
+      ],
+      "@youneed/server-middleware-session": [
+        "./packages/server-middleware-session/src/index.ts"
+      ],
+      "@youneed/server-middleware-basic-auth": [
+        "./packages/server-middleware-basic-auth/src/index.ts"
+      ],
+      "@youneed/server-middleware-trust-proxy": [
+        "./packages/server-middleware-trust-proxy/src/index.ts"
+      ],
+      "@youneed/server-plugin-store": [
+        "./packages/server-plugin-store/src/index.ts"
+      ],
+      "@youneed/kv": [
+        "./packages/kv/src/index.ts"
+      ],
+      "@youneed/server-plugin-kv": [
+        "./packages/server-plugin-kv/src/index.ts"
+      ],
+      "@youneed/server-plugin-kv/devtools": [
+        "./packages/server-plugin-kv/src/devtools.ts"
+      ],
+      "@youneed/server-plugin-pubsub": [
+        "./packages/server-plugin-pubsub/src/index.ts"
+      ],
+      "@youneed/server-plugin-pubsub/devtools": [
+        "./packages/server-plugin-pubsub/src/devtools.ts"
+      ],
+      "@youneed/server-plugin-pubsub-redis": [
+        "./packages/server-plugin-pubsub-redis/src/index.ts"
+      ],
+      "@youneed/server-plugin-pubsub-postgres": [
+        "./packages/server-plugin-pubsub-postgres/src/index.ts"
+      ],
+      "@youneed/server-plugin-pubsub-kafka": [
+        "./packages/server-plugin-pubsub-kafka/src/index.ts"
+      ],
+      "@youneed/server-plugin-pubsub-deno": [
+        "./packages/server-plugin-pubsub-deno/src/index.ts"
+      ],
+      "@youneed/server-plugin-pubsub-rabbitmq": [
+        "./packages/server-plugin-pubsub-rabbitmq/src/index.ts"
+      ],
+      "@youneed/server-plugin-pubsub-nats": [
+        "./packages/server-plugin-pubsub-nats/src/index.ts"
+      ],
+      "@youneed/server-plugin-pubsub-sqs": [
+        "./packages/server-plugin-pubsub-sqs/src/index.ts"
+      ],
+      "@youneed/kv-redis": [
+        "./packages/kv-redis/src/index.ts"
+      ],
+      "@youneed/logger": [
+        "./packages/logger/src/index.ts"
+      ],
+      "@youneed/logger-transport-stdout": [
+        "./packages/logger-transport-stdout/src/index.ts"
+      ],
+      "@youneed/logger-transport-file": [
+        "./packages/logger-transport-file/src/index.ts"
+      ],
+      "@youneed/logger-transport-http": [
+        "./packages/logger-transport-http/src/index.ts"
+      ],
+      "@youneed/logger-plugin-exception": [
+        "./packages/logger-plugin-exception/src/index.ts"
+      ],
+      "@youneed/logger-plugin-datadog": [
+        "./packages/logger-plugin-datadog/src/index.ts"
+      ],
+      "@youneed/logger-plugin-location": [
+        "./packages/logger-plugin-location/src/index.ts"
+      ],
+      "@youneed/cli": [
+        "./packages/cli/src/index.ts"
+      ],
+      "@youneed/cli-middleware-color": [
+        "./packages/cli-middleware-color/src/index.ts"
+      ],
+      "@youneed/cli-middleware-logger": [
+        "./packages/cli-middleware-logger/src/index.ts"
+      ],
+      "@youneed/cli-middleware-env": [
+        "./packages/cli-middleware-env/src/index.ts"
+      ],
+      "@youneed/cli-middleware-prompt": [
+        "./packages/cli-middleware-prompt/src/index.ts"
+      ],
+      "@youneed/cli-middleware-notification": [
+        "./packages/cli-middleware-notification/src/index.ts"
+      ],
+      "@youneed/cli-middleware-oscillator": [
+        "./packages/cli-middleware-oscillator/src/index.ts"
+      ],
+      "@youneed/cli-middleware-music": [
+        "./packages/cli-middleware-music/src/index.ts"
+      ],
+      "@youneed/cli-plugin-devtools": [
+        "./packages/cli-plugin-devtools/src/index.ts"
+      ],
+      "@youneed/cli-middleware-childprocess": [
+        "./packages/cli-middleware-childprocess/src/index.ts"
+      ],
+      "@youneed/cli-middleware-worker": [
+        "./packages/cli-middleware-worker/src/index.ts"
+      ],
+      "@youneed/cli-plugin-error": [
+        "./packages/cli-plugin-error/src/index.ts"
+      ],
+      "@youneed/cli-plugin-completion": [
+        "./packages/cli-plugin-completion/src/index.ts"
+      ],
+      "@youneed/cli-plugin-config": [
+        "./packages/cli-plugin-config/src/index.ts"
+      ],
+      "@youneed/http-client": [
+        "./packages/http-client/src/index.ts"
+      ],
+      "@youneed/server-middleware-idempotency": [
+        "./packages/server-middleware-idempotency/src/index.ts"
+      ],
+      "@youneed/server-plugin-jobs": [
+        "./packages/server-plugin-jobs/src/index.ts"
+      ],
+      "@youneed/server-plugin-jobs/devtools": [
+        "./packages/server-plugin-jobs/src/devtools.ts"
+      ],
+      "@youneed/server-plugin-queue": [
+        "./packages/server-plugin-queue/src/index.ts"
+      ],
+      "@youneed/server-plugin-queue/devtools": [
+        "./packages/server-plugin-queue/src/devtools.ts"
+      ],
+      "@youneed/server-plugin-storage": [
+        "./packages/server-plugin-storage/src/index.ts"
+      ],
+      "@youneed/server-plugin-storage/devtools": [
+        "./packages/server-plugin-storage/src/devtools.ts"
+      ],
+      "@youneed/server-plugin-mailer": [
+        "./packages/server-plugin-mailer/src/index.ts"
+      ],
+      "@youneed/server-plugin-mailer/devtools": [
+        "./packages/server-plugin-mailer/src/devtools.ts"
+      ],
+      "@youneed/server-plugin-mailer/smtp": [
+        "./packages/server-plugin-mailer/src/smtp.ts"
+      ],
+      "@youneed/server-plugin-mailer/sendgrid": [
+        "./packages/server-plugin-mailer/src/sendgrid.ts"
+      ],
+      "@youneed/server-plugin-mailer/postmark": [
+        "./packages/server-plugin-mailer/src/postmark.ts"
+      ],
+      "@youneed/server-plugin-mailer/ses": [
+        "./packages/server-plugin-mailer/src/ses.ts"
+      ],
+      "@youneed/server-plugin-graphql": [
+        "./packages/server-plugin-graphql/src/index.ts"
+      ],
+      "@youneed/server-plugin-graphql/devtools": [
+        "./packages/server-plugin-graphql/src/devtools.ts"
+      ],
+      "@youneed/server-plugin-grpc": [
+        "./packages/server-plugin-grpc/src/index.ts"
+      ],
+      "@youneed/server-plugin-grpc/devtools": [
+        "./packages/server-plugin-grpc/src/devtools.ts"
+      ],
+      "@youneed/server-plugin-otlp": [
+        "./packages/server-plugin-otlp/src/index.ts"
+      ],
+      "@youneed/server-plugin-otlp/devtools": [
+        "./packages/server-plugin-otlp/src/devtools.ts"
+      ],
+      "@youneed/server-plugin-cluster": [
+        "./packages/server-plugin-cluster/src/index.ts"
+      ],
+      "@youneed/server-middleware-logger": [
+        "./packages/server-middleware-logger/src/index.ts"
+      ],
+      "@youneed/i18n": [
+        "./packages/i18n/src/index.ts"
+      ],
+      "@youneed/dom-provider-i18n": [
+        "./packages/dom-provider-i18n/src/index.ts"
+      ],
+      "@youneed/feature-flags": [
+        "./packages/feature-flags/src/index.ts"
+      ],
+      "@youneed/rbac": [
+        "./packages/rbac/src/index.ts"
+      ],
+      "@youneed/secrets": [
+        "./packages/secrets/src/index.ts"
+      ],
+      "@youneed/secrets-vault": [
+        "./packages/secrets-vault/src/index.ts"
+      ],
+      "@youneed/secrets-aws": [
+        "./packages/secrets-aws/src/index.ts"
+      ],
+      "@youneed/server-plugin-secrets": [
+        "./packages/server-plugin-secrets/src/index.ts"
+      ],
+      "@youneed/server-plugin-secrets/devtools": [
+        "./packages/server-plugin-secrets/src/devtools.ts"
+      ],
+      "@youneed/api-client": [
+        "./packages/api-client/src/index.ts"
+      ],
+      "@youneed/api-client/codegen": [
+        "./packages/api-client/src/codegen.ts"
+      ],
+      "@youneed/dom-provider-rbac": [
+        "./packages/dom-provider-rbac/src/index.ts"
+      ],
+      "@youneed/server-plugin-rbac": [
+        "./packages/server-plugin-rbac/src/index.ts"
+      ],
+      "@youneed/server-plugin-rbac/devtools": [
+        "./packages/server-plugin-rbac/src/devtools.ts"
+      ],
+      "@youneed/test-plugin-rbac": [
+        "./packages/test-plugin-rbac/src/index.ts"
+      ],
+      "@youneed/dom-provider-feature-flags": [
+        "./packages/dom-provider-feature-flags/src/index.ts"
+      ],
+      "@youneed/server-plugin-feature-flags": [
+        "./packages/server-plugin-feature-flags/src/index.ts"
+      ],
+      "@youneed/server-plugin-feature-flags/devtools": [
+        "./packages/server-plugin-feature-flags/src/devtools.ts"
+      ],
+      "@youneed/ssr-plugin-feature-flags": [
+        "./packages/ssr-plugin-feature-flags/src/index.ts"
+      ],
+      "@youneed/cli-plugin-feature-flags": [
+        "./packages/cli-plugin-feature-flags/src/index.ts"
+      ],
+      "@youneed/test-plugin-feature-flags": [
+        "./packages/test-plugin-feature-flags/src/index.ts"
+      ],
+      "@youneed/feature-flags-vercel": [
+        "./packages/feature-flags-vercel/src/index.ts"
+      ],
+      "@youneed/feature-flags-launchdarkly": [
+        "./packages/feature-flags-launchdarkly/src/index.ts"
+      ],
+      "@youneed/feature-flags-posthog": [
+        "./packages/feature-flags-posthog/src/index.ts"
+      ],
+      "@youneed/feature-flags-datadog": [
+        "./packages/feature-flags-datadog/src/index.ts"
+      ],
+      "@youneed/dom-provider-i18n/devtools": [
+        "./packages/dom-provider-i18n/src/devtools.ts"
+      ],
+      "@youneed/logger-plugin-i18n": [
+        "./packages/logger-plugin-i18n/src/index.ts"
+      ],
+      "@youneed/server-middleware-accept-language": [
+        "./packages/server-middleware-accept-language/src/index.ts"
+      ],
+      "@youneed/server-plugin-devtools": [
+        "./packages/server-plugin-devtools/src/index.ts"
+      ],
+      "@youneed/server-plugin-devtools/registry": [
+        "./packages/server-plugin-devtools/src/registry.ts"
+      ],
+      "@youneed/server-plugin-devtools/ui": [
+        "./packages/server-plugin-devtools/src/ui.ts"
+      ],
+      "@youneed/server-plugin-devtools/serve": [
+        "./packages/server-plugin-devtools/src/serve.ts"
+      ],
+      "@youneed/test-plugin-i18n": [
+        "./packages/test-plugin-i18n/src/index.ts"
+      ],
+      "@youneed/dom-router": [
+        "./packages/dom-router/src/index.ts"
+      ],
+      "@youneed/ssr": [
+        "./packages/ssr/src/index.ts"
+      ],
+      "@youneed/server-plugin-ssr": [
+        "./packages/server-plugin-ssr/src/index.ts"
+      ],
+      "@youneed/server-plugin-ssr/devtools": [
+        "./packages/server-plugin-ssr/src/devtools.ts"
+      ],
+      "@youneed/ssr-plugin-robots": [
+        "./packages/ssr-plugin-robots/src/index.ts"
+      ],
+      "@youneed/ssr-plugin-sitemap": [
+        "./packages/ssr-plugin-sitemap/src/index.ts"
+      ],
+      "@youneed/ssr-plugin-rss": [
+        "./packages/ssr-plugin-rss/src/index.ts"
+      ],
+      "@youneed/ssr-plugin-llms": [
+        "./packages/ssr-plugin-llms/src/index.ts"
+      ],
+      "@youneed/ssr-plugin-structured-data": [
+        "./packages/ssr-plugin-structured-data/src/index.ts"
+      ],
+      "@youneed/ssr-plugin-speculation": [
+        "./packages/ssr-plugin-speculation/src/index.ts"
+      ],
+      "@youneed/ssr-router": [
+        "./packages/ssr-router/src/index.ts"
+      ],
+      "@youneed/ssr-plugin-meta": [
+        "./packages/ssr-plugin-meta/src/index.ts"
+      ],
+      "@youneed/ssr-plugin-canonical": [
+        "./packages/ssr-plugin-canonical/src/index.ts"
+      ],
+      "@youneed/ssr-plugin-preload": [
+        "./packages/ssr-plugin-preload/src/index.ts"
+      ],
+      "@youneed/ssr-plugin-csp": [
+        "./packages/ssr-plugin-csp/src/index.ts"
+      ],
+      "@youneed/devtools": [
+        "./packages/devtools/src/index.ts"
+      ],
+      "@youneed/vite-plugin": [
+        "./packages/vite-plugin/src/index.ts"
+      ],
+      "@youneed/test": [
+        "./packages/test/src/index.ts"
+      ],
+      "@youneed/test-reporter-console": [
+        "./packages/test-reporter-console/src/index.ts"
+      ],
+      "@youneed/test-reporter-html": [
+        "./packages/test-reporter-html/src/index.ts"
+      ],
+      "@youneed/test-plugin-benchmark": [
+        "./packages/test-plugin-benchmark/src/index.ts"
+      ],
+      "@youneed/test-reporter-progress": [
+        "./packages/test-reporter-progress/src/index.ts"
+      ],
+      "@youneed/test-reporter-tap": [
+        "./packages/test-reporter-tap/src/index.ts"
+      ],
+      "@youneed/test-reporter-junit": [
+        "./packages/test-reporter-junit/src/index.ts"
+      ],
+      "@youneed/test-resilience": [
+        "./packages/test-resilience/src/index.ts"
+      ],
+      "@youneed/test-snapshot": [
+        "./packages/test-snapshot/src/index.ts"
+      ],
+      "@youneed/test-expect-extra": [
+        "./packages/test-expect-extra/src/index.ts"
+      ],
+      "@youneed/dom-ui-shad": [
+        "./packages/dom-ui-shad/src/index.ts"
+      ],
+      "@youneed/devtools-protocol": [
+        "./packages/devtools-protocol/src/index.ts"
+      ]
+    }
+  }
+}

@@ -1,0 +1,42 @@
+{
+  "name": "@youneed/server-plugin-jsonrpc",
+  "version": "0.1.0",
+  "description": "JSON-RPC 2.0 for @youneed/server: class + TC39-decorator endpoints (@JsonRPC.method) with schema-validated params, served over a POST request or a Chrome-CDP-style WebSocket, plus a @youneed/server-plugin-devtools panel to inspect methods and debug calls.",
+  "type": "module",
+  "license": "ISC",
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    },
+    "./devtools": {
+      "types": "./dist/devtools.d.ts",
+      "default": "./dist/devtools.js"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "sideEffects": [
+    "./dist/devtools.js",
+    "./src/devtools.ts"
+  ],
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json",
+    "test": "tsx tests/jsonrpc.test.ts"
+  },
+  "dependencies": {
+    "@youneed/schema": "workspace:*",
+    "@youneed/server": "workspace:*"
+  },
+  "devDependencies": {
+    "@youneed/test": "workspace:*",
+    "@youneed/test-reporter-console": "workspace:*",
+    "@youneed/dom": "workspace:*",
+    "@youneed/dom-ui-shad": "workspace:*",
+    "@youneed/server-plugin-devtools": "workspace:*"
+  }
+}

@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Render priority · render-blocking vs background</title>
+    <style>
+      body {
+        font-family: system-ui, -apple-system, sans-serif;
+        margin: 24px;
+        max-width: 760px;
+        color: #1b1b1f;
+      }
+      code {
+        background: #eee;
+        padding: 1px 4px;
+        border-radius: 4px;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Render priority — render-blocking vs background</h1>
+    <p>
+      Two widgets render the same rapidly-updated value with an expensive render.
+      Only their scheduler <code>priority</code> differs:
+      <b>render-blocking</b> flushes on the microtask queue (always fresh, hogs the
+      main thread) while <b>background</b> flushes on idle (coalesces under load,
+      lags, stays responsive). Watch the FPS heartbeat while flooding.
+    </p>
+
+    <priority-demo></priority-demo>
+
+    <!-- IIFE bundle (classic script) — works over file:// too -->
+    <script src="./app.js"></script>
+  </body>
+</html>

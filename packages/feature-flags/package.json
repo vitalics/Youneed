@@ -1,0 +1,28 @@
+{
+  "name": "@youneed/feature-flags",
+  "version": "0.1.0",
+  "description": "Tiny framework-agnostic feature-flag engine: boolean/variant/value flags, attribute targeting + deterministic percentage rollout, synchronous evaluation, SSR snapshot hydration.",
+  "type": "module",
+  "license": "ISC",
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "sideEffects": false,
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json",
+    "test": "tsx tests/feature-flags.test.ts"
+  },
+  "devDependencies": {
+    "@youneed/test": "workspace:*",
+    "@youneed/test-reporter-console": "workspace:*"
+  }
+}

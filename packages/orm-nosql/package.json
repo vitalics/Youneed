@@ -1,0 +1,38 @@
+{
+  "name": "@youneed/orm-nosql",
+  "version": "0.1.0",
+  "description": "Tiny document/NoSQL ORM on standard TC39 decorators (Mongoose-style collections, Mongo-style query filters, pluggable document-store adapters; ships an in-memory store).",
+  "type": "module",
+  "license": "ISC",
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    },
+    "./devtools": {
+      "types": "./dist/devtools.d.ts",
+      "default": "./dist/devtools.js"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "sideEffects": [
+    "./dist/devtools.js",
+    "./src/devtools.ts"
+  ],
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json",
+    "test": "tsx tests/nosql.test.ts"
+  },
+  "devDependencies": {
+    "@youneed/dom": "workspace:*",
+    "@youneed/server": "workspace:*",
+    "@youneed/server-plugin-devtools": "workspace:*",
+    "@youneed/test": "workspace:*",
+    "@youneed/test-reporter-console": "workspace:*"
+  }
+}

@@ -1,0 +1,30 @@
+{
+  "extends": "../../tsconfig.base.json",
+  "compilerOptions": {
+    "noEmit": true,
+    "types": [],
+    "plugins": [
+      {
+        "name": "@youneed/ts-plugin",
+        "//": "Audits: each [moduleSpecifier, options] loads a check provider. The dom audit owns binding checks + unusedCss + preview; the a11y package contributes the reduce-motion / color-scheme CSS checks.",
+        "audits": [
+          [
+            "@youneed/ts-plugin/dom",
+            {
+              "unusedCss": { "enabled": true, "kind": "error" },
+              "preview": { "dir": "preview", "capture": true, "command": "node generate-previews.mjs" }
+            }
+          ],
+          [
+            "@youneed/dom-provider-a11y/ts-plugin",
+            {
+              "reduceMotion": { "enabled": true, "kind": "warning" },
+              "colorScheme": { "enabled": true, "kind": "warning" }
+            }
+          ]
+        ]
+      }
+    ]
+  },
+  "include": ["*.ts"]
+}

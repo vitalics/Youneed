@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Auto-restarting task</title>
+    <style>
+      body { font-family: system-ui, sans-serif; margin: 24px; max-width: 640px; color: #1b1b1f; }
+      code { background: #eee; padding: 1px 4px; border-radius: 4px; }
+    </style>
+  </head>
+  <body>
+    <h1>Task that restarts when a number is reached</h1>
+    <p>
+      A <code>task()</code> counts up once per tick. A
+      <code>@Component.watch("count")</code> watches the value; when it reaches the
+      threshold it counts a lap, resets, and calls <code>tick.run()</code> — which
+      aborts the in-flight run and starts a clean one. The <code>+1 now</code>
+      button proves the same rule fires no matter how the number changed.
+    </p>
+    <restart-counter></restart-counter>
+    <script src="./app.js"></script>
+  </body>
+</html>

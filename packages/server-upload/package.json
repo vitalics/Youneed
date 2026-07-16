@@ -1,0 +1,12 @@
+{
+  "name": "@youneed/server-upload",
+  "version": "0.1.0",
+  "description": "Streaming multipart/form-data file uploads for @youneed/server: web streams, progress, and size/extension/type/name/content guards.",
+  "type": "module", "license": "ISC",
+  "main": "./dist/index.js", "module": "./dist/index.js", "types": "./dist/index.d.ts",
+  "exports": { ".": { "types": "./dist/index.d.ts", "default": "./dist/index.js" } },
+  "files": ["dist"], "sideEffects": false,
+  "scripts": { "build": "tsc -p tsconfig.build.json", "test": "tsx tests/upload.test.ts" },
+  "dependencies": { "@youneed/server": "workspace:*" },
+  "devDependencies": { "@youneed/test": "workspace:*", "@youneed/test-reporter-console": "workspace:*" }
+}

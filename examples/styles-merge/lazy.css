@@ -1,0 +1,4 @@
+/* Layer 3 — lazy `() => import()`. Adopted LAST → wins the :host background. */
+:host { background: #dcfce7; }                     /* green bg (final winner) */
+.lazy-only { display: block; color: #166534; }     /* reveals the line hidden by layer 2 */
+.badge::after { content: " · lazy applied ✓"; color: #166534; }

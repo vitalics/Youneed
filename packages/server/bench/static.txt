@@ -1,0 +1,6 @@
+Hello, World!
+
+This is a small static asset served by @youneed/server's File() response so the
+benchmark exercises the static-file code path (stat + stream) rather than an
+in-memory string. The body is intentionally short and deterministic: the harness
+compares the framework's per-request overhead, not payload size or disk speed.

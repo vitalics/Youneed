@@ -1,0 +1,31 @@
+{
+  "name": "@youneed/feature-flags-posthog",
+  "version": "0.1.0",
+  "description": "PostHog provider for @youneed/feature-flags — a framework-agnostic remote evaluator over PostHog's /decide HTTP API (no SDK, pure fetch).",
+  "type": "module",
+  "license": "ISC",
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "sideEffects": false,
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json",
+    "test": "tsx tests/posthog.test.ts"
+  },
+  "dependencies": {
+    "@youneed/feature-flags": "workspace:*"
+  },
+  "devDependencies": {
+    "@youneed/test": "workspace:*",
+    "@youneed/test-reporter-console": "workspace:*"
+  }
+}

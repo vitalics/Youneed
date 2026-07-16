@@ -1,0 +1,3 @@
+/* Layer 1 — Component options `styles` (imported as text). Adopted FIRST. */
+:host { display: block; background: #e0e7ff; padding: 24px; } /* indigo bg (loses) · unique: padding */
+.label { color: #4338ca; font-weight: 700; }

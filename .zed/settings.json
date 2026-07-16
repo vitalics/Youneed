@@ -1,0 +1,24 @@
+{
+  // Zed drives TypeScript through vtsls. Load @youneed/ts-plugin as a global
+  // tsserver plugin. `location: "."` (repo root) resolves it from node_modules;
+  // `languages` tells vtsls which file types to activate it for (required), and
+  // `enableForWorkspaceTypeScriptVersions` lets it run under the workspace TS.
+  "lsp": {
+    "vtsls": {
+      "settings": {
+        "vtsls": {
+          "tsserver": {
+            "globalPlugins": [
+              {
+                "name": "@youneed/ts-plugin",
+                "location": ".",
+                "languages": ["typescript", "typescriptreact", "javascript", "javascriptreact"],
+                "enableForWorkspaceTypeScriptVersions": true
+              }
+            ]
+          }
+        }
+      }
+    }
+  }
+}

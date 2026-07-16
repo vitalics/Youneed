@@ -1,0 +1,32 @@
+{
+  "name": "@youneed/server-adapter",
+  "version": "0.1.0",
+  "description": "Run a @youneed/server app on any runtime: a Web `fetch` bridge (Bun / Deno / edge / Workers) over the app's Node request listener, plus node/bun/deno serve adapters.",
+  "type": "module",
+  "license": "ISC",
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "sideEffects": false,
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json",
+    "test": "tsx tests/fetch.test.ts"
+  },
+  "peerDependencies": {
+    "@youneed/server": "workspace:*"
+  },
+  "devDependencies": {
+    "@youneed/server": "workspace:*",
+    "@youneed/test": "workspace:*",
+    "@youneed/test-reporter-console": "workspace:*"
+  }
+}

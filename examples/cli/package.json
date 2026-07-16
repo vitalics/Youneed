@@ -1,0 +1,28 @@
+{
+  "name": "@youneed/example-cli",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "//": "Run with tsx, e.g. `pnpm tsx examples/cli/bin.ts status`. Not a pnpm workspace member; @youneed/* resolve from the repo-root node_modules (added to the root package.json deps + `pnpm install`; build the packages first: `pnpm -r build`).",
+  "scripts": {
+    "devtools": "tsx bin.ts devtools",
+    "play": "tsx bin.ts play",
+    "dashboard": "tsx bin.ts dashboard",
+    "setup": "tsx bin.ts setup",
+    "elements": "tsx bin.ts elements",
+    "status": "tsx bin.ts status",
+    "split": "tsx bin.ts split a,b,c --first"
+  },
+  "dependencies": {
+    "@youneed/cli": "workspace:*",
+    "@youneed/cli-middleware-color": "workspace:*",
+    "@youneed/cli-middleware-logger": "workspace:*",
+    "@youneed/cli-middleware-prompt": "workspace:*",
+    "@youneed/cli-middleware-music": "workspace:*",
+    "@youneed/cli-middleware-oscillator": "workspace:*",
+    "@youneed/cli-plugin-devtools": "workspace:*"
+  },
+  "devDependencies": {
+    "tsx": "*"
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "comment": "Nest needs legacy (experimental) decorators + reflect-metadata. tsx reads this via --tsconfig.",
+  "compilerOptions": {
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+    "target": "ES2021",
+    "module": "ESNext",
+    "moduleResolution": "bundler",
+    "esModuleInterop": true,
+    "skipLibCheck": true
+  }
+}

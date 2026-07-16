@@ -1,0 +1,624 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>youneed — 170 packages. One paradigm.</title>
+<meta name="description" content="youneed is a TypeScript-first toolkit built on native platform primitives — Custom Elements, Shadow DOM, the HTTP server, the Speculation Rules API.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700;800&display=swap" rel="stylesheet">
+<style>
+/* Hallmark · macrostructure: Narrative Workflow · theme: Terminal · genre: atmospheric · nav: N8 · footer: Ft5 · tone: atmospheric-terminal · anchor hue: phosphor-green */
+/* knobs: type scale 1.25 (major third) · single-family mono (JetBrains Mono — terminal aesthetic IS the design) · anchor hue 150 · accent chroma 0.19 · blooms ×2 fixed (atmospheric loosens gate 29) · spacing 4pt · motion primitives 3: caret-blink (N8 only) + load-fade + copy-label-swap · left-biased axis · rules: hair 1px / thick 3px */
+/* Hallmark · pre-emit critique: P4 H4 E3 S4 R4 V4 → post-fix E4 */
+/* Hallmark · contrast: pass (40–41) · slop: pass (42–45) · honest: pass (46) · chrome: pass (47) · tokens: pass (48) · responsive: pass (49) · icons: pass (30) · mobile: pass (34, 49, 50–57) · variety: prior = Manifesto, Workbench → this = Narrative Workflow */
+
+:root {
+  /* type — one family; the mono is the design choice (Terminal theme) */
+  --font-mono: "JetBrains Mono", ui-monospace, "SF Mono", Menlo, monospace;
+  --font-display: var(--font-mono);
+  --font-body: var(--font-mono);
+
+  /* scale 1.25 */
+  --text-xs:   0.64rem;
+  --text-sm:   0.8rem;
+  --text-base: 1rem;
+  --text-md:   1.25rem;
+  --text-lg:   1.5625rem;
+  --text-xl:   1.9531rem;
+  --text-2xl:  2.4414rem;
+  --text-display-s: clamp(1.75rem, 3.5vw + 0.5rem, 3.05rem);
+  --text-figure: clamp(5rem, 15vw, 11.5rem);
+
+  /* colour — Terminal: dark paper, phosphor-green anchor (hue 150), OKLCH only */
+  --color-paper:    oklch(15% 0.012 150);
+  --color-paper-2:  oklch(19% 0.015 150);
+  --color-rule:     oklch(33% 0.022 150);
+  --color-neutral:  oklch(66% 0.025 150);
+  --color-muted:    oklch(74% 0.03 150);
+  --color-ink:      oklch(93% 0.012 150);
+  --color-accent:   oklch(79% 0.19 150);
+  --color-accent-dim: oklch(70% 0.14 150);
+  --color-accent-ink: oklch(15% 0.012 150);  /* text on accent fills */
+  --color-focus:    oklch(83% 0.2 150);
+  --color-bloom-a:  oklch(46% 0.1 150 / 0.13);
+  --color-bloom-b:  oklch(52% 0.11 170 / 0.09);
+  --color-shadow:   oklch(8% 0.01 150 / 0.5);
+
+  /* spacing — 4pt scale */
+  --space-3xs: 0.125rem;
+  --space-2xs: 0.25rem;
+  --space-xs:  0.5rem;
+  --space-sm:  0.75rem;
+  --space-md:  1rem;
+  --space-lg:  1.5rem;
+  --space-xl:  2.5rem;
+  --space-2xl: 4rem;
+  --space-3xl: 6rem;
+  --space-4xl: 9rem;
+
+  --page-gutter: clamp(1rem, 5vw, 4rem);
+  --measure: 62ch;
+  --rule-hair: 1px;
+  --rule-thick: 3px;
+
+  /* z scale */
+  --z-base: 1;
+  --z-raised: 10;
+  --z-sticky: 200;
+
+  /* motion */
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in:  cubic-bezier(0.7, 0, 0.84, 0);
+  --dur-micro: 120ms;
+  --dur-short: 220ms;
+  --dur-long:  420ms;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+html { overflow-x: clip; }
+body { overflow-x: clip; }
+
+body {
+  margin: 0;
+  background: var(--color-paper);
+  color: var(--color-ink);
+  font-family: var(--font-body);
+  font-size: var(--text-base);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* two phosphor blooms — fixed, static, ≤ ~25% footprint each (atmospheric genre) */
+body::before,
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+}
+body::before {
+  background: radial-gradient(38rem 30rem at 82% -6%, var(--color-bloom-a), transparent 70%);
+}
+body::after {
+  background: radial-gradient(34rem 28rem at -8% 72%, var(--color-bloom-b), transparent 70%);
+}
+
+main, header, footer { position: relative; z-index: var(--z-base); }
+
+h1, h2, h3 { font-style: normal; font-weight: 700; margin: 0; }
+p { margin: 0; }
+a { color: var(--color-accent); text-decoration: underline; text-underline-offset: 3px; text-decoration-thickness: 1px; }
+a:hover { color: var(--color-ink); }
+a:active { color: var(--color-accent-dim); }
+a, button { transition: color var(--dur-micro) var(--ease-out), background-color var(--dur-micro) var(--ease-out); }
+
+:focus-visible {
+  outline: 2px solid var(--color-focus);
+  outline-offset: 3px;
+  transition: none;
+}
+
+::selection { background: var(--color-accent-dim); color: var(--color-paper); }
+
+.container {
+  max-width: 72rem;
+  margin-inline: auto;
+  padding-inline: var(--page-gutter);
+}
+
+/* ---------- N8 · terminal-command nav ---------- */
+.nav-term {
+  border-bottom: var(--rule-hair) solid var(--color-rule);
+  padding-block: var(--space-sm);
+}
+.nav-term__line {
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+  margin: 0;
+  white-space: nowrap;
+}
+.nav-term__line .prompt { color: var(--color-accent); padding-inline-end: 0.4ch; }
+.nav-term__line .cmd { color: var(--color-ink); font-weight: 700; }
+.nav-term__line a {
+  color: var(--color-muted);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  white-space: nowrap;
+  padding-block: var(--space-sm);
+}
+.nav-term__line a:hover, .nav-term__line a:focus-visible { color: var(--color-accent); }
+.caret {
+  display: inline-block;
+  width: 1ch;
+  color: var(--color-accent);
+  animation: blink 1.05s steps(2) infinite;
+}
+@keyframes blink { 50% { opacity: 0; } }
+
+/* mobile: collapse to `> menu` */
+.nav-term__menu { display: none; }
+.nav-term__menu summary {
+  list-style: none;
+  cursor: pointer;
+  font-size: var(--text-sm);
+  min-height: 44px;
+  display: flex;
+  align-items: center;
+}
+.nav-term__menu summary::-webkit-details-marker { display: none; }
+.nav-term__menu summary .prompt { color: var(--color-accent); padding-inline-end: 0.4ch; }
+.nav-term__menu[open] summary .caret { animation: none; opacity: 1; }
+.nav-term__menu ul {
+  list-style: none;
+  margin: 0;
+  padding: 0 0 var(--space-xs) 2ch;
+  display: grid;
+}
+.nav-term__menu li a {
+  display: flex;
+  align-items: center;
+  min-height: 44px;
+  font-size: var(--text-sm);
+  color: var(--color-muted);
+  white-space: nowrap;
+}
+@media (max-width: 40rem) {
+  .nav-term__line { display: none; }
+  .nav-term__menu { display: block; }
+}
+
+/* ---------- H4 · stat-led hero ---------- */
+.hero {
+  /* bottom-heavy on purpose — the hero settles into the page (gate 44a) */
+  padding-block: var(--space-2xl) var(--space-3xl);
+}
+.hero__figure {
+  font-family: var(--font-display);
+  font-size: var(--text-figure);
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+  line-height: 0.9;
+  letter-spacing: -0.04em;
+  margin: 0;
+  min-width: 0;
+  overflow-wrap: anywhere;
+  color: var(--color-ink);
+}
+.hero__qualifier {
+  font-size: var(--text-display-s);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.15;
+  margin-block-start: var(--space-lg);
+  max-width: 24ch;
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+.hero__body {
+  margin-block-start: var(--space-xl);
+  max-width: var(--measure);
+  color: var(--color-muted);
+}
+.hero__meta {
+  margin-block-start: var(--space-lg);
+  font-size: var(--text-sm);
+  color: var(--color-neutral);
+}
+
+/* page-load reveal — one orchestrated entrance, opacity only (atmospheric) */
+.reveal {
+  opacity: 0;
+  animation: reveal var(--dur-long) var(--ease-out) forwards;
+  animation-delay: calc(var(--i, 0) * 90ms);
+}
+@keyframes reveal { to { opacity: 1; } }
+
+/* ---------- paradigm interlude (S4 inline head lives in flow) ---------- */
+.paradigm {
+  padding-block: var(--space-2xl) var(--space-3xl);
+  border-top: var(--rule-hair) solid var(--color-rule);
+}
+.paradigm p {
+  max-width: var(--measure);
+  color: var(--color-muted);
+}
+.paradigm code, .stage p code {
+  color: var(--color-ink);
+  font-size: 0.95em;
+}
+.head-inline {
+  font-variant-caps: all-small-caps;
+  letter-spacing: 0.08em;
+  font-weight: 700;
+  color: var(--color-ink);
+}
+
+/* ---------- narrative workflow stages ---------- */
+.stages { display: grid; }
+.stage {
+  border-top: var(--rule-thick) solid var(--color-rule);
+  padding-block: var(--space-2xl) var(--space-3xl);
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--space-lg) var(--space-2xl);
+  align-items: start;
+}
+@media (min-width: 60rem) {
+  .stage { grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr); }
+  .stage:nth-of-type(3) { padding-block: var(--space-2xl) var(--space-2xl); } /* uneven rhythm on purpose */
+}
+.stage__head h2 {
+  font-size: var(--text-xl);
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  line-height: 1.15;
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+.stage__head h2 .stage-num {
+  color: var(--color-accent);
+  font-variant-numeric: tabular-nums;
+}
+.stage__head .pkg {
+  display: block;
+  margin-block-start: var(--space-xs);
+  font-size: var(--text-sm);
+  font-weight: 400;
+  color: var(--color-neutral);
+  letter-spacing: 0;
+}
+.stage__head p {
+  margin-block-start: var(--space-lg);
+  max-width: 48ch;
+  color: var(--color-muted);
+}
+
+/* code — plain pre, hairline frame, no fake window chrome */
+pre.code {
+  margin: 0;
+  padding: var(--space-lg);
+  border: var(--rule-hair) solid var(--color-rule);
+  background: var(--color-paper-2);
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+  line-height: 1.7;
+  overflow-x: auto;
+  color: var(--color-ink);
+  min-width: 0;
+}
+pre.code .c  { color: var(--color-neutral); }   /* comment */
+pre.code .k  { color: var(--color-accent); }    /* decorator / keyword landmark */
+pre.code .s  { color: var(--color-muted); }     /* string */
+
+/* ---------- F2 · sticky scroll stack (packages) ---------- */
+.sticky-stack {
+  border-top: var(--rule-thick) solid var(--color-rule);
+  padding-block: var(--space-3xl) var(--space-2xl);
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--space-xl) var(--space-2xl);
+}
+@media (min-width: 60rem) {
+  .sticky-stack { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
+  .pane-sticky {
+    position: sticky;
+    top: var(--space-xl);
+    align-self: start;
+    z-index: var(--z-sticky);
+  }
+}
+.pane-sticky p { max-width: 46ch; color: var(--color-muted); }
+.pane-sticky p + p { margin-block-start: var(--space-lg); }
+.pane-scroll { display: grid; gap: var(--space-2xl); min-width: 0; }
+.pane-scroll figure { margin: 0; min-width: 0; }
+.pane-scroll figcaption {
+  font-size: var(--text-sm);
+  color: var(--color-neutral);
+  margin-block-start: var(--space-xs);
+}
+
+/* ---------- quickstart / CTA ---------- */
+.quickstart {
+  border-top: var(--rule-hair) solid var(--color-rule);
+  padding-block: var(--space-2xl) var(--space-4xl);
+}
+.quickstart > p { max-width: var(--measure); color: var(--color-muted); }
+.install {
+  margin-block-start: var(--space-xl);
+  display: flex;
+  flex-wrap: wrap;
+  align-items: stretch;
+  gap: var(--space-sm);
+  max-width: 40rem;
+}
+.install__cmd {
+  flex: 1 1 16rem;
+  margin: 0;
+  padding: var(--space-sm) var(--space-md);
+  border: var(--rule-hair) solid var(--color-rule);
+  background: var(--color-paper-2);
+  font-family: var(--font-mono);
+  font-size: var(--text-base);
+  line-height: 1.6;
+  overflow-x: auto;
+  white-space: nowrap;
+  min-width: 0;
+  display: flex;
+  align-items: center;
+}
+.install__cmd .prompt { color: var(--color-accent); padding-inline-end: 1ch; user-select: none; }
+.copy-btn {
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+  color: var(--color-accent);
+  background: none;
+  border: var(--rule-hair) solid var(--color-rule);
+  padding: var(--space-sm) var(--space-lg);
+  min-height: 44px;
+  min-width: 44px;
+  cursor: pointer;
+  white-space: nowrap;
+}
+.copy-btn:hover { color: var(--color-accent-ink); background: var(--color-accent); }
+.copy-btn:active { transform: translateY(1px); }
+.copy-btn:disabled { opacity: 0.55; cursor: not-allowed; }
+.copy-btn[data-state="copied"] { color: var(--color-ink); border-color: var(--color-accent-dim); background: none; }
+
+.cta-links {
+  margin-block-start: var(--space-xl);
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-xs) var(--space-xl);
+}
+/* C3 · typographic link — word, arrow, 1px underline; no box */
+.link {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  color: var(--color-ink);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 4px;
+  white-space: nowrap;
+}
+.link:hover, .link:focus-visible { color: var(--color-accent); }
+
+/* ---------- Ft5 · statement footer ---------- */
+.foot-stmt {
+  border-top: var(--rule-hair) solid var(--color-rule);
+  padding-block: var(--space-3xl) var(--space-xl);
+  display: grid;
+  gap: var(--space-2xl);
+}
+.foot-stmt__line {
+  font-family: var(--font-display);
+  font-size: clamp(1.6rem, 4.5vw, 3rem);
+  font-weight: 700;
+  font-style: normal;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  max-width: 26ch;
+  min-width: 0;
+  overflow-wrap: anywhere;
+  margin: 0;
+}
+.foot-stmt__meta {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: var(--space-xs) var(--space-lg);
+  border-top: var(--rule-hair) solid var(--color-rule);
+  padding-block-start: var(--space-sm);
+  font-size: var(--text-sm);
+}
+.foot-stmt__meta .wordmark { font-weight: 700; color: var(--color-ink); }
+.foot-stmt__meta .muted { color: var(--color-neutral); }
+
+/* ---------- reduced motion ---------- */
+@media (prefers-reduced-motion: reduce) {
+  .caret { animation: none; opacity: 1; }
+  .reveal { animation: reveal 1ms linear forwards; }
+  a, button { transition: none; }
+}
+</style>
+</head>
+<body>
+
+<header class="nav-term">
+  <div class="container">
+    <pre class="nav-term__line"><span class="prompt">&gt;</span> <span class="cmd">youneed</span> <a href="./docs">--docs</a> <a href="#packages">--packages</a> <a href="#quickstart">--quickstart</a><span class="caret" aria-hidden="true">▮</span></pre>
+    <details class="nav-term__menu">
+      <summary><span class="prompt">&gt;</span> <span class="cmd">menu</span><span class="caret" aria-hidden="true">▮</span></summary>
+      <ul>
+        <li><a href="./docs">--docs</a></li>
+        <li><a href="#packages">--packages</a></li>
+        <li><a href="#quickstart">--quickstart</a></li>
+      </ul>
+    </details>
+  </div>
+</header>
+
+<main>
+  <!-- H4 · stat-led hero -->
+  <section class="hero container">
+    <p class="hero__figure reveal" style="--i: 0">170</p>
+    <h1 class="hero__qualifier reveal" style="--i: 1">packages. One paradigm.</h1>
+    <p class="hero__body reveal" style="--i: 2">youneed is a TypeScript-first toolkit built on what the browser and Node already ship — Custom Elements, Shadow DOM, the HTTP server, the Speculation Rules API. No virtual DOM. Minimal runtime.</p>
+    <p class="hero__meta reveal" style="--i: 3">~170 packages in one monorepo · counted, not rounded up</p>
+  </section>
+
+  <!-- S4 inline head — heading emerges inside the body flow -->
+  <section class="paradigm container">
+    <p>Every package speaks the same shape. <span class="head-inline">One paradigm:</span> a factory returns a base class you extend, TC39 standard decorators register the members, a fluent builder wires it up. <code>Component(tag)</code>, <code>Controller(path)</code>, <code>Page(url)</code>, <code>Test()</code> — the same three moves at every layer of the stack. What follows is one afternoon with it, in four numbered stages.</p>
+  </section>
+
+  <!-- Narrative Workflow · stages 1.0 → 4.0 -->
+  <div class="stages container">
+
+    <article class="stage" id="stage-1">
+      <div class="stage__head">
+        <h2><span class="stage-num">1.0</span> Define a component
+          <span class="pkg">@youneed/dom · zero dependencies</span></h2>
+        <p>Start in the browser. <code>Component("x-counter")</code> returns a base class; standard decorators register props and events; the template is a tagged literal. What renders is a real Custom Element with Shadow DOM — no virtual DOM in between.</p>
+      </div>
+      <pre class="code"><code><span class="c">// counter.ts</span>
+<span class="k">@Component.define()</span>
+class Counter extends Component(<span class="s">"x-counter"</span>) {
+  <span class="k">@Component.prop()</span> count = 0;
+  <span class="k">@Component.event()</span> inc() { this.count++; }
+  render() {
+    return html`&lt;button @click=${this.inc}&gt;${this.count}&lt;/button&gt;`;
+  }
+}</code></pre>
+    </article>
+
+    <article class="stage" id="stage-2">
+      <div class="stage__head">
+        <h2><span class="stage-num">2.0</span> Add a typed server
+          <span class="pkg">@youneed/server</span></h2>
+        <p>Same shape, new layer. <code>Controller("/counters")</code> is a base class; decorated methods become routes; the context is typed end to end. The server runs on Node's own HTTP primitives.</p>
+      </div>
+      <pre class="code"><code><span class="c">// counters.ts</span>
+<span class="k">@Controller.define()</span>
+class Counters extends Controller(<span class="s">"/counters"</span>) {
+  <span class="k">@Controller.get(<span class="s">"/:id"</span>)</span>
+  read(ctx: Context) {
+    return { id: ctx.params.id, count: 0 };
+  }
+}</code></pre>
+    </article>
+
+    <article class="stage" id="stage-3">
+      <div class="stage__head">
+        <h2><span class="stage-num">3.0</span> Render it server-side
+          <span class="pkg">@youneed/ssr · builds on dom + server</span></h2>
+        <p>A <code>Page(url)</code> renders the same component to Declarative Shadow DOM on the server, and ships a Speculation Rules hint so the next navigation is already prerendered when the reader clicks.</p>
+      </div>
+      <pre class="code"><code><span class="c">// home.ts</span>
+<span class="k">@Page.define()</span>
+class Home extends Page(<span class="s">"/"</span>) {
+  <span class="k">@Page.speculation({ prerender: <span class="s">"moderate"</span> })</span>
+  render() {
+    return html`&lt;x-counter count=<span class="s">"3"</span>&gt;&lt;/x-counter&gt;`;
+  }
+}</code></pre>
+    </article>
+
+    <article class="stage" id="stage-4">
+      <div class="stage__head">
+        <h2><span class="stage-num">4.0</span> Test in the same paradigm
+          <span class="pkg">@youneed/test</span></h2>
+        <p>No fourth mental model. A suite extends <code>Test()</code>, decorated methods are the cases, and the component you defined at stage 1.0 mounts straight into the run.</p>
+      </div>
+      <pre class="code"><code><span class="c">// counter.spec.ts</span>
+<span class="k">@Test.define()</span>
+class CounterSpec extends Test(<span class="s">"x-counter"</span>) {
+  <span class="k">@Test.it(<span class="s">"increments on click"</span>)</span>
+  async increments(ctx: TestContext) {
+    const el = await ctx.mount(Counter);
+    el.inc();
+    expect(el.count).toBe(1);
+  }
+}</code></pre>
+    </article>
+
+  </div>
+
+  <!-- F2 · sticky scroll stack — the package graph -->
+  <section class="sticky-stack container" id="packages">
+    <div class="pane-sticky">
+      <p><span class="head-inline">The dependency graph.</span> ~170 packages in one monorepo, layered so you only pay for what you import. <code>dom</code> stands alone with zero dependencies; <code>ssr</code> builds on <code>dom</code> and <code>server</code>; <code>devtools</code> builds on <code>dom</code> and <code>ssr</code>.</p>
+      <p>The HTTP server holds around 50k requests per second on this repo’s local autocannon bench — a number from our machine, not a promise about yours. The bench script ships in the repo; run it and disagree.</p>
+    </div>
+    <div class="pane-scroll">
+      <figure>
+        <pre class="code"><code><span class="c"># @youneed/dom</span>
+@youneed/dom
+└── <span class="c">(no dependencies)</span></code></pre>
+        <figcaption>The base layer stands alone.</figcaption>
+      </figure>
+      <figure>
+        <pre class="code"><code><span class="c"># @youneed/ssr</span>
+@youneed/ssr
+├── @youneed/dom
+└── @youneed/server</code></pre>
+        <figcaption>Server rendering composes the two layers below it.</figcaption>
+      </figure>
+      <figure>
+        <pre class="code"><code><span class="c"># @youneed/devtools</span>
+@youneed/devtools
+├── @youneed/dom
+└── @youneed/ssr</code></pre>
+        <figcaption>Tooling sits on top; nothing sits on top of your app.</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <!-- quickstart · C3 typographic links + copyable command -->
+  <section class="quickstart container" id="quickstart">
+    <p>One install gets you stage 1.0. The rest of the graph waits until you import it.</p>
+    <div class="install">
+      <pre class="install__cmd" id="install-cmd"><span class="prompt" aria-hidden="true">$</span><span id="install-text">pnpm add @youneed/dom</span></pre>
+      <button class="copy-btn" id="copy-btn" type="button" aria-label="Copy install command">copy</button>
+    </div>
+    <nav class="cta-links" aria-label="Next steps">
+      <a class="link" href="#stage-1">Start at stage 1.0 →</a>
+      <a class="link" href="./docs">Read docs →</a>
+      <a class="link" href="#">GitHub →</a>
+    </nav>
+  </section>
+</main>
+
+<!-- Ft5 · statement footer -->
+<footer class="foot-stmt container">
+  <p class="foot-stmt__line">The platform was the framework all along.</p>
+  <div class="foot-stmt__meta">
+    <span class="wordmark">youneed</span>
+    <span class="muted">© 2026 · MIT</span>
+  </div>
+</footer>
+
+<script>
+  // copy-to-clipboard — label swap is the feedback; no toast
+  const btn = document.getElementById("copy-btn");
+  btn.addEventListener("click", async () => {
+    try {
+      await navigator.clipboard.writeText(document.getElementById("install-text").textContent);
+      btn.dataset.state = "copied";
+      btn.textContent = "copied ✓";
+      setTimeout(() => { delete btn.dataset.state; btn.textContent = "copy"; }, 2500);
+    } catch {
+      btn.textContent = "select + ⌘C";
+      setTimeout(() => { btn.textContent = "copy"; }, 2500);
+    }
+  });
+  // mobile terminal menu closes after choosing a flag
+  const menu = document.querySelector(".nav-term__menu");
+  menu.addEventListener("click", (e) => { if (e.target.closest("a")) menu.removeAttribute("open"); });
+</script>
+</body>
+</html>

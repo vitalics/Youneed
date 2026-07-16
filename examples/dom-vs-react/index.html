@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>@youneed/dom vs React — fine-grained</title>
+    <style>
+      :root { color-scheme: light; }
+      body { font: 15px/1.5 system-ui, sans-serif; margin: 28px auto; max-width: 1100px; color: #18181b; padding: 0 16px; }
+      h1 { font-size: 1.3rem; margin: 0 0 6px; }
+      .lede { color: #52525b; }
+      b { color: #18181b; }
+      .controls { display: flex; gap: 12px; margin: 16px 0 20px; }
+      button { font: inherit; padding: 6px 14px; border: 1px solid #d4d4d8; border-radius: 8px; background: #fff; cursor: pointer; }
+      .start { background: #4f46e5; border-color: #4f46e5; color: #fff; }
+      .stop { background: #dc2626; border-color: #dc2626; color: #fff; }
+      .panels { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+      .panel { border: 1px solid #e4e4e7; border-radius: 14px; padding: 14px; }
+      .phead { display: flex; justify-content: space-between; align-items: baseline; }
+      .ptitle { font-weight: 700; }
+      .ptotal { font-variant-numeric: tabular-nums; font-weight: 800; color: #dc2626; }
+      .phint { font-size: 12px; color: #71717a; margin: 2px 0 10px; min-height: 2.4em; }
+      .grid { display: grid; grid-template-columns: repeat(8, 1fr); gap: 4px; }
+      vm-cell { display: block; }
+      .cell { display: flex; flex-direction: column; align-items: center; justify-content: center; aspect-ratio: 1; border-radius: 6px; font: 11px ui-monospace, monospace; }
+      .cell .cv { font-size: 13px; font-weight: 800; }
+      .cell .cn { color: #3f3f46; opacity: .7; }
+    </style>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script src="./app.js"></script>
+  </body>
+</html>

@@ -1,0 +1,42 @@
+{
+  "quick": false,
+  "baseline": "youneed",
+  "measured": {
+    "youneed": {
+      "mean": 186.191,
+      "stddev": 12.031,
+      "min": 172.537,
+      "max": 210.419,
+      "median": 183.727
+    },
+    "node": {
+      "mean": 292.699,
+      "stddev": 41.493,
+      "min": 257.708,
+      "max": 415.702,
+      "median": 279.195
+    },
+    "vitest": {
+      "mean": 720.307,
+      "stddev": 64.694,
+      "min": 649.94,
+      "max": 862.335,
+      "median": 709.33
+    },
+    "jest": {
+      "mean": 712.19,
+      "stddev": 19.512,
+      "min": 679.159,
+      "max": 736.177,
+      "median": 717.07
+    },
+    "playwright": {
+      "mean": 2389.17,
+      "stddev": 141.288,
+      "min": 2258.922,
+      "max": 2681.748,
+      "median": 2339.924
+    }
+  },
+  "skipped": []
+}

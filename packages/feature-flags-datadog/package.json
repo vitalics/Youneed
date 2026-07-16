@@ -1,0 +1,31 @@
+{
+  "name": "@youneed/feature-flags-datadog",
+  "version": "0.1.0",
+  "description": "Framework-agnostic @youneed/feature-flags adapter: batch flag EXPOSURES to the Datadog Logs intake (no Datadog SDK, plain fetch) via flags.onEvaluation.",
+  "type": "module",
+  "license": "ISC",
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "sideEffects": false,
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json",
+    "test": "tsx tests/feature-flags-datadog.test.ts"
+  },
+  "dependencies": {
+    "@youneed/feature-flags": "workspace:*"
+  },
+  "devDependencies": {
+    "@youneed/test": "workspace:*",
+    "@youneed/test-reporter-console": "workspace:*"
+  }
+}
