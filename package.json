@@ -13,8 +13,8 @@
     "ci:version": "changeset version && pnpm install --no-frozen-lockfile",
     "ci:publish": "pnpm build && changeset publish",
     "site:gen": "node site/scripts/gen-packages.mjs",
-    "site:dev": "pnpm site:gen && vite --config site/vite.config.ts",
-    "site:build": "pnpm site:gen && vite build --config site/vite.config.ts",
+    "site:dev": "pnpm site:gen && node site/scripts/build-client.mjs && tsx site/src/index.ts",
+    "site:build": "pnpm site:gen && node site/scripts/build-client.mjs && tsx site/scripts/generate.mjs",
     "site:serve": "node scripts/serve-site.mjs",
     "site:open": "OPEN=/ node scripts/serve-site.mjs",
     "site:variants": "OPEN=/,/index-brutalist.html,/index-atmospheric.html node scripts/serve-site.mjs",
@@ -112,10 +112,13 @@
     "@youneed/dom": "workspace:*",
     "@youneed/dom-adapter-react": "workspace:*",
     "@youneed/dom-provider-a11y": "workspace:*",
+    "@youneed/dom-provider-timers": "workspace:*",
     "@youneed/dom-provider-virtual": "workspace:*",
     "@youneed/dom-router": "workspace:*",
     "@youneed/server": "workspace:*",
+    "@youneed/server-middleware-static": "workspace:*",
     "@youneed/ssr": "workspace:*",
+    "@youneed/ssr-plugin-speculation": "workspace:*",
     "@youneed/vite-plugin": "workspace:*"
   }
 }

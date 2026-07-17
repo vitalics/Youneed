@@ -8,12 +8,8 @@
     "strict": true,
     "skipLibCheck": true,
     "useDefineForClassFields": true,
-    "lib": ["ES2022", "DOM", "DOM.Iterable"],
-    "types": ["vite/client"],
-    "paths": {
-      "@youneed/dom": ["../packages/dom/src/index.ts"],
-      "@youneed/dom-provider-timers": ["../packages/dom-provider-timers/src/index.ts"]
-    }
+    "lib": ["ES2022", "DOM", "DOM.Iterable", "ESNext.Disposable"],
+    "types": ["node"]
   },
-  "include": ["src", "vite.config.ts"]
+  "include": ["src"]
 }

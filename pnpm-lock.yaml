@@ -41,6 +41,9 @@ importers:
       '@youneed/dom-provider-a11y':
         specifier: workspace:*
         version: link:packages/dom-provider-a11y
+      '@youneed/dom-provider-timers':
+        specifier: workspace:*
+        version: link:packages/dom-provider-timers
       '@youneed/dom-provider-virtual':
         specifier: workspace:*
         version: link:packages/dom-provider-virtual
@@ -50,9 +53,15 @@ importers:
       '@youneed/server':
         specifier: workspace:*
         version: link:packages/server
+      '@youneed/server-middleware-static':
+        specifier: workspace:*
+        version: link:packages/server-middleware-static
       '@youneed/ssr':
         specifier: workspace:*
         version: link:packages/ssr
+      '@youneed/ssr-plugin-speculation':
+        specifier: workspace:*
+        version: link:packages/ssr-plugin-speculation
       '@youneed/vite-plugin':
         specifier: workspace:*
         version: link:packages/vite-plugin

@@ -1,4 +1,4 @@
-// Landing page entry — the site now runs on its own stack:
-// @youneed/dom components bundled by Vite via @youneed/vite-plugin.
+// Landing client entry — hydrates the SSR'd custom elements
+// (bundled by esbuild in scripts/build-client.mjs → /main.js).
 import "./components/copy-button.ts";
 import "./components/package-explorer.ts";

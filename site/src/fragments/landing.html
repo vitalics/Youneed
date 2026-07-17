@@ -1,0 +1,229 @@
+<header class="nav">
+  <div class="nav__inner">
+    <a class="nav__brand" href="#top">youneed</a>
+    <nav class="nav__center" aria-label="Primary">
+      <a class="nav__link" href="#tour">Tour</a>
+      <a class="nav__link" href="#packages">Packages</a>
+      <a class="nav__link" href="./docs">Docs</a>
+    </nav>
+    <div class="nav__right">
+      <a class="btn btn--text" href="#">GitHub</a>
+      <a class="btn btn--accent" href="#quick-start">Quick start</a>
+    </div>
+  </div>
+</header>
+
+<main id="top">
+
+  <!-- Hero · H2 split diptych 7/5 -->
+  <section class="hero wrap">
+    <div class="hero__grid">
+      <div>
+        <h1 class="reveal" style="--i:0">Native primitives, one&nbsp;paradigm.</h1>
+        <p class="hero__lede reveal" style="--i:1">
+          youneed is a TypeScript-first toolkit for building web apps on what the
+          platform already ships — <strong>Custom Elements</strong>, <strong>Shadow&nbsp;DOM</strong>,
+          the <strong>HTTP server</strong>, the <strong>Speculation Rules API</strong>.
+          No virtual DOM. Minimal runtime.
+        </p>
+        <div class="hero__actions reveal" style="--i:2">
+          <a class="cta-outline" href="#quick-start">Quick start →</a>
+          <a class="link-quiet" href="./docs">Read docs</a>
+        </div>
+      </div>
+      <figure class="code-fig reveal" style="--i:3">
+        <figcaption>counter.ts <span class="pkg">@youneed/dom</span></figcaption>
+        <pre class="code" tabindex="0"><code><span class="tk-d">@Component.define</span><span class="tk-m">()</span>
+<span class="tk-d">class</span> Counter <span class="tk-d">extends</span> Component<span class="tk-m">(</span><span class="tk-s">"x-counter"</span><span class="tk-m">)</span> <span class="tk-m">{</span>
+  <span class="tk-d">@Component.prop</span><span class="tk-m">()</span> count <span class="tk-m">=</span> 0<span class="tk-m">;</span>
+  <span class="tk-d">@Component.event</span><span class="tk-m">()</span> inc<span class="tk-m">()</span> <span class="tk-m">{</span> <span class="tk-d">this</span><span class="tk-m">.</span>count<span class="tk-m">++;</span> <span class="tk-m">}</span>
+  render<span class="tk-m">()</span> <span class="tk-m">{</span>
+    <span class="tk-d">return</span> html<span class="tk-s">`&lt;button @click=<span class="tk-m">${</span>this.inc<span class="tk-m">}</span>&gt;<span class="tk-m">${</span>this.count<span class="tk-m">}</span>&lt;/button&gt;`</span><span class="tk-m">;</span>
+  <span class="tk-m">}</span>
+<span class="tk-m">}</span></code></pre>
+      </figure>
+    </div>
+  </section>
+
+  <!-- T4 numbered stat strip -->
+  <section class="stat-strip" aria-label="Project figures">
+    <div class="wrap stat-strip__grid">
+      <div><b>~170</b><span>packages in the monorepo</span></div>
+      <div><b>0</b><span>dependencies in @youneed/dom</span></div>
+      <div><b>50k</b><span>req/s on the repo’s local bench (autocannon)</span></div>
+      <div><b>MIT</b><span>license</span></div>
+    </div>
+  </section>
+
+  <!-- Workbench tour — the code blocks are the product screenshots -->
+  <section id="tour" class="wrap">
+    <header class="head-hang">
+      <h2>The same shape, at every layer.</h2>
+      <p class="sub">
+        A factory returns a base class you extend. TC39 standard decorators register
+        the members. A fluent builder wires it together.
+        <code>Component(tag)</code>, <code>Controller(path)</code>, <code>Page(url)</code>
+        and <code>Test()</code> all feel the same — learn it once on the client, reuse
+        it on the server, in pages, in tests.
+      </p>
+    </header>
+
+    <article class="step">
+      <div class="step__text">
+        <h3>Type the HTTP layer.</h3>
+        <p>
+          A controller is a class on a path. Route decorators carry the schema, so
+          <code>ctx.params</code> and <code>ctx.body</code> arrive typed and validated —
+          guards and middleware compose around them.
+        </p>
+        <p class="fine">
+          On this repo’s local autocannon bench the server holds ~50k req/s —
+          one machine, no hosted asterisk.
+        </p>
+      </div>
+      <figure class="code-fig">
+        <figcaption>cats.ts <span class="pkg">@youneed/server</span></figcaption>
+        <pre class="code" tabindex="0"><code><span class="tk-d">const</span> Cat <span class="tk-m">=</span> t<span class="tk-m">.</span>object<span class="tk-m">({</span> name<span class="tk-m">:</span> t<span class="tk-m">.</span>string<span class="tk-m">(),</span> age<span class="tk-m">:</span> t<span class="tk-m">.</span>number<span class="tk-m">()</span> <span class="tk-m">});</span>
+
+<span class="tk-d">class</span> Cats <span class="tk-d">extends</span> Controller<span class="tk-m">(</span><span class="tk-s">"/cats"</span><span class="tk-m">)</span> <span class="tk-m">{</span>
+  <span class="tk-d">@Controller.get</span><span class="tk-m">(</span><span class="tk-s">"/:name"</span><span class="tk-m">,</span> <span class="tk-m">{</span> response<span class="tk-m">:</span> <span class="tk-m">{</span> 200<span class="tk-m">:</span> Cat <span class="tk-m">}</span> <span class="tk-m">})</span>
+  <span class="tk-d">async</span> byName<span class="tk-m">(</span>ctx<span class="tk-m">:</span> Context<span class="tk-m">)</span> <span class="tk-m">{</span>
+    <span class="tk-d">const</span> cat <span class="tk-m">=</span> lookup<span class="tk-m">(</span>ctx<span class="tk-m">.</span>params<span class="tk-m">.</span>name<span class="tk-m">);</span>
+    <span class="tk-d">if</span> <span class="tk-m">(!</span>cat<span class="tk-m">)</span> <span class="tk-d">throw new</span> HttpError<span class="tk-m">(</span>404<span class="tk-m">,</span> <span class="tk-m">{</span> error<span class="tk-m">:</span> <span class="tk-s">"Not found"</span> <span class="tk-m">});</span>
+    <span class="tk-d">return</span> cat<span class="tk-m">;</span> <span class="tk-m">// validated against 200: Cat</span>
+  <span class="tk-m">}</span>
+<span class="tk-m">}</span>
+
+Application<span class="tk-m">(</span>Cats<span class="tk-m">).</span>listen<span class="tk-m">(</span>3000<span class="tk-m">);</span></code></pre>
+      </figure>
+    </article>
+
+    <article class="step">
+      <div class="step__text">
+        <h3>Render pages on the server.</h3>
+        <p>
+          A page is a class on a URL. It renders Declarative Shadow DOM on the
+          server, names its own client script, and declares Speculation Rules so
+          the browser prerenders the next navigation.
+        </p>
+      </div>
+      <figure class="code-fig">
+        <figcaption>home.ts <span class="pkg">@youneed/ssr</span></figcaption>
+        <pre class="code" tabindex="0"><code><span class="tk-d">class</span> Home <span class="tk-d">extends</span> Page<span class="tk-m">(</span><span class="tk-s">"/"</span><span class="tk-m">,</span> <span class="tk-m">{</span>
+  title<span class="tk-m">:</span> <span class="tk-s">"Home"</span><span class="tk-m">,</span>
+  clientScript<span class="tk-m">:</span> <span class="tk-m">()</span> <span class="tk-d">=&gt;</span> <span class="tk-d">import</span><span class="tk-m">(</span><span class="tk-s">"./client.ts"</span><span class="tk-m">),</span>
+  speculation<span class="tk-m">:</span> <span class="tk-m">{</span> prerender<span class="tk-m">:</span> <span class="tk-m">[{</span> source<span class="tk-m">:</span> <span class="tk-s">"list"</span><span class="tk-m">,</span> urls<span class="tk-m">:</span> <span class="tk-m">[</span>About<span class="tk-m">.</span>url<span class="tk-m">]</span> <span class="tk-m">}]</span> <span class="tk-m">},</span>
+<span class="tk-m">})</span> <span class="tk-m">{</span>
+  render<span class="tk-m">()</span> <span class="tk-m">{</span> <span class="tk-d">return</span> HomeApp<span class="tk-m">;</span> <span class="tk-m">}</span>
+<span class="tk-m">}</span>
+
+mountPages<span class="tk-m">(</span>Application<span class="tk-m">(),</span> Home<span class="tk-m">,</span> About<span class="tk-m">).</span>listen<span class="tk-m">(</span>3010<span class="tk-m">);</span></code></pre>
+      </figure>
+    </article>
+
+    <article class="step">
+      <div class="step__text">
+        <h3>Test in the same shape.</h3>
+        <p>
+          Suites extend <code>Test()</code>, cases are decorated methods, fixtures
+          inject through a field. If you can write a component, you already know
+          how to write the test.
+        </p>
+      </div>
+      <figure class="code-fig">
+        <figcaption>calc.test.ts <span class="pkg">@youneed/test</span></figcaption>
+        <pre class="code" tabindex="0"><code><span class="tk-d">class</span> CalcTest <span class="tk-d">extends</span> Test<span class="tk-m">({</span> name<span class="tk-m">:</span> <span class="tk-s">"Calculator"</span> <span class="tk-m">})</span> <span class="tk-m">{</span>
+  <span class="tk-d">@Test.use</span><span class="tk-m">(</span>CalcFixture<span class="tk-m">)</span> calc<span class="tk-m">!:</span> Calculator<span class="tk-m">;</span>
+
+  <span class="tk-d">@Test.it</span><span class="tk-m">(</span><span class="tk-s">"adds two numbers"</span><span class="tk-m">)</span>
+  adds<span class="tk-m">()</span> <span class="tk-m">{</span>
+    expect<span class="tk-m">(</span><span class="tk-d">this</span><span class="tk-m">.</span>calc<span class="tk-m">.</span>add<span class="tk-m">(</span>2<span class="tk-m">,</span> 3<span class="tk-m">)).</span>toBe<span class="tk-m">(</span>5<span class="tk-m">);</span>
+  <span class="tk-m">}</span>
+<span class="tk-m">}</span></code></pre>
+      </figure>
+    </article>
+  </section>
+
+  <!-- F3 tabular spec sheet — the package catalog -->
+  <section id="packages" class="wrap">
+    <header class="head-hang">
+      <h2>Pick only what you need.</h2>
+      <p class="sub">
+        Around 170 packages live in the monorepo. The dependency graph stays shallow:
+        <code>dom</code> has zero dependencies, <code>ssr</code> builds on
+        <code>dom</code> + <code>server</code>, <code>devtools</code> on
+        <code>dom</code> + <code>ssr</code>. The key ones:
+      </p>
+    </header>
+    <div class="spec-scroll" role="region" aria-label="Package spec sheet" tabindex="0">
+      <table class="spec-sheet">
+        <thead>
+          <tr><th scope="col">Package</th><th scope="col">What it does</th><th scope="col">Builds on</th></tr>
+        </thead>
+        <tbody>
+          <tr><th scope="row">@youneed/dom</th><td>Reactive components on Custom Elements + Shadow DOM</td><td class="note">nothing — zero dependencies</td></tr>
+          <tr><th scope="row">@youneed/server</th><td>Tiny typed HTTP server — controllers, schema validation, guards, middleware</td><td class="note">node:http</td></tr>
+          <tr><th scope="row">@youneed/ssr</th><td>Declarative Shadow DOM SSR + Page entity with Speculation Rules</td><td class="note">dom + server</td></tr>
+          <tr><th scope="row">@youneed/dom-router</th><td>SPA router — hash, history, query</td><td class="note">dom</td></tr>
+          <tr><th scope="row">@youneed/devtools</th><td>Floating inspector — component tree, time-travel</td><td class="note">dom + ssr</td></tr>
+          <tr><th scope="row">@youneed/test</th><td>Class + decorator test framework</td><td class="note">—</td></tr>
+          <tr><th scope="row">@youneed/orm-sql</th><td>TypeORM-style ORM on TC39 decorators, built-in SQLite</td><td class="note">node:sqlite</td></tr>
+          <tr><th scope="row">@youneed/cli</th><td>Commander-style CLI framework</td><td class="note">—</td></tr>
+          <tr><th scope="row">@youneed/schema</th><td>class-validator-style DTO validation</td><td class="note">—</td></tr>
+          <tr><th scope="row">@youneed/logger</th><td>Structured JSON logging</td><td class="note">—</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="spec-note">
+      Every package follows the same convention: a factory, a base class, standard
+      decorators. Install one, or compose the stack — nothing drags the rest in.
+    </p>
+
+    <div class="explorer-head">
+      <h3>The full catalog</h3>
+      <p>
+        Every package in the monorepo — search by name or description, or narrow
+        to one ecosystem. Descriptions come straight from each package's
+        <code style="font-family: var(--font-mono); font-size: 0.85em;">package.json</code>.
+        (This table is itself a <span style="font-family: var(--font-mono); font-size: 0.85em;">@youneed/dom</span> component.)
+      </p>
+    </div>
+    <yn-package-explorer>
+      <noscript>The interactive catalog needs JavaScript — browse <a href="https://github.com/vitalics/Youneed/tree/main/packages">packages/ on GitHub</a> instead.</noscript>
+    </yn-package-explorer>
+  </section>
+
+  <!-- Quick start · the page's one dark graphite band -->
+  <section id="quick-start" class="band">
+    <div class="band__inner">
+      <div>
+        <h2>Start with one package.</h2>
+        <p>
+          Add <code>@youneed/dom</code>, define a tag, ship a component. The server,
+          SSR, router and tests join the same paradigm when you need them.
+        </p>
+        <div class="band__actions">
+          <a class="cta-outline" href="./docs">Open the quick start →</a>
+          <a class="link-quiet" href="#">GitHub</a>
+        </div>
+      </div>
+      <div class="install">
+        <code id="install-cmd"><span class="ps1">$ </span><span class="cmd">pnpm add </span><span class="pkg">@youneed/dom</span></code>
+        <yn-copy text="pnpm add @youneed/dom"></yn-copy>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<!-- Footer · Ft2 inline rule single line -->
+<footer class="foot-line">
+  <p>
+    <span class="brand">youneed</span>
+    <span>— a TypeScript toolkit on platform primitives</span>
+    <span>· MIT license</span>
+    <span>· <a href="./docs">Docs</a></span>
+    <span>· <a href="#">GitHub</a></span>
+    <span>· © 2026</span>
+  </p>
+</footer>
