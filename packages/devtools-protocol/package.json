@@ -41,6 +41,11 @@
     "@youneed/dom": "workspace:*"
   },
   "devDependencies": {
+    "@youneed/server": "workspace:*",
+    "@youneed/server-middleware-cors": "workspace:*",
+    "@youneed/server-middleware-logger": "workspace:*",
+    "@youneed/server-plugin-devtools": "workspace:*",
+    "@youneed/server-plugin-jsonrpc": "workspace:*",
     "@youneed/test": "workspace:*",
     "@youneed/test-reporter-console": "workspace:*"
   }

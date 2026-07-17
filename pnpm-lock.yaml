@@ -527,6 +527,21 @@ importers:
         specifier: workspace:*
         version: link:../schema
     devDependencies:
+      '@youneed/server':
+        specifier: workspace:*
+        version: link:../server
+      '@youneed/server-middleware-cors':
+        specifier: workspace:*
+        version: link:../server-middleware-cors
+      '@youneed/server-middleware-logger':
+        specifier: workspace:*
+        version: link:../server-middleware-logger
+      '@youneed/server-plugin-devtools':
+        specifier: workspace:*
+        version: link:../server-plugin-devtools
+      '@youneed/server-plugin-jsonrpc':
+        specifier: workspace:*
+        version: link:../server-plugin-jsonrpc
       '@youneed/test':
         specifier: workspace:*
         version: link:../test
