@@ -4,5 +4,12 @@
     "noEmit": true
   },
   "include": ["packages/*/src/**/*.ts", "examples/**/*.ts"],
-  "exclude": ["node_modules", "**/dist", "examples/vite", "packages/ts-plugin"]
+  "exclude": [
+    "node_modules",
+    "**/dist",
+    "examples/vite",
+    "packages/ts-plugin",
+    "packages/server-plugin-devtools/src/ext.ts",
+    "packages/server-plugin-devtools/src/web.ts"
+  ]
 }
