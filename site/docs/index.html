@@ -1256,10 +1256,8 @@ reqLog<span class="tk-m">.</span>error<span class="tk-m">(</span><span class="tk
       <section class="doc-sec" id="naming">
         <h2>Naming &amp; the full index</h2>
         <p class="lede">
-          Around 170 packages live in the monorepo. Rather than list them all
-          here, it helps to know the naming convention — most packages are an
-          extension of a core package, named
-          <code>&lt;core&gt;-&lt;kind&gt;-&lt;name&gt;</code>:
+          Around 170 packages live in the monorepo. Most are an extension of a
+          core package, named <code>&lt;core&gt;-&lt;kind&gt;-&lt;name&gt;</code>:
         </p>
         <div class="conv-grid">
           <div>
@@ -1300,6 +1298,18 @@ reqLog<span class="tk-m">.</span>error<span class="tk-m">(</span><span class="tk
           a base class, standard decorators. Install one, or compose the
           stack — nothing drags the rest in.
         </p>
+
+        <h3>The full index</h3>
+        <p style="margin-top: var(--space-sm); max-width: var(--docs-measure); font-size: var(--text-sm); color: var(--color-neutral);">
+          The same <code>&lt;yn-package-explorer&gt;</code> component as on the
+          landing page — descriptions come straight from each package's
+          <code>package.json</code>.
+        </p>
+        <div style="margin-top: var(--space-md);">
+          <yn-package-explorer>
+            <noscript>The interactive catalog needs JavaScript — browse <a href="https://github.com/vitalics/Youneed/tree/main/packages">packages/ on GitHub</a> instead.</noscript>
+          </yn-package-explorer>
+        </div>
         <a class="gh-link" href="https://github.com/vitalics/Youneed/tree/main/packages">packages/ on GitHub →</a>
       </section>
 
@@ -1316,6 +1326,11 @@ reqLog<span class="tk-m">.</span>error<span class="tk-m">(</span><span class="tk
   </main>
 
 </div>
+
+<!-- Speculation Rules: prerender the landing for the way back (Chromium; harmless no-op elsewhere) -->
+<script type="speculationrules">
+{ "prerender": [{ "source": "list", "urls": ["/"], "eagerness": "moderate" }] }
+</script>
 
 <script type="module" src="/src/docs.ts"></script>
 

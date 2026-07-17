@@ -1,6 +1,7 @@
 // Docs page entry.
 import "./components/copy-button.ts";
 import "./components/docs-nav.ts";
+import "./components/package-explorer.ts"; // full index in the #naming section
 import { highlightAll } from "./highlight.ts";
 
 highlightAll();

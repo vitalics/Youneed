@@ -709,6 +709,11 @@ mountPages<span class="tk-m">(</span>Application<span class="tk-m">(),</span> Ho
   </p>
 </footer>
 
+<!-- Speculation Rules: prerender the docs before the user clicks (Chromium; harmless no-op elsewhere) -->
+<script type="speculationrules">
+{ "prerender": [{ "source": "list", "urls": ["/docs"], "eagerness": "moderate" }] }
+</script>
+
 <script type="module" src="/src/main.ts"></script>
 
 </body>
