@@ -42,12 +42,24 @@ pnpm site:serve    # zero-dep static preview of site/dist
 
 ## Deploy to Vercel
 
+Git-driven — the project is linked to the GitHub repo and the root
+`vercel.json` carries the pipeline (`installCommand` / `buildCommand:
+pnpm site:build:vercel` / `outputDirectory: site/dist`):
+
+- push to **main** → production (youneed.vercel.app)
+- push to **any branch / PR** → preview deployment
+- commits not touching `site/`, `packages/`, the lockfile or `vercel.json`
+  skip the build (`ignoreCommand`)
+
+`site:build:vercel` first builds the package subset the site imports
+(`dom`, `ssr`, `ssr-plugin-speculation`, `server-middleware-static`,
+`dom-provider-timers` + their dependency closure), then runs the SSG.
+
+Manual escape hatch (rarely needed):
+
 ```bash
 pnpm site:build
-
-# link once per fresh dist (vite/ssg builds wipe it):
 cd site/dist && npx vercel link --yes --project youneed --scope vitaliharadkous-projects
 rm -f .env.local   # the link drops an OIDC token file — do not deploy it
-
 npx vercel deploy --prod --yes
 ```

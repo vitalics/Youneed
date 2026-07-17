@@ -15,6 +15,7 @@
     "site:gen": "node site/scripts/gen-packages.mjs",
     "site:dev": "pnpm site:gen && node site/scripts/build-client.mjs && tsx site/src/index.ts",
     "site:build": "pnpm site:gen && node site/scripts/build-client.mjs && tsx site/scripts/generate.mjs",
+    "site:build:vercel": "pnpm --filter \"@youneed/ssr-plugin-speculation...\" --filter \"@youneed/server-middleware-static...\" --filter \"@youneed/dom-provider-timers...\" --filter \"@youneed/dom...\" run build && pnpm site:build",
     "site:serve": "node scripts/serve-site.mjs",
     "site:open": "OPEN=/ node scripts/serve-site.mjs",
     "site:variants": "OPEN=/,/index-brutalist.html,/index-atmospheric.html node scripts/serve-site.mjs",
