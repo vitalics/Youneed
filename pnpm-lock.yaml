@@ -781,6 +781,18 @@ importers:
         specifier: workspace:*
         version: link:../test-reporter-console
 
+  packages/dom-provider-timers:
+    devDependencies:
+      '@youneed/dom':
+        specifier: workspace:*
+        version: link:../dom
+      '@youneed/test':
+        specifier: workspace:*
+        version: link:../test
+      '@youneed/test-reporter-console':
+        specifier: workspace:*
+        version: link:../test-reporter-console
+
   packages/dom-provider-virtual:
     dependencies:
       '@youneed/dom':

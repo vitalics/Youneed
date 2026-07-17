@@ -649,6 +649,9 @@
       ],
       "@youneed/devtools-protocol": [
         "./packages/devtools-protocol/src/index.ts"
+      ],
+      "@youneed/dom-provider-timers": [
+        "./packages/dom-provider-timers/src/index.ts"
       ]
     }
   }
