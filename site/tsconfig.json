@@ -1,0 +1,19 @@
+{
+  "compilerOptions": {
+    "target": "ES2022",
+    "module": "ESNext",
+    "moduleResolution": "bundler",
+    "allowImportingTsExtensions": true,
+    "noEmit": true,
+    "strict": true,
+    "skipLibCheck": true,
+    "useDefineForClassFields": true,
+    "lib": ["ES2022", "DOM", "DOM.Iterable"],
+    "types": ["vite/client"],
+    "paths": {
+      "@youneed/dom": ["../packages/dom/src/index.ts"],
+      "@youneed/dom-provider-timers": ["../packages/dom-provider-timers/src/index.ts"]
+    }
+  },
+  "include": ["src", "vite.config.ts"]
+}

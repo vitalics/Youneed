@@ -4,12 +4,12 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
 <title>Docs — youneed</title>
-<meta name="description" content="youneed docs: installation, quick start, and one section per package — dom, server, ssr, dom-router, devtools, test, cli, orm-sql, schema, logger." />
+<meta name="description" content="youneed docs: installation, quick start, and per-package sections grouped by ecosystem — dom, server, ssr, cli — plus the adapters, providers, middleware and plugins that snap into each." />
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Crect x='2' y='2' width='12' height='12' rx='2' fill='%233a63d8'/%3E%3C/svg%3E" />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
-<link rel="stylesheet" href="../tokens.css">
+<link rel="stylesheet" href="/tokens.css">
 <style>
 /* Hallmark · docs · theme: Cobalt (shared tokens.css) · layout: side-rail · genre: docs
    knobs — rail: ~16rem fixed, grouped small-caps nav, sticky, own scroll
@@ -138,6 +138,21 @@ pre code { border: 0; background: none; padding: 0; white-space: inherit; }
   text-decoration: none;
 }
 .rail__back:hover { color: var(--color-accent-deep); }
+
+.rail__search {
+  width: 100%;
+  font: inherit;
+  font-size: var(--text-sm);
+  color: var(--color-ink);
+  background: var(--color-paper);
+  border: 1px solid var(--color-rule-strong);
+  border-radius: var(--radius-ctrl);
+  min-height: 36px;
+  padding: var(--space-2xs) var(--space-sm);
+  margin-bottom: var(--space-md);
+}
+.rail__search:focus-visible { outline: 2px solid var(--color-focus); outline-offset: 2px; }
+.rail__empty { font-size: var(--text-sm); color: var(--color-neutral); }
 
 .rail__group + .rail__group { margin-top: var(--space-lg); }
 .rail__group h2 {
@@ -274,25 +289,11 @@ pre.code code { font-family: inherit; }
 .tk-s { color: var(--color-code-str); }      /* strings, templates */
 .tk-m { color: var(--color-code-muted); }    /* punctuation, comments */
 
-.fig-copy {
+.code-fig__wrap yn-copy {
   position: absolute;
   top: var(--space-sm);
   right: var(--space-sm);
-  font-family: var(--font-mono);
-  font-size: 0.68rem;
-  font-weight: 500;
-  letter-spacing: 0.04em;
-  color: var(--color-code-muted);
-  background: var(--color-graphite-2);
-  border: 1px solid var(--color-graphite-rule);
-  border-radius: var(--radius-ctrl);
-  min-height: 30px;
-  padding: 0.2em 0.6em;
-  cursor: pointer;
-  transition: color var(--dur-short) var(--ease-out), border-color var(--dur-short) var(--ease-out);
 }
-.fig-copy:hover { color: var(--color-code-str); border-color: var(--color-code-muted); }
-.fig-copy[data-state="copied"] { color: var(--color-code-accent); border-color: var(--color-code-accent); }
 
 .install-line {
   display: flex;
@@ -445,69 +446,13 @@ pre.code code { font-family: inherit; }
 
     <!-- Mobile disclosure body (only visible when <details> is open, on narrow screens) -->
     <div class="rail__nav-body" id="railNavBody" hidden>
-      <nav aria-label="Docs sections">
-        <div class="rail__group">
-          <h2>Start</h2>
-          <ul>
-            <li><a class="rail__link" href="#intro">Introduction</a></li>
-            <li><a class="rail__link" href="#quick-start">Installation &amp; quick start</a></li>
-          </ul>
-        </div>
-        <div class="rail__group">
-          <h2>Packages</h2>
-          <ul>
-            <li><a class="rail__link" href="#dom">dom</a></li>
-            <li><a class="rail__link" href="#server">server</a></li>
-            <li><a class="rail__link" href="#ssr">ssr</a></li>
-            <li><a class="rail__link" href="#dom-router">dom-router</a></li>
-            <li><a class="rail__link" href="#devtools">devtools</a></li>
-            <li><a class="rail__link" href="#test">test</a></li>
-            <li><a class="rail__link" href="#cli">cli</a></li>
-            <li><a class="rail__link" href="#orm-sql">orm-sql</a></li>
-            <li><a class="rail__link" href="#schema">schema</a></li>
-            <li><a class="rail__link" href="#logger">logger</a></li>
-          </ul>
-        </div>
-        <div class="rail__group">
-          <h2>Reference</h2>
-          <ul>
-            <li><a class="rail__link" href="#naming">Naming &amp; the full index</a></li>
-          </ul>
-        </div>
-      </nav>
+      <yn-docs-nav></yn-docs-nav>
     </div>
 
     <!-- Desktop nav — always visible ≥60rem, hidden below via .rail__desktop-nav rule -->
-    <nav class="rail__desktop-nav" aria-label="Docs sections (desktop)">
-      <div class="rail__group">
-        <h2>Start</h2>
-        <ul>
-          <li><a class="rail__link" href="#intro">Introduction</a></li>
-          <li><a class="rail__link" href="#quick-start">Installation &amp; quick start</a></li>
-        </ul>
-      </div>
-      <div class="rail__group">
-        <h2>Packages</h2>
-        <ul>
-          <li><a class="rail__link" href="#dom">dom</a></li>
-          <li><a class="rail__link" href="#server">server</a></li>
-          <li><a class="rail__link" href="#ssr">ssr</a></li>
-          <li><a class="rail__link" href="#dom-router">dom-router</a></li>
-          <li><a class="rail__link" href="#devtools">devtools</a></li>
-          <li><a class="rail__link" href="#test">test</a></li>
-          <li><a class="rail__link" href="#cli">cli</a></li>
-          <li><a class="rail__link" href="#orm-sql">orm-sql</a></li>
-          <li><a class="rail__link" href="#schema">schema</a></li>
-          <li><a class="rail__link" href="#logger">logger</a></li>
-        </ul>
-      </div>
-      <div class="rail__group">
-        <h2>Reference</h2>
-        <ul>
-          <li><a class="rail__link" href="#naming">Naming &amp; the full index</a></li>
-        </ul>
-      </div>
-    </nav>
+    <div class="rail__desktop-nav">
+      <yn-docs-nav></yn-docs-nav>
+    </div>
   </header>
 
   <main class="main" id="main">
@@ -516,9 +461,12 @@ pre.code code { font-family: inherit; }
       <div class="doc-hero">
         <h1>Docs</h1>
         <p class="sub">
-          One paradigm, ten packages you'll actually reach for first, and ~170
-          in the monorepo overall. Everything below is copied from the
-          packages' own READMEs — nothing here is aspirational.
+          One paradigm, ~170 packages in the monorepo. The sidebar groups them
+          by ecosystem — <strong>dom</strong>, <strong>server</strong>,
+          <strong>ssr</strong>, <strong>cli</strong> — each core package
+          followed by adapters, providers, middleware and plugins that snap
+          into it. Everything below is copied from the packages' own READMEs —
+          nothing here is aspirational.
         </p>
       </div>
 
@@ -553,7 +501,7 @@ pre.code code { font-family: inherit; }
 
         <div class="install-line">
           <code><span class="ps1">$ </span><span class="cmd">pnpm add </span><span class="pkgname">@youneed/dom</span></code>
-          <button class="fig-copy" style="position: static;" type="button" data-copy="pnpm add @youneed/dom" aria-label="Copy install command">Copy</button>
+          <yn-copy></yn-copy>
         </div>
 
         <figure class="code-fig">
@@ -567,12 +515,7 @@ pre.code code { font-family: inherit; }
     <span class="tk-d">return</span> html<span class="tk-s">`&lt;button @click=<span class="tk-m">${</span>this.inc<span class="tk-m">}</span>&gt;<span class="tk-m">${</span>this.count<span class="tk-m">}</span>&lt;/button&gt;`</span><span class="tk-m">;</span>
   <span class="tk-m">}</span>
 <span class="tk-m">}</span></code></pre>
-            <button class="fig-copy" type="button" data-copy='@Component.define()
-class Counter extends Component("x-counter") {
-  @Component.prop() count = 0;
-  @Component.event() inc() { this.count++; }
-  render() {
-    return html`<button @click=${this.inc}>${this.count}</button>`;
+            <yn-copy></yn-copy>`;
   }
 }' aria-label="Copy code sample">Copy</button>
           </div>
@@ -619,24 +562,180 @@ class Counter extends Component("x-counter") {
     <span class="tk-d">return</span> html<span class="tk-s">`&lt;button @click=<span class="tk-m">${</span>this.inc<span class="tk-m">}</span>&gt;<span class="tk-m">${</span>this.label<span class="tk-m">}</span>: <span class="tk-m">${</span>this.count<span class="tk-m">}</span>&lt;/button&gt;`</span><span class="tk-m">;</span>
   <span class="tk-m">}</span>
 <span class="tk-m">}</span></code></pre>
-            <button class="fig-copy" type="button" data-copy='import { Component, html, css } from "@youneed/dom";
-
-@Component.define()
-class Counter extends Component("x-counter") {
-  static styles = css`button { font: inherit }`;
-
-  @Component.prop() count = 0;          // reactive: assigning re-renders
-  @Component.prop({ attribute: true }) label = "count"; // reflects <x-counter label="…">
-
-  @Component.event() inc() { this.count++; } // auto-bound for @click
-
-  render() {
-    return html`<button @click=${this.inc}>${this.label}: ${this.count}</button>`;
+            <yn-copy></yn-copy>`;
   }
 }' aria-label="Copy code sample">Copy</button>
           </div>
         </figure>
         <a class="gh-link" href="https://github.com/vitalics/Youneed/tree/main/packages/dom">packages/dom on GitHub →</a>
+      </section>
+
+      <section class="doc-sec" id="dom-router">
+        <h2>dom-router <span class="pkg-name">@youneed/dom-router</span></h2>
+        <p class="lede">
+          A small client-side SPA router that mounts a Custom Element into a
+          DOM outlet when the current URL matches a route. It supports three
+          URL strategies — hash, history, query — behind a single API, and
+          routes can target either a component class or a tag-name string. It
+          pairs naturally with <code>@youneed/dom</code> components but has no
+          hard dependency on it.
+        </p>
+        <figure class="code-fig">
+          <figcaption>router.ts <span class="pkg">@youneed/dom-router</span></figcaption>
+          <div class="code-fig__wrap">
+            <pre class="code" tabindex="0"><code><span class="tk-d">import</span> <span class="tk-m">{</span> createRouter <span class="tk-m">}</span> <span class="tk-d">from</span> <span class="tk-s">"@youneed/dom-router"</span><span class="tk-m">;</span>
+
+<span class="tk-d">const</span> router <span class="tk-m">=</span> createRouter<span class="tk-m">({</span>
+  outlet<span class="tk-m">:</span> document<span class="tk-m">.</span>getElementById<span class="tk-m">(</span><span class="tk-s">"app"</span><span class="tk-m">)!,</span>
+  mode<span class="tk-m">:</span> <span class="tk-s">"history"</span><span class="tk-m">,</span>                 <span class="tk-m">// "hash" (default) · "history" · "query"</span>
+  routes<span class="tk-m">:</span> <span class="tk-m">[</span>
+    <span class="tk-m">{</span> path<span class="tk-m">:</span> <span class="tk-s">"/"</span><span class="tk-m">,</span>            component<span class="tk-m">:</span> HomePage <span class="tk-m">},</span>       <span class="tk-m">// a component CLASS…</span>
+    <span class="tk-m">{</span> path<span class="tk-m">:</span> <span class="tk-s">"/users/:id"</span><span class="tk-m">,</span>   component<span class="tk-m">:</span> <span class="tk-s">"user-page"</span> <span class="tk-m">},</span>    <span class="tk-m">// …or a tag string. params: { id }</span>
+    <span class="tk-m">{</span> path<span class="tk-m">:</span> <span class="tk-s">"*"</span><span class="tk-m">,</span>            component<span class="tk-m">:</span> <span class="tk-s">"not-found"</span> <span class="tk-m">},</span>     <span class="tk-m">// catch-all</span>
+  <span class="tk-m">],</span>
+<span class="tk-m">});</span>
+
+router<span class="tk-m">.</span>navigate<span class="tk-m">(</span><span class="tk-s">"/users/42"</span><span class="tk-m">);</span>      <span class="tk-m">// updates the URL + mounts &lt;user-page&gt;</span>
+router<span class="tk-m">.</span>current<span class="tk-m">?.</span>params<span class="tk-m">;</span>            <span class="tk-m">// { id: "42" }</span></code></pre>
+            <yn-copy></yn-copy>
+          </div>
+        </figure>
+        <a class="gh-link" href="https://github.com/vitalics/Youneed/tree/main/packages/dom-router">packages/dom-router on GitHub →</a>
+      </section>
+
+      <section class="doc-sec" id="devtools">
+        <h2>devtools <span class="pkg-name">@youneed/devtools</span></h2>
+        <p class="lede">
+          A floating, React-DevTools-style inspector for
+          <code>@youneed/dom</code> applications. It provides a live,
+          searchable component tree, a detail view with props, time-travel
+          over state snapshots, a props diff, emitted events, live scheduler
+          swapping, and per-element style editing — extensible with
+          additional tabs (<code>@youneed/ssr</code> adds Page/Routes/Map
+          views).
+        </p>
+        <figure class="code-fig">
+          <figcaption>devtools.ts <span class="pkg">@youneed/devtools</span></figcaption>
+          <div class="code-fig__wrap">
+            <pre class="code" tabindex="0"><code><span class="tk-d">import</span> <span class="tk-m">{</span> installDevtools<span class="tk-m">,</span> mountDevtoolsPanel <span class="tk-m">}</span> <span class="tk-d">from</span> <span class="tk-s">"@youneed/devtools"</span><span class="tk-m">;</span>
+
+installDevtools<span class="tk-m">();</span>        <span class="tk-m">// capture per-component state/props/events/styles</span>
+mountDevtoolsPanel<span class="tk-m">();</span>     <span class="tk-m">// floating, dockable, interactive panel (state persists)</span></code></pre>
+            <yn-copy></yn-copy>
+          </div>
+        </figure>
+        <a class="gh-link" href="https://github.com/vitalics/Youneed/tree/main/packages/devtools">packages/devtools on GitHub →</a>
+      </section>
+
+      <section class="doc-sec" id="dom-adapter-react">
+        <h2>dom-adapter-react <span class="pkg-name">@youneed/dom-adapter-react</span></h2>
+        <p class="lede">
+          Bridge <code>@youneed/dom</code> and React in both directions.
+          <code>toReact</code> renders a dom component inside a React tree — props
+          are type-checked against the component's own <code>@prop</code> fields
+          and <code>on&lt;Event&gt;</code> handlers receive its
+          <code>CustomEvent</code>s. <code>fromReact</code> wraps an existing
+          React component as a custom element that drops into a dom tree — no
+          rewrite. Part of the adapter family
+          (<code>dom-adapter-vue</code>, <code>-preact</code>,
+          <code>-svelte</code>, <code>-astro</code>, <code>-angular</code>).
+        </p>
+        <figure class="code-fig">
+          <figcaption>bridge.tsx <span class="pkg">@youneed/dom-adapter-react</span></figcaption>
+          <div class="code-fig__wrap">
+            <pre class="code" tabindex="0" data-hl><code>import { toReact, fromReact } from "@youneed/dom-adapter-react";
+
+// dom → React: a real React component with typed props
+const ReactUserCard = toReact(UserCard);
+function Profile({ user }) {
+  return &lt;ReactUserCard user={user} onSelect={(e) =&gt; console.log(e.detail)} /&gt;;
+}
+
+// React → dom: a custom-element class wrapping a React component
+const ReactChart = fromReact(Chart);
+html`&lt;${ReactChart.tagName} .props=${{ data }}&gt;&lt;/${ReactChart.tagName}&gt;`;</code></pre>
+            <yn-copy></yn-copy>
+          </div>
+        </figure>
+        <a class="gh-link" href="https://github.com/vitalics/Youneed/tree/main/packages/dom-adapter-react">packages/dom-adapter-react on GitHub →</a>
+      </section>
+
+      <section class="doc-sec" id="dom-provider-i18n">
+        <h2>dom-provider-i18n <span class="pkg-name">@youneed/dom-provider-i18n</span></h2>
+        <p class="lede">
+          Use <code>@youneed/i18n</code> translations inside components — call
+          <code>i18n("key")</code> straight in an <code>html</code> template and
+          re-render on every locale change. The <code>i18nProvider</code> form
+          plugs into the component's <code>providers</code> slot and adds a
+          <strong>typed</strong> <code>this.i18n</code> (key autocomplete) with
+          automatic reactivity — no boilerplate, and it composes with other
+          providers in the same array.
+        </p>
+        <figure class="code-fig">
+          <figcaption>greeting.ts <span class="pkg">@youneed/dom-provider-i18n</span></figcaption>
+          <div class="code-fig__wrap">
+            <pre class="code" tabindex="0" data-hl><code>import { Component, html } from "@youneed/dom";
+import { createI18n } from "@youneed/i18n";
+import { i18nProvider } from "@youneed/dom-provider-i18n";
+
+const appI18n = createI18n({
+  resources: { en: { hello: "Hello {name}" }, de: { hello: "Hallo {name}" } },
+  locale: "en",
+});
+
+class Greeting extends Component("x-greeting", { providers: [i18nProvider(appI18n)] }) {
+  render() {
+    return html`&lt;div&gt;${this.i18n("hello", { name: "Ada" })}&lt;/div&gt;`;
+    //                       ^ typed: autocompletes "hello" and checks params
+  }
+}
+// setLocale("de") → every subscribed component re-renders</code></pre>
+            <yn-copy></yn-copy>
+          </div>
+        </figure>
+        <a class="gh-link" href="https://github.com/vitalics/Youneed/tree/main/packages/dom-provider-i18n">packages/dom-provider-i18n on GitHub →</a>
+      </section>
+
+      <section class="doc-sec" id="dom-provider-timers">
+        <h2>dom-provider-timers <span class="pkg-name">@youneed/dom-provider-timers</span></h2>
+        <p class="lede">
+          Lifecycle-scoped timers: <code>this.timers</code> wraps
+          <code>setTimeout</code> / <code>setInterval</code> / rAF / idle /
+          <code>delay</code> + the <strong>Scheduler API</strong>
+          (<code>postTask</code>, <code>yield</code>) + <code>debounce</code> /
+          <code>throttle</code> — everything is cancelled automatically when the
+          component disconnects, and every handle (and the registry itself)
+          implements <code>Symbol.dispose</code>, so <code>using</code> scopes
+          it. The search box in this page's sidebar is debounced through it.
+        </p>
+        <figure class="code-fig">
+          <figcaption>clock.ts <span class="pkg">@youneed/dom-provider-timers</span></figcaption>
+          <div class="code-fig__wrap">
+            <pre class="code" tabindex="0" data-hl><code>import { Component, html } from "@youneed/dom";
+import { timersProvider } from "@youneed/dom-provider-timers";
+
+class Clock extends Component("x-clock", { providers: [timersProvider()] }) {
+  time = this.signal(new Date());
+
+  onMount() {
+    this.timers.setInterval(() => this.time.set(new Date()), 1_000);
+    // no teardown code — cancelled on disconnect
+  }
+
+  render() {
+    return html`&lt;time&gt;${this.time.get().toLocaleTimeString()}&lt;/time&gt;`;
+  }
+}
+
+// delay rejects AbortError on disconnect; postTask maps to scheduler.postTask.
+// Everything cancellable is Disposable:
+{
+  using tick = this.timers.setInterval(render, 100);
+} // ← cancelled at end of scope, even on throw</code></pre>
+            <yn-copy></yn-copy>
+          </div>
+        </figure>
+        <a class="gh-link" href="https://github.com/vitalics/Youneed/tree/main/packages/dom-provider-timers">packages/dom-provider-timers on GitHub →</a>
       </section>
 
       <section class="doc-sec" id="server">
@@ -675,32 +774,150 @@ Application<span class="tk-m">(</span>Cats<span class="tk-m">)</span>
   <span class="tk-m">.</span>use<span class="tk-m">(</span>requestLogger<span class="tk-m">(),</span> cors<span class="tk-m">())</span>          <span class="tk-m">// global middleware (onion model)</span>
   <span class="tk-m">.</span>openapi<span class="tk-m">({</span> title<span class="tk-m">:</span> <span class="tk-s">"Cats"</span><span class="tk-m">,</span> version<span class="tk-m">:</span> <span class="tk-s">"1.0.0"</span> <span class="tk-m">})</span>   <span class="tk-m">// → GET /openapi.json</span>
   <span class="tk-m">.</span>listen<span class="tk-m">(</span>3000<span class="tk-m">,</span> <span class="tk-m">(</span>ctx<span class="tk-m">)</span> <span class="tk-d">=&gt;</span> console<span class="tk-m">.</span>log<span class="tk-s">(`:${ctx.port}`</span><span class="tk-m">));</span></code></pre>
-            <button class="fig-copy" type="button" data-copy='import { Application, Controller, t, HttpError } from "@youneed/server";
-
-const Cat = t.object({ name: t.string(), age: t.number() });
-
-class Cats extends Controller("/cats", { guards: [requireApiKey] }) {
-  @Controller.get("/:name", { params: t.object({ name: t.string() }), response: { 200: Cat } })
-  async byName(ctx: Context) {
-    const cat = lookup(ctx.params.name);
-    if (!cat) throw new HttpError(404, { error: "Not found" }); // throw any status
-    return cat;                                                  // validated against 200: Cat
-  }
-
-  @Controller.guard(isAdmin)            // per-method guard (stacks with class guards)
-  @Controller.post({ body: Cat, response: { 201: Cat } })
-  async create(ctx: Context) {
-    return this.Response.json(ctx.body, { status: 201 });        // ctx.body is typed + validated
-  }
-}
-
-Application(Cats)
-  .use(requestLogger(), cors())          // global middleware (onion model)
-  .openapi({ title: "Cats", version: "1.0.0" })   // → GET /openapi.json
-  .listen(3000, (ctx) => console.log(`:${ctx.port}`));' aria-label="Copy code sample">Copy</button>
+            <yn-copy></yn-copy>
           </div>
         </figure>
         <a class="gh-link" href="https://github.com/vitalics/Youneed/tree/main/packages/server">packages/server on GitHub →</a>
+      </section>
+
+      <section class="doc-sec" id="schema">
+        <h2>schema <span class="pkg-name">@youneed/schema</span></h2>
+        <p class="lede">
+          <code>class-validator</code>-style DTO validation built on standard
+          TC39 decorators rather than <code>reflect-metadata</code> or legacy
+          experimental decorators, so the same decorated class validates
+          identically in TypeScript and plain compiled JS. Fields are
+          annotated with constraint decorators like <code>@IsEmail()</code>,
+          <code>@MinLength()</code>, and <code>@Min()</code>, and
+          <code>validate()</code> checks a class or plain object against those
+          rules.
+        </p>
+        <figure class="code-fig">
+          <figcaption>schema.ts <span class="pkg">@youneed/schema</span></figcaption>
+          <div class="code-fig__wrap">
+            <pre class="code" tabindex="0"><code><span class="tk-d">import</span> <span class="tk-m">{</span> IsEmail<span class="tk-m">,</span> IsNotEmpty<span class="tk-m">,</span> MinLength<span class="tk-m">,</span> IsOptional<span class="tk-m">,</span> IsInt<span class="tk-m">,</span> Min<span class="tk-m">,</span> validate <span class="tk-m">}</span> <span class="tk-d">from</span> <span class="tk-s">"@youneed/schema"</span><span class="tk-m">;</span>
+
+<span class="tk-d">class</span> CreateUserDTO <span class="tk-m">{</span>
+  <span class="tk-d">@IsEmail</span><span class="tk-m">()</span> email<span class="tk-m">!:</span> string<span class="tk-m">;</span>
+  <span class="tk-d">@IsNotEmpty</span><span class="tk-m">()</span> <span class="tk-d">@MinLength</span><span class="tk-m">(</span>8<span class="tk-m">)</span> password<span class="tk-m">!:</span> string<span class="tk-m">;</span>
+  <span class="tk-d">@IsOptional</span><span class="tk-m">()</span> <span class="tk-d">@IsInt</span><span class="tk-m">()</span> <span class="tk-d">@Min</span><span class="tk-m">(</span>18<span class="tk-m">)</span> age<span class="tk-m">?:</span> number<span class="tk-m">;</span>
+<span class="tk-m">}</span>
+
+<span class="tk-d">const</span> errors <span class="tk-m">=</span> validate<span class="tk-m">(</span>CreateUserDTO<span class="tk-m">,</span> <span class="tk-d">await</span> req<span class="tk-m">.</span>json<span class="tk-m">());</span>
+<span class="tk-m">// [] when valid, else:</span>
+<span class="tk-m">// [{ property: "email", value: "nope", constraints: { isEmail: "email must be an email" } }]</span></code></pre>
+            <yn-copy></yn-copy>
+          </div>
+        </figure>
+        <a class="gh-link" href="https://github.com/vitalics/Youneed/tree/main/packages/schema">packages/schema on GitHub →</a>
+      </section>
+
+      <section class="doc-sec" id="orm-sql">
+        <h2>orm-sql <span class="pkg-name">@youneed/orm-sql</span></h2>
+        <p class="lede">
+          A small TypeORM-style SQL ORM built on standard TC39 decorators, with
+          no <code>reflect-metadata</code> or legacy TypeScript decorator
+          flags required. Entities are plain classes and databases plug in as
+          adapters, with a zero-dependency SQLite adapter
+          (<code>node:sqlite</code>) included as the reference engine —
+          repositories give CRUD, relations, transactions, and schema
+          migrations via a <code>Migrator</code>.
+        </p>
+        <figure class="code-fig">
+          <figcaption>orm-sql.ts <span class="pkg">@youneed/orm-sql</span></figcaption>
+          <div class="code-fig__wrap">
+            <pre class="code" tabindex="0"><code><span class="tk-d">import</span> <span class="tk-m">{</span> Table<span class="tk-m">,</span> Orm<span class="tk-m">,</span> getRepository <span class="tk-m">}</span> <span class="tk-d">from</span> <span class="tk-s">"@youneed/orm-sql"</span><span class="tk-m">;</span>
+
+<span class="tk-d">class</span> UsersTable <span class="tk-d">extends</span> Table<span class="tk-m">(</span><span class="tk-s">"users"</span><span class="tk-m">)</span> <span class="tk-m">{</span>
+  <span class="tk-d">@Table.primaryGeneratedColumn</span><span class="tk-m">()</span> id<span class="tk-m">!:</span> number<span class="tk-m">;</span>
+
+  <span class="tk-d">@Table.field</span><span class="tk-m">(</span><span class="tk-s">"string"</span><span class="tk-m">)</span>
+  <span class="tk-d">@Table.index</span><span class="tk-m">({</span> group<span class="tk-m">:</span> <span class="tk-s">"user_action"</span> <span class="tk-m">})</span>
+  userId<span class="tk-m">!:</span> string<span class="tk-m">;</span>
+
+  <span class="tk-d">@Table.field</span><span class="tk-m">(</span><span class="tk-s">"string"</span><span class="tk-m">,</span> <span class="tk-m">{</span> unique<span class="tk-m">:</span> <span class="tk-d">true</span> <span class="tk-m">})</span> email<span class="tk-m">!:</span> string<span class="tk-m">;</span>
+  <span class="tk-d">@Table.column</span><span class="tk-m">({</span> type<span class="tk-m">:</span> <span class="tk-s">"boolean"</span><span class="tk-m">,</span> default<span class="tk-m">:</span> <span class="tk-d">true</span> <span class="tk-m">})</span> isActive<span class="tk-m">!:</span> boolean<span class="tk-m">;</span>
+
+  <span class="tk-d">@Table.oneToMany</span><span class="tk-m">(()</span> <span class="tk-d">=&gt;</span> Photo<span class="tk-m">,</span> <span class="tk-m">(</span>p<span class="tk-m">)</span> <span class="tk-d">=&gt;</span> p<span class="tk-m">.</span>user<span class="tk-m">)</span> photos<span class="tk-m">!:</span> Photo<span class="tk-m">[];</span>
+<span class="tk-m">}</span>
+
+<span class="tk-d">await</span> Orm<span class="tk-m">({</span>
+  type<span class="tk-m">:</span> <span class="tk-s">"sqlite"</span><span class="tk-m">,</span>
+  database<span class="tk-m">:</span> <span class="tk-s">":memory:"</span><span class="tk-m">,</span>
+  tables<span class="tk-m">:</span> <span class="tk-m">[</span>UsersTable<span class="tk-m">,</span> Photo<span class="tk-m">],</span>
+  synchronize<span class="tk-m">:</span> <span class="tk-d">true</span><span class="tk-m">,</span>
+<span class="tk-m">});</span>
+
+<span class="tk-d">const</span> users <span class="tk-m">=</span> getRepository<span class="tk-m">(</span>UsersTable<span class="tk-m">);</span>
+<span class="tk-d">const</span> ada <span class="tk-m">=</span> <span class="tk-d">await</span> users<span class="tk-m">.</span>insert<span class="tk-m">({</span> userId<span class="tk-m">:</span> <span class="tk-s">"u1"</span><span class="tk-m">,</span> email<span class="tk-m">:</span> <span class="tk-s">"ada@x.com"</span> <span class="tk-m">});</span>
+<span class="tk-d">await</span> users<span class="tk-m">.</span>findOne<span class="tk-m">({</span> email<span class="tk-m">:</span> <span class="tk-s">"ada@x.com"</span> <span class="tk-m">});</span> <span class="tk-m">// → UsersTable instance</span></code></pre>
+            <yn-copy></yn-copy>
+          </div>
+        </figure>
+        <a class="gh-link" href="https://github.com/vitalics/Youneed/tree/main/packages/orm-sql">packages/orm-sql on GitHub →</a>
+      </section>
+
+      <section class="doc-sec" id="server-middleware-rate-limit">
+        <h2>server-middleware-rate-limit <span class="pkg-name">@youneed/server-middleware-rate-limit</span></h2>
+        <p class="lede">
+          Rate-limit requests with a pluggable strategy — fixed window, sliding
+          log, token bucket, exponential backoff — emitting standard
+          <code>X-RateLimit-*</code> and <code>Retry-After</code> headers. The
+          KV-backed <code>KvFixedWindow</code> keeps <strong>one shared
+          limit</strong> across a whole fleet via a single atomic
+          <code>incr</code> per request. One of ~30
+          <code>server-middleware-*</code> packages that compose the same way
+          (<code>cors</code>, <code>helmet</code>, <code>etag</code>,
+          <code>session</code>, <code>metrics</code>, …).
+        </p>
+        <figure class="code-fig">
+          <figcaption>rate-limit.ts <span class="pkg">@youneed/server-middleware-rate-limit</span></figcaption>
+          <div class="code-fig__wrap">
+            <pre class="code" tabindex="0" data-hl><code>import { Application } from "@youneed/server";
+import { rateLimit, TokenBucket, KvFixedWindow } from "@youneed/server-middleware-rate-limit";
+import { RedisKV } from "@youneed/kv-redis";
+
+Application()
+  .use(rateLimit({ windowMs: 60_000, max: 100 }))   // fixed window, global
+  .use("/api", rateLimit({ strategy: new TokenBucket({ capacity: 50, refillPerSec: 5 }) }))
+  // one shared limit across N instances — the counter lives in Redis
+  .use("/auth", rateLimit({ strategy: new KvFixedWindow(new RedisKV({ url: process.env.REDIS_URL }), { windowMs: 60_000, max: 20 }) }))
+  .listen(3000, () =&gt; {});</code></pre>
+            <yn-copy></yn-copy>
+          </div>
+        </figure>
+        <a class="gh-link" href="https://github.com/vitalics/Youneed/tree/main/packages/server-middleware-rate-limit">packages/server-middleware-rate-limit on GitHub →</a>
+      </section>
+
+      <section class="doc-sec" id="server-plugin-jobs">
+        <h2>server-plugin-jobs <span class="pkg-name">@youneed/server-plugin-jobs</span></h2>
+        <p class="lede">
+          A zero-dependency job scheduler — cron expressions (5- or 6-field),
+          fixed intervals, one-off delays — shipped standalone
+          (<code>createScheduler</code>) and as a server plugin that starts on
+          listen and stops during graceful drain. A leader-lock over a shared KV
+          store makes a job fire <strong>exactly once per occurrence</strong>
+          across a fleet, and injectable clock/timers make tests run instantly.
+        </p>
+        <figure class="code-fig">
+          <figcaption>jobs.ts <span class="pkg">@youneed/server-plugin-jobs</span></figcaption>
+          <div class="code-fig__wrap">
+            <pre class="code" tabindex="0" data-hl><code>import { Application } from "@youneed/server";
+import { jobs } from "@youneed/server-plugin-jobs";
+
+const cron = jobs({
+  jobs: [{ name: "cleanup", schedule: "0 */6 * * *", handler: purge }],
+});
+
+app.plugin(cron).listen(3000, () =&gt; {}); // start() on listen, stop() on drain
+
+// still mutable after registration
+cron.scheduler.add({ name: "heartbeat", schedule: { every: 30_000 }, handler: ping });
+cron.scheduler.trigger("cleanup");       // run one now, bypassing the schedule</code></pre>
+            <yn-copy></yn-copy>
+          </div>
+        </figure>
+        <a class="gh-link" href="https://github.com/vitalics/Youneed/tree/main/packages/server-plugin-jobs">packages/server-plugin-jobs on GitHub →</a>
       </section>
 
       <section class="doc-sec" id="ssr">
@@ -734,159 +951,111 @@ Application(Cats)
 
 enablePageDevtools<span class="tk-m">();</span>                            <span class="tk-m">// embed page+routes payload (dev)</span>
 mountPages<span class="tk-m">(</span>Application<span class="tk-m">(),</span> Home<span class="tk-m">,</span> About<span class="tk-m">).</span>listen<span class="tk-m">(</span>3010<span class="tk-m">,</span> …<span class="tk-m">);</span></code></pre>
-            <button class="fig-copy" type="button" data-copy='import { Page, mountPages, enablePageDevtools } from "@youneed/ssr";
-import { Application } from "@youneed/server";
-
-class About extends Page("/about", { title: "About" }) {
-  render() { return AboutApp; }                  // a component class, instance, or HTML string
-}
-
-class Home extends Page("/", {
-  title: "Home",
-  clientScript: () => import("./client.ts"),     // type-checked; resolved to a URL
-  speculation: { prerender: [{ source: "list", urls: [About.url], eagerness: "moderate" }] },
-}) {
-  render() { return HomeApp; }
-}
-
-enablePageDevtools();                            // embed page+routes payload (dev)
-mountPages(Application(), Home, About).listen(3010, …);' aria-label="Copy code sample">Copy</button>
+            <yn-copy></yn-copy>
           </div>
         </figure>
         <a class="gh-link" href="https://github.com/vitalics/Youneed/tree/main/packages/ssr">packages/ssr on GitHub →</a>
       </section>
 
-      <section class="doc-sec" id="dom-router">
-        <h2>dom-router <span class="pkg-name">@youneed/dom-router</span></h2>
+      <section class="doc-sec" id="ssr-plugin-meta">
+        <h2>ssr-plugin-meta <span class="pkg-name">@youneed/ssr-plugin-meta</span></h2>
         <p class="lede">
-          A small client-side SPA router that mounts a Custom Element into a
-          DOM outlet when the current URL matches a route. It supports three
-          URL strategies — hash, history, query — behind a single API, and
-          routes can target either a component class or a tag-name string. It
-          pairs naturally with <code>@youneed/dom</code> components but has no
-          hard dependency on it.
+          SEO <code>&lt;meta&gt;</code> + OpenGraph + Twitter Card tags as SSR
+          page middleware. A page declares metadata via the <code>meta</code>
+          option; the module renders the tags, resolving <code>og:url</code> /
+          <code>og:image</code> to absolute URLs against the SSR
+          <code>origin</code>. <code>meta</code> can also be a function of the
+          request context for per-request tags.
         </p>
         <figure class="code-fig">
-          <figcaption>router.ts <span class="pkg">@youneed/dom-router</span></figcaption>
+          <figcaption>post.ts <span class="pkg">@youneed/ssr-plugin-meta</span></figcaption>
           <div class="code-fig__wrap">
-            <pre class="code" tabindex="0"><code><span class="tk-d">import</span> <span class="tk-m">{</span> createRouter <span class="tk-m">}</span> <span class="tk-d">from</span> <span class="tk-s">"@youneed/dom-router"</span><span class="tk-m">;</span>
+            <pre class="code" tabindex="0" data-hl><code>import { ssr } from "@youneed/server-plugin-ssr";
+import { meta } from "@youneed/ssr-plugin-meta";
 
-<span class="tk-d">const</span> router <span class="tk-m">=</span> createRouter<span class="tk-m">({</span>
-  outlet<span class="tk-m">:</span> document<span class="tk-m">.</span>getElementById<span class="tk-m">(</span><span class="tk-s">"app"</span><span class="tk-m">)!,</span>
-  mode<span class="tk-m">:</span> <span class="tk-s">"history"</span><span class="tk-m">,</span>                 <span class="tk-m">// "hash" (default) · "history" · "query"</span>
-  routes<span class="tk-m">:</span> <span class="tk-m">[</span>
-    <span class="tk-m">{</span> path<span class="tk-m">:</span> <span class="tk-s">"/"</span><span class="tk-m">,</span>            component<span class="tk-m">:</span> HomePage <span class="tk-m">},</span>       <span class="tk-m">// a component CLASS…</span>
-    <span class="tk-m">{</span> path<span class="tk-m">:</span> <span class="tk-s">"/users/:id"</span><span class="tk-m">,</span>   component<span class="tk-m">:</span> <span class="tk-s">"user-page"</span> <span class="tk-m">},</span>    <span class="tk-m">// …or a tag string. params: { id }</span>
-    <span class="tk-m">{</span> path<span class="tk-m">:</span> <span class="tk-s">"*"</span><span class="tk-m">,</span>            component<span class="tk-m">:</span> <span class="tk-s">"not-found"</span> <span class="tk-m">},</span>     <span class="tk-m">// catch-all</span>
-  <span class="tk-m">],</span>
-<span class="tk-m">});</span>
+class Post extends Page("/blog/:slug", {
+  title: "Hello world",
+  meta: {
+    description: "An introductory post.",
+    og: { type: "article", image: "/og/hello.png" },
+    twitter: { card: "summary_large_image" },
+  },
+}) { /* … */ }
 
-router<span class="tk-m">.</span>navigate<span class="tk-m">(</span><span class="tk-s">"/users/42"</span><span class="tk-m">);</span>      <span class="tk-m">// updates the URL + mounts &lt;user-page&gt;</span>
-router<span class="tk-m">.</span>current<span class="tk-m">?.</span>params<span class="tk-m">;</span>            <span class="tk-m">// { id: "42" }</span></code></pre>
-            <button class="fig-copy" type="button" data-copy='import { createRouter } from "@youneed/dom-router";
+app.plugin(ssr({
+  origin: "https://example.com",
+  pages: [Post],
+  modules: [meta({ siteName: "Example", twitterSite: "@example" })],
+}));</code></pre>
+            <yn-copy></yn-copy>
+          </div>
+        </figure>
+        <a class="gh-link" href="https://github.com/vitalics/Youneed/tree/main/packages/ssr-plugin-meta">packages/ssr-plugin-meta on GitHub →</a>
+      </section>
 
-const router = createRouter({
-  outlet: document.getElementById("app")!,
-  mode: "history",                 // "hash" (default) · "history" · "query"
-  routes: [
-    { path: "/",            component: HomePage },       // a component CLASS…
-    { path: "/users/:id",   component: "user-page" },    // …or a tag string. params: { id }
-    { path: "*",            component: "not-found" },     // catch-all
+      <section class="doc-sec" id="ssr-plugin-sitemap">
+        <h2>ssr-plugin-sitemap <span class="pkg-name">@youneed/ssr-plugin-sitemap</span></h2>
+        <p class="lede">
+          A <code>sitemap.xml</code> module for the SSR plugin. Static page
+          routes are enumerated automatically; dynamic routes
+          (<code>/users/:id</code>) are listed via <code>entries</code> — a value
+          or an async function, so the feed reflects fresh data on each request.
+          All <code>&lt;loc&gt;</code>s resolve absolute against
+          <code>origin</code>.
+        </p>
+        <figure class="code-fig">
+          <figcaption>sitemap.ts <span class="pkg">@youneed/ssr-plugin-sitemap</span></figcaption>
+          <div class="code-fig__wrap">
+            <pre class="code" tabindex="0" data-hl><code>import { ssr } from "@youneed/server-plugin-ssr";
+import { sitemap } from "@youneed/ssr-plugin-sitemap";
+
+app.plugin(ssr({
+  origin: "https://example.com",
+  pages: [Home, About, Pricing],
+  modules: [
+    sitemap({
+      exclude: ["/admin", /^\/internal/],
+      entries: [{ url: "/blog/launch", lastmod: "2026-06-01", priority: 0.8 }],
+      defaults: { changefreq: "weekly", priority: 0.5 },
+    }),
   ],
-});
-
-router.navigate("/users/42");      // updates the URL + mounts <user-page>
-router.current?.params;            // { id: "42" }' aria-label="Copy code sample">Copy</button>
+}));</code></pre>
+            <yn-copy></yn-copy>
           </div>
         </figure>
-        <a class="gh-link" href="https://github.com/vitalics/Youneed/tree/main/packages/dom-router">packages/dom-router on GitHub →</a>
+        <a class="gh-link" href="https://github.com/vitalics/Youneed/tree/main/packages/ssr-plugin-sitemap">packages/ssr-plugin-sitemap on GitHub →</a>
       </section>
 
-      <section class="doc-sec" id="devtools">
-        <h2>devtools <span class="pkg-name">@youneed/devtools</span></h2>
+      <section class="doc-sec" id="ssr-plugin-robots">
+        <h2>ssr-plugin-robots <span class="pkg-name">@youneed/ssr-plugin-robots</span></h2>
         <p class="lede">
-          A floating, React-DevTools-style inspector for
-          <code>@youneed/dom</code> applications. It provides a live,
-          searchable component tree, a detail view with props, time-travel
-          over state snapshots, a props diff, emitted events, live scheduler
-          swapping, and per-element style editing — extensible with
-          additional tabs (<code>@youneed/ssr</code> adds Page/Routes/Map
-          views).
+          A <code>robots.txt</code> module: per-user-agent allow/disallow
+          policies, a <code>Sitemap:</code> line resolved against
+          <code>origin</code>, and the permissive "allow everything" file when no
+          policies are given.
         </p>
         <figure class="code-fig">
-          <figcaption>devtools.ts <span class="pkg">@youneed/devtools</span></figcaption>
+          <figcaption>robots.ts <span class="pkg">@youneed/ssr-plugin-robots</span></figcaption>
           <div class="code-fig__wrap">
-            <pre class="code" tabindex="0"><code><span class="tk-d">import</span> <span class="tk-m">{</span> installDevtools<span class="tk-m">,</span> mountDevtoolsPanel <span class="tk-m">}</span> <span class="tk-d">from</span> <span class="tk-s">"@youneed/devtools"</span><span class="tk-m">;</span>
+            <pre class="code" tabindex="0" data-hl><code>import { ssr } from "@youneed/server-plugin-ssr";
+import { robots } from "@youneed/ssr-plugin-robots";
 
-installDevtools<span class="tk-m">();</span>        <span class="tk-m">// capture per-component state/props/events/styles</span>
-mountDevtoolsPanel<span class="tk-m">();</span>     <span class="tk-m">// floating, dockable, interactive panel (state persists)</span></code></pre>
-            <button class="fig-copy" type="button" data-copy='import { installDevtools, mountDevtoolsPanel } from "@youneed/devtools";
-
-installDevtools();        // capture per-component state/props/events/styles
-mountDevtoolsPanel();     // floating, dockable, interactive panel (state persists)' aria-label="Copy code sample">Copy</button>
+app.plugin(ssr({
+  origin: "https://example.com",
+  modules: [
+    robots({
+      policies: [
+        { userAgent: "*", disallow: ["/admin", "/api"], allow: "/api/public" },
+        { userAgent: ["GPTBot", "CCBot"], disallow: "/" },
+      ],
+      sitemap: true, // → Sitemap: https://example.com/sitemap.xml
+    }),
+  ],
+}));</code></pre>
+            <yn-copy></yn-copy>
           </div>
         </figure>
-        <a class="gh-link" href="https://github.com/vitalics/Youneed/tree/main/packages/devtools">packages/devtools on GitHub →</a>
-      </section>
-
-      <section class="doc-sec" id="test">
-        <h2>test <span class="pkg-name">@youneed/test</span></h2>
-        <p class="lede">
-          A class-and-decorator test framework built in the same paradigm as
-          <code>@youneed/dom</code> and <code>@youneed/server</code>: a
-          factory returns a base class you extend, TC39 decorators register
-          test members (cases, fixtures, hooks), and a fluent
-          <code>TestApplication</code> builder wires everything up and runs
-          it. Fixtures give scoped setup/teardown, <code>TestContext</code>
-          carries steps/annotations/abort signals, and reporters, plugins, and
-          parallelization (worker processes, CI sharding) are pluggable.
-        </p>
-        <figure class="code-fig">
-          <figcaption>calculator.test.ts <span class="pkg">@youneed/test</span></figcaption>
-          <div class="code-fig__wrap">
-            <pre class="code" tabindex="0"><code><span class="tk-d">import</span> <span class="tk-m">{</span> Test<span class="tk-m">,</span> Fixture<span class="tk-m">,</span> TestApplication<span class="tk-m">,</span> expect <span class="tk-m">}</span> <span class="tk-d">from</span> <span class="tk-s">"@youneed/test"</span><span class="tk-m">;</span>
-
-<span class="tk-d">class</span> Calculator <span class="tk-m">{</span>
-  add<span class="tk-m">(</span>a<span class="tk-m">:</span> number<span class="tk-m">,</span> b<span class="tk-m">:</span> number<span class="tk-m">)</span> <span class="tk-m">{</span> <span class="tk-d">return</span> a <span class="tk-m">+</span> b<span class="tk-m">;</span> <span class="tk-m">}</span>
-<span class="tk-m">}</span>
-
-<span class="tk-d">class</span> CalcFixture <span class="tk-d">extends</span> Fixture<span class="tk-m">&lt;</span>Calculator<span class="tk-m">&gt;(</span><span class="tk-m">{</span> name<span class="tk-m">:</span> <span class="tk-s">"calc"</span><span class="tk-m">,</span> scope<span class="tk-m">:</span> <span class="tk-s">"test"</span> <span class="tk-m">})</span> <span class="tk-m">{</span>
-  setup<span class="tk-m">()</span> <span class="tk-m">{</span> <span class="tk-d">return new</span> Calculator<span class="tk-m">();</span> <span class="tk-m">}</span>
-<span class="tk-m">}</span>
-
-<span class="tk-d">class</span> CalcTest <span class="tk-d">extends</span> Test<span class="tk-m">({</span> name<span class="tk-m">:</span> <span class="tk-s">"Calculator"</span> <span class="tk-m">})</span> <span class="tk-m">{</span>
-  <span class="tk-d">@Test.use</span><span class="tk-m">(</span>CalcFixture<span class="tk-m">)</span> calc<span class="tk-m">!:</span> Calculator<span class="tk-m">;</span>
-
-  <span class="tk-d">@Test.it</span><span class="tk-m">(</span><span class="tk-s">"adds two numbers"</span><span class="tk-m">)</span>
-  adds<span class="tk-m">()</span> <span class="tk-m">{</span>
-    expect<span class="tk-m">(</span><span class="tk-d">this</span><span class="tk-m">.</span>calc<span class="tk-m">.</span>add<span class="tk-m">(</span>2<span class="tk-m">,</span> 3<span class="tk-m">)).</span>toBe<span class="tk-m">(</span>5<span class="tk-m">);</span>
-  <span class="tk-m">}</span>
-<span class="tk-m">}</span>
-
-<span class="tk-d">await</span> TestApplication<span class="tk-m">().</span>addTests<span class="tk-m">(</span>CalcTest<span class="tk-m">).</span>run<span class="tk-m">();</span></code></pre>
-            <button class="fig-copy" type="button" data-copy='import { Test, Fixture, TestApplication, expect } from "@youneed/test";
-
-class Calculator {
-  add(a: number, b: number) { return a + b; }
-}
-
-class CalcFixture extends Fixture<Calculator>({ name: "calc", scope: "test" }) {
-  setup() { return new Calculator(); }
-}
-
-class CalcTest extends Test({ name: "Calculator" }) {
-  @Test.use(CalcFixture) calc!: Calculator;
-
-  @Test.it("adds two numbers")
-  adds() {
-    expect(this.calc.add(2, 3)).toBe(5);
-  }
-}
-
-await TestApplication().addTests(CalcTest).run();' aria-label="Copy code sample">Copy</button>
-          </div>
-        </figure>
-        <a class="gh-link" href="https://github.com/vitalics/Youneed/tree/main/packages/test">packages/test on GitHub →</a>
+        <a class="gh-link" href="https://github.com/vitalics/Youneed/tree/main/packages/ssr-plugin-robots">packages/ssr-plugin-robots on GitHub →</a>
       </section>
 
       <section class="doc-sec" id="cli">
@@ -931,147 +1100,120 @@ Application<span class="tk-m">({</span>
   commands<span class="tk-m">:</span> <span class="tk-m">[</span>SplitCommand<span class="tk-m">],</span>
   options<span class="tk-m">:</span> <span class="tk-m">[...</span>defaultOptions<span class="tk-m">()],</span>
 <span class="tk-m">});</span></code></pre>
-            <button class="fig-copy" type="button" data-copy='import { Application, Command, Option, defaultOptions } from "@youneed/cli";
-
-// A reusable, named option (its key + value type flow into `this.options`).
-class FirstOption extends Option("--first", {
-  short: "f",
-  description: "display just the first substring",
-}) {}
-
-class SplitCommand extends Command({
-  name: "split <string>", // grammar: a word + positional args
-  description: "Split a string into substrings and display as an array",
-  options: [FirstOption, { name: "-s, --separator <char>", default: "," }, ...defaultOptions()],
-}) {
-  execute(value: string) {
-    // `value` is typed from `<string>`; `this.options` from the options tuple.
-    const limit = this.options.first ? 1 : undefined;
-    console.log(value.split(this.options.separator, limit));
-  }
-}
-
-Application({
-  name: "string-util",
-  description: "CLI to some JavaScript string utilities",
-  version: "0.0.8",
-  commands: [SplitCommand],
-  options: [...defaultOptions()],
-});' aria-label="Copy code sample">Copy</button>
+            <yn-copy></yn-copy>
           </div>
         </figure>
         <a class="gh-link" href="https://github.com/vitalics/Youneed/tree/main/packages/cli">packages/cli on GitHub →</a>
       </section>
 
-      <section class="doc-sec" id="orm-sql">
-        <h2>orm-sql <span class="pkg-name">@youneed/orm-sql</span></h2>
+      <section class="doc-sec" id="cli-middleware-prompt">
+        <h2>cli-middleware-prompt <span class="pkg-name">@youneed/cli-middleware-prompt</span></h2>
         <p class="lede">
-          A small TypeORM-style SQL ORM built on standard TC39 decorators, with
-          no <code>reflect-metadata</code> or legacy TypeScript decorator
-          flags required. Entities are plain classes and databases plug in as
-          adapters, with a zero-dependency SQLite adapter
-          (<code>node:sqlite</code>) included as the reference engine —
-          repositories give CRUD, relations, transactions, and schema
-          migrations via a <code>Migrator</code>.
+          Interactive prompts for CLI commands: the middleware adds
+          <code>this.prompt</code> with <code>ask</code> (free text),
+          <code>confirm</code> (y/n), <code>choice</code> (single-select),
+          <code>list</code> (multi-select), <code>alert</code> and
+          <code>spinner</code>. Prompts draw through the core
+          <code>LiveRenderer</code> in raw-key mode, and everything binds to one
+          terminal — inject a scripted double and they're testable.
         </p>
         <figure class="code-fig">
-          <figcaption>orm-sql.ts <span class="pkg">@youneed/orm-sql</span></figcaption>
+          <figcaption>setup.ts <span class="pkg">@youneed/cli-middleware-prompt</span></figcaption>
           <div class="code-fig__wrap">
-            <pre class="code" tabindex="0"><code><span class="tk-d">import</span> <span class="tk-m">{</span> Table<span class="tk-m">,</span> Orm<span class="tk-m">,</span> getRepository <span class="tk-m">}</span> <span class="tk-d">from</span> <span class="tk-s">"@youneed/orm-sql"</span><span class="tk-m">;</span>
+            <pre class="code" tabindex="0" data-hl><code>import { Application, Command } from "@youneed/cli";
+import { prompts } from "@youneed/cli-middleware-prompt";
 
-<span class="tk-d">class</span> UsersTable <span class="tk-d">extends</span> Table<span class="tk-m">(</span><span class="tk-s">"users"</span><span class="tk-m">)</span> <span class="tk-m">{</span>
-  <span class="tk-d">@Table.primaryGeneratedColumn</span><span class="tk-m">()</span> id<span class="tk-m">!:</span> number<span class="tk-m">;</span>
-
-  <span class="tk-d">@Table.field</span><span class="tk-m">(</span><span class="tk-s">"string"</span><span class="tk-m">)</span>
-  <span class="tk-d">@Table.index</span><span class="tk-m">({</span> group<span class="tk-m">:</span> <span class="tk-s">"user_action"</span> <span class="tk-m">})</span>
-  userId<span class="tk-m">!:</span> string<span class="tk-m">;</span>
-
-  <span class="tk-d">@Table.field</span><span class="tk-m">(</span><span class="tk-s">"string"</span><span class="tk-m">,</span> <span class="tk-m">{</span> unique<span class="tk-m">:</span> <span class="tk-d">true</span> <span class="tk-m">})</span> email<span class="tk-m">!:</span> string<span class="tk-m">;</span>
-  <span class="tk-d">@Table.column</span><span class="tk-m">({</span> type<span class="tk-m">:</span> <span class="tk-s">"boolean"</span><span class="tk-m">,</span> default<span class="tk-m">:</span> <span class="tk-d">true</span> <span class="tk-m">})</span> isActive<span class="tk-m">!:</span> boolean<span class="tk-m">;</span>
-
-  <span class="tk-d">@Table.oneToMany</span><span class="tk-m">(()</span> <span class="tk-d">=&gt;</span> Photo<span class="tk-m">,</span> <span class="tk-m">(</span>p<span class="tk-m">)</span> <span class="tk-d">=&gt;</span> p<span class="tk-m">.</span>user<span class="tk-m">)</span> photos<span class="tk-m">!:</span> Photo<span class="tk-m">[];</span>
-<span class="tk-m">}</span>
-
-<span class="tk-d">await</span> Orm<span class="tk-m">({</span>
-  type<span class="tk-m">:</span> <span class="tk-s">"sqlite"</span><span class="tk-m">,</span>
-  database<span class="tk-m">:</span> <span class="tk-s">":memory:"</span><span class="tk-m">,</span>
-  tables<span class="tk-m">:</span> <span class="tk-m">[</span>UsersTable<span class="tk-m">,</span> Photo<span class="tk-m">],</span>
-  synchronize<span class="tk-m">:</span> <span class="tk-d">true</span><span class="tk-m">,</span>
-<span class="tk-m">});</span>
-
-<span class="tk-d">const</span> users <span class="tk-m">=</span> getRepository<span class="tk-m">(</span>UsersTable<span class="tk-m">);</span>
-<span class="tk-d">const</span> ada <span class="tk-m">=</span> <span class="tk-d">await</span> users<span class="tk-m">.</span>insert<span class="tk-m">({</span> userId<span class="tk-m">:</span> <span class="tk-s">"u1"</span><span class="tk-m">,</span> email<span class="tk-m">:</span> <span class="tk-s">"ada@x.com"</span> <span class="tk-m">});</span>
-<span class="tk-d">await</span> users<span class="tk-m">.</span>findOne<span class="tk-m">({</span> email<span class="tk-m">:</span> <span class="tk-s">"ada@x.com"</span> <span class="tk-m">});</span> <span class="tk-m">// → UsersTable instance</span></code></pre>
-            <button class="fig-copy" type="button" data-copy='import { Table, Orm, getRepository } from "@youneed/orm-sql";
-
-class UsersTable extends Table("users") {
-  @Table.primaryGeneratedColumn() id!: number;
-
-  @Table.field("string")
-  @Table.index({ group: "user_action" })
-  userId!: string;
-
-  @Table.field("string", { unique: true }) email!: string;
-  @Table.column({ type: "boolean", default: true }) isActive!: boolean;
-
-  @Table.oneToMany(() => Photo, (p) => p.user) photos!: Photo[];
+class Setup extends Command("setup", { middleware: [prompts()] }) {
+  async execute() {
+    const name = await this.prompt.ask("Project name?", { default: "app" });
+    const env = await this.prompt.choice("Environment", ["dev", "staging", "prod"]);
+    const feats = await this.prompt.list("Features", ["ts", "lint", "tests"]);
+    if (await this.prompt.confirm(`Create ${name}?`, { default: true })) {
+      await this.prompt.spinner("scaffolding", () =&gt; scaffold(name, env, feats));
+      await this.prompt.alert("Done!");
+    }
+  }
 }
 
-await Orm({
-  type: "sqlite",
-  database: ":memory:",
-  tables: [UsersTable, Photo],
-  synchronize: true,
-});
-
-const users = getRepository(UsersTable);
-const ada = await users.insert({ userId: "u1", email: "ada@x.com" });
-await users.findOne({ email: "ada@x.com" }); // → UsersTable instance' aria-label="Copy code sample">Copy</button>
+Application({ name: "create", commands: [Setup] }).run(["setup"]);</code></pre>
+            <yn-copy></yn-copy>
           </div>
         </figure>
-        <a class="gh-link" href="https://github.com/vitalics/Youneed/tree/main/packages/orm-sql">packages/orm-sql on GitHub →</a>
+        <a class="gh-link" href="https://github.com/vitalics/Youneed/tree/main/packages/cli-middleware-prompt">packages/cli-middleware-prompt on GitHub →</a>
       </section>
 
-      <section class="doc-sec" id="schema">
-        <h2>schema <span class="pkg-name">@youneed/schema</span></h2>
+      <section class="doc-sec" id="cli-plugin-help">
+        <h2>cli-plugin-help <span class="pkg-name">@youneed/cli-plugin-help</span></h2>
         <p class="lede">
-          <code>class-validator</code>-style DTO validation built on standard
-          TC39 decorators rather than <code>reflect-metadata</code> or legacy
-          experimental decorators, so the same decorated class validates
-          identically in TypeScript and plain compiled JS. Fields are
-          annotated with constraint decorators like <code>@IsEmail()</code>,
-          <code>@MinLength()</code>, and <code>@Min()</code>, and
-          <code>validate()</code> checks a class or plain object against those
-          rules.
+          Enhanced help: registers a <code>help [command]</code> command that
+          replaces the built-in output with a grouped command list and
+          per-command <strong>examples</strong> — the interactive, in-terminal
+          usage screen. For offline <code>man(1)</code> documentation, pair it
+          with <code>cli-plugin-man</code>.
         </p>
         <figure class="code-fig">
-          <figcaption>schema.ts <span class="pkg">@youneed/schema</span></figcaption>
+          <figcaption>ops.ts <span class="pkg">@youneed/cli-plugin-help</span></figcaption>
           <div class="code-fig__wrap">
-            <pre class="code" tabindex="0"><code><span class="tk-d">import</span> <span class="tk-m">{</span> IsEmail<span class="tk-m">,</span> IsNotEmpty<span class="tk-m">,</span> MinLength<span class="tk-m">,</span> IsOptional<span class="tk-m">,</span> IsInt<span class="tk-m">,</span> Min<span class="tk-m">,</span> validate <span class="tk-m">}</span> <span class="tk-d">from</span> <span class="tk-s">"@youneed/schema"</span><span class="tk-m">;</span>
+            <pre class="code" tabindex="0" data-hl><code>import { Application } from "@youneed/cli";
+import { help } from "@youneed/cli-plugin-help";
 
-<span class="tk-d">class</span> CreateUserDTO <span class="tk-m">{</span>
-  <span class="tk-d">@IsEmail</span><span class="tk-m">()</span> email<span class="tk-m">!:</span> string<span class="tk-m">;</span>
-  <span class="tk-d">@IsNotEmpty</span><span class="tk-m">()</span> <span class="tk-d">@MinLength</span><span class="tk-m">(</span>8<span class="tk-m">)</span> password<span class="tk-m">!:</span> string<span class="tk-m">;</span>
-  <span class="tk-d">@IsOptional</span><span class="tk-m">()</span> <span class="tk-d">@IsInt</span><span class="tk-m">()</span> <span class="tk-d">@Min</span><span class="tk-m">(</span>18<span class="tk-m">)</span> age<span class="tk-m">?:</span> number<span class="tk-m">;</span>
-<span class="tk-m">}</span>
+Application({
+  name: "ops",
+  version: "1.0.0",
+  description: "Operations toolkit",
+  commands: [/* … */],
+  plugins: [
+    help({ examples: { split: ["ops split a,b,c --first"] } }),
+  ],
+}).run();
 
-<span class="tk-d">const</span> errors <span class="tk-m">=</span> validate<span class="tk-m">(</span>CreateUserDTO<span class="tk-m">,</span> <span class="tk-d">await</span> req<span class="tk-m">.</span>json<span class="tk-m">());</span>
-<span class="tk-m">// [] when valid, else:</span>
-<span class="tk-m">// [{ property: "email", value: "nope", constraints: { isEmail: "email must be an email" } }]</span></code></pre>
-            <button class="fig-copy" type="button" data-copy='import { IsEmail, IsNotEmpty, MinLength, IsOptional, IsInt, Min, validate } from "@youneed/schema";
-
-class CreateUserDTO {
-  @IsEmail() email!: string;
-  @IsNotEmpty() @MinLength(8) password!: string;
-  @IsOptional() @IsInt() @Min(18) age?: number;
-}
-
-const errors = validate(CreateUserDTO, await req.json());
-// [] when valid, else:
-// [{ property: "email", value: "nope", constraints: { isEmail: "email must be an email" } }]' aria-label="Copy code sample">Copy</button>
+// ops help          → grouped command list with examples
+// ops help split    → usage, options and examples for one command</code></pre>
+            <yn-copy></yn-copy>
           </div>
         </figure>
-        <a class="gh-link" href="https://github.com/vitalics/Youneed/tree/main/packages/schema">packages/schema on GitHub →</a>
+        <a class="gh-link" href="https://github.com/vitalics/Youneed/tree/main/packages/cli-plugin-help">packages/cli-plugin-help on GitHub →</a>
+      </section>
+
+      <section class="doc-sec" id="test">
+        <h2>test <span class="pkg-name">@youneed/test</span></h2>
+        <p class="lede">
+          A class-and-decorator test framework built in the same paradigm as
+          <code>@youneed/dom</code> and <code>@youneed/server</code>: a
+          factory returns a base class you extend, TC39 decorators register
+          test members (cases, fixtures, hooks), and a fluent
+          <code>TestApplication</code> builder wires everything up and runs
+          it. Fixtures give scoped setup/teardown, <code>TestContext</code>
+          carries steps/annotations/abort signals, and reporters, plugins, and
+          parallelization (worker processes, CI sharding) are pluggable.
+        </p>
+        <figure class="code-fig">
+          <figcaption>calculator.test.ts <span class="pkg">@youneed/test</span></figcaption>
+          <div class="code-fig__wrap">
+            <pre class="code" tabindex="0"><code><span class="tk-d">import</span> <span class="tk-m">{</span> Test<span class="tk-m">,</span> Fixture<span class="tk-m">,</span> TestApplication<span class="tk-m">,</span> expect <span class="tk-m">}</span> <span class="tk-d">from</span> <span class="tk-s">"@youneed/test"</span><span class="tk-m">;</span>
+
+<span class="tk-d">class</span> Calculator <span class="tk-m">{</span>
+  add<span class="tk-m">(</span>a<span class="tk-m">:</span> number<span class="tk-m">,</span> b<span class="tk-m">:</span> number<span class="tk-m">)</span> <span class="tk-m">{</span> <span class="tk-d">return</span> a <span class="tk-m">+</span> b<span class="tk-m">;</span> <span class="tk-m">}</span>
+<span class="tk-m">}</span>
+
+<span class="tk-d">class</span> CalcFixture <span class="tk-d">extends</span> Fixture<span class="tk-m">&lt;</span>Calculator<span class="tk-m">&gt;(</span><span class="tk-m">{</span> name<span class="tk-m">:</span> <span class="tk-s">"calc"</span><span class="tk-m">,</span> scope<span class="tk-m">:</span> <span class="tk-s">"test"</span> <span class="tk-m">})</span> <span class="tk-m">{</span>
+  setup<span class="tk-m">()</span> <span class="tk-m">{</span> <span class="tk-d">return new</span> Calculator<span class="tk-m">();</span> <span class="tk-m">}</span>
+<span class="tk-m">}</span>
+
+<span class="tk-d">class</span> CalcTest <span class="tk-d">extends</span> Test<span class="tk-m">({</span> name<span class="tk-m">:</span> <span class="tk-s">"Calculator"</span> <span class="tk-m">})</span> <span class="tk-m">{</span>
+  <span class="tk-d">@Test.use</span><span class="tk-m">(</span>CalcFixture<span class="tk-m">)</span> calc<span class="tk-m">!:</span> Calculator<span class="tk-m">;</span>
+
+  <span class="tk-d">@Test.it</span><span class="tk-m">(</span><span class="tk-s">"adds two numbers"</span><span class="tk-m">)</span>
+  adds<span class="tk-m">()</span> <span class="tk-m">{</span>
+    expect<span class="tk-m">(</span><span class="tk-d">this</span><span class="tk-m">.</span>calc<span class="tk-m">.</span>add<span class="tk-m">(</span>2<span class="tk-m">,</span> 3<span class="tk-m">)).</span>toBe<span class="tk-m">(</span>5<span class="tk-m">);</span>
+  <span class="tk-m">}</span>
+<span class="tk-m">}</span>
+
+<span class="tk-d">await</span> TestApplication<span class="tk-m">().</span>addTests<span class="tk-m">(</span>CalcTest<span class="tk-m">).</span>run<span class="tk-m">();</span></code></pre>
+            <yn-copy></yn-copy>
+          </div>
+        </figure>
+        <a class="gh-link" href="https://github.com/vitalics/Youneed/tree/main/packages/test">packages/test on GitHub →</a>
       </section>
 
       <section class="doc-sec" id="logger">
@@ -1104,20 +1246,7 @@ log<span class="tk-m">.</span>info<span class="tk-m">(</span><span class="tk-s">
 
 <span class="tk-d">const</span> reqLog <span class="tk-m">=</span> log<span class="tk-m">.</span>child<span class="tk-m">({</span> requestId<span class="tk-m">:</span> <span class="tk-s">"r-42"</span> <span class="tk-m">});</span> <span class="tk-m">// bindings on every record</span>
 reqLog<span class="tk-m">.</span>error<span class="tk-m">(</span><span class="tk-s">"db down"</span><span class="tk-m">,</span> <span class="tk-m">{</span> password<span class="tk-m">:</span> <span class="tk-s">"hunter2"</span> <span class="tk-m">});</span> <span class="tk-m">// password → "[REDACTED]"</span></code></pre>
-            <button class="fig-copy" type="button" data-copy='import { createLogger, format, ConsoleTransport } from "@youneed/logger";
-
-const log = createLogger({
-  level: "info",
-  format: format.combine(format.timestamp(), format.redact(["ssn"]), format.json()),
-  defaultMeta: { service: "api" },
-  transports: [new ConsoleTransport()], // works in the browser and on the server
-});
-
-log.info("listening", { port: 3000 });
-// {"level":"info","message":"listening","timestamp":"…","service":"api","port":3000}
-
-const reqLog = log.child({ requestId: "r-42" }); // bindings on every record
-reqLog.error("db down", { password: "hunter2" }); // password → "[REDACTED]"' aria-label="Copy code sample">Copy</button>
+            <yn-copy></yn-copy>
           </div>
         </figure>
         <a class="gh-link" href="https://github.com/vitalics/Youneed/tree/main/packages/logger">packages/logger on GitHub →</a>
@@ -1188,62 +1317,7 @@ reqLog.error("db down", { password: "hunter2" }); // password → "[REDACTED]"' 
 
 </div>
 
-<script>
-// Copy-to-clipboard on install line + code figures — label swap is the feedback;
-// the page reads fine without JS.
-document.querySelectorAll(".fig-copy").forEach((btn) => {
-  btn.addEventListener("click", async () => {
-    try {
-      await navigator.clipboard.writeText(btn.dataset.copy);
-      btn.dataset.state = "copied";
-      const prev = btn.textContent;
-      btn.textContent = "Copied ✓";
-      setTimeout(() => { delete btn.dataset.state; btn.textContent = prev; }, 2000);
-    } catch { /* clipboard unavailable — code stays selectable */ }
-  });
-});
-
-// Mobile disclosure: toggle nav body visibility from the <details> element,
-// and close it after a link is tapped.
-(() => {
-  const details = document.getElementById("railToggle");
-  const body = document.getElementById("railNavBody");
-  if (!details || !body) return;
-  const sync = () => { body.hidden = !details.open; };
-  details.addEventListener("toggle", sync);
-  sync();
-  body.querySelectorAll(".rail__link").forEach((a) => {
-    a.addEventListener("click", () => { details.open = false; });
-  });
-})();
-
-// Active-link highlight on scroll (progressive enhancement only).
-(() => {
-  const links = Array.from(document.querySelectorAll(".rail__link"));
-  const map = new Map();
-  links.forEach((a) => {
-    const id = a.getAttribute("href").slice(1);
-    if (!map.has(id)) map.set(id, []);
-    map.get(id).push(a);
-  });
-  const sections = Array.from(document.querySelectorAll("section[id]"));
-  if (!("IntersectionObserver" in window) || sections.length === 0) return;
-  const io = new IntersectionObserver(
-    (entries) => {
-      for (const entry of entries) {
-        const group = map.get(entry.target.id);
-        if (!group) continue;
-        if (entry.isIntersecting) {
-          links.forEach((a) => a.classList.remove("is-active"));
-          group.forEach((a) => a.classList.add("is-active"));
-        }
-      }
-    },
-    { rootMargin: "-10% 0px -70% 0px", threshold: 0 }
-  );
-  sections.forEach((s) => io.observe(s));
-})();
-</script>
+<script type="module" src="/src/docs.ts"></script>
 
 </body>
 </html>

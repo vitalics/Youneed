@@ -1,14 +1,15 @@
-// Local static preview of site/ — zero dependencies (no npx/network needed).
+// Local static preview of the BUILT site (site/dist) — zero dependencies.
+// Run `pnpm site:build` first; use `pnpm site:dev` for the live dev server.
 //   pnpm site:serve            → http://localhost:4173
 //   PORT=8080 pnpm site:serve
-//   OPEN=/index-technical.html,/index-brutalist.html pnpm site:serve  → also opens tabs
+//   OPEN=/index-brutalist.html,/index-atmospheric.html pnpm site:serve  → also opens tabs
 import { createServer } from "node:http";
 import { spawn } from "node:child_process";
 import { readFile } from "node:fs/promises";
 import { join, extname, normalize } from "node:path";
 import { fileURLToPath } from "node:url";
 
-const ROOT = join(fileURLToPath(new URL(".", import.meta.url)), "..", "site");
+const ROOT = join(fileURLToPath(new URL(".", import.meta.url)), "..", "site", "dist");
 const PORT = Number(process.env.PORT) || 4173;
 const MIME = {
   ".html": "text/html; charset=utf-8",

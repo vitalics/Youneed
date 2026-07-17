@@ -9,7 +9,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
-<link rel="stylesheet" href="./tokens.css">
+<link rel="stylesheet" href="/tokens.css">
 <style>
 /* Hallmark · macrostructure: Workbench · theme: Cobalt · genre: modern-minimal · nav: N1b · footer: Ft2 · tone: technical · anchor hue: cobalt
    knobs — nav: 3 centre links · no dropdowns · always-solid · text+fill CTA pair
@@ -406,26 +406,24 @@ table.spec-sheet {
 .install .ps1 { color: var(--color-code-muted); user-select: none; }
 .install .cmd { color: var(--color-code-str); }
 .install .pkg { color: var(--color-code-accent); }
-.copy-btn {
-  flex-shrink: 0;
-  font-family: var(--font-mono);
-  font-size: 0.75rem;
-  font-weight: 500;
-  letter-spacing: 0.04em;
-  color: var(--color-code-muted);
-  background: transparent;
-  border: 1px solid var(--color-graphite-rule);
-  border-radius: var(--radius-ctrl);
-  min-height: 36px;
-  padding: var(--space-2xs) var(--space-sm);
-  cursor: pointer;
-  transition: color var(--dur-short) var(--ease-out), border-color var(--dur-short) var(--ease-out),
-              transform var(--dur-micro) var(--ease-out);
+.install yn-copy { flex-shrink: 0; }
+
+/* full catalog under the curated spec sheet */
+.explorer-head {
+  margin-top: var(--space-2xl);
+  padding-bottom: var(--space-md);
 }
-.copy-btn:hover { color: var(--color-code-str); border-color: var(--color-code-muted); }
-.copy-btn:active { transform: translateY(1px); }
-.copy-btn:disabled { opacity: 0.55; cursor: not-allowed; }
-.copy-btn[data-state="copied"] { color: var(--color-code-accent); border-color: var(--color-code-accent); }
+.explorer-head h3 {
+  font-family: var(--font-display);
+  font-size: var(--text-lg);
+  font-weight: 600;
+}
+.explorer-head p {
+  margin-top: var(--space-xs);
+  font-size: var(--text-sm);
+  color: var(--color-neutral);
+  max-width: 62ch;
+}
 
 /* ---------- Footer · Ft2 inline rule single line ---------- */
 .foot-line {
@@ -460,7 +458,7 @@ table.spec-sheet {
 @media (max-width: 40rem) {
   .stat-strip__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); row-gap: var(--space-xl); }
   .stat-strip__grid > div:nth-child(3) { border-left: 0; padding-left: 0; }
-  .nav__link, .btn, .cta-outline, .link-quiet, .copy-btn { min-height: 44px; }
+  .nav__link, .btn, .cta-outline, .link-quiet { min-height: 44px; }
   .nav__link { display: inline-flex; align-items: center; }
   .nav__brand { min-height: 44px; }
   .foot-line a { display: inline-flex; align-items: center; min-height: 44px; }
@@ -661,6 +659,19 @@ mountPages<span class="tk-m">(</span>Application<span class="tk-m">(),</span> Ho
       Every package follows the same convention: a factory, a base class, standard
       decorators. Install one, or compose the stack — nothing drags the rest in.
     </p>
+
+    <div class="explorer-head">
+      <h3>The full catalog</h3>
+      <p>
+        Every package in the monorepo — search by name or description, or narrow
+        to one ecosystem. Descriptions come straight from each package's
+        <code style="font-family: var(--font-mono); font-size: 0.85em;">package.json</code>.
+        (This table is itself a <span style="font-family: var(--font-mono); font-size: 0.85em;">@youneed/dom</span> component.)
+      </p>
+    </div>
+    <yn-package-explorer>
+      <noscript>The interactive catalog needs JavaScript — browse <a href="https://github.com/vitalics/Youneed/tree/main/packages">packages/ on GitHub</a> instead.</noscript>
+    </yn-package-explorer>
   </section>
 
   <!-- Quick start · the page's one dark graphite band -->
@@ -679,7 +690,7 @@ mountPages<span class="tk-m">(</span>Application<span class="tk-m">(),</span> Ho
       </div>
       <div class="install">
         <code id="install-cmd"><span class="ps1">$ </span><span class="cmd">pnpm add </span><span class="pkg">@youneed/dom</span></code>
-        <button class="copy-btn" type="button" data-copy="pnpm add @youneed/dom" aria-label="Copy install command">Copy</button>
+        <yn-copy text="pnpm add @youneed/dom"></yn-copy>
       </div>
     </div>
   </section>
@@ -698,19 +709,7 @@ mountPages<span class="tk-m">(</span>Application<span class="tk-m">(),</span> Ho
   </p>
 </footer>
 
-<script>
-// Copy-to-clipboard — label swap is the feedback; the page works without JS.
-document.querySelectorAll(".copy-btn").forEach((btn) => {
-  btn.addEventListener("click", async () => {
-    try {
-      await navigator.clipboard.writeText(btn.dataset.copy);
-      btn.dataset.state = "copied";
-      btn.textContent = "Copied ✓";
-      setTimeout(() => { delete btn.dataset.state; btn.textContent = "Copy"; }, 2500);
-    } catch { /* clipboard unavailable — command stays selectable */ }
-  });
-});
-</script>
+<script type="module" src="/src/main.ts"></script>
 
 </body>
 </html>
