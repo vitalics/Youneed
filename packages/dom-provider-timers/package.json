@@ -1,6 +1,6 @@
 {
   "name": "@youneed/dom-provider-timers",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Lifecycle-scoped timers for @youneed/dom — a composable provider contributing this.timers: setTimeout/setInterval/rAF/idle/delay + the Scheduler API (postTask, yield) + debounce/throttle, all auto-cancelled when the component disconnects.",
   "type": "module",
   "license": "ISC",
