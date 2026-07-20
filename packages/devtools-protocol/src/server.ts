@@ -6,7 +6,7 @@ import {
   JsonRPC,
   JsonRPCResponse,
 } from "@youneed/server-plugin-jsonrpc";
-import jsonrpcDevtools from "@youneed/server-plugin-jsonrpc/devtools";
+import "@youneed/server-plugin-jsonrpc/devtools"; // side effect: registers the JSON-RPC devtools renderers
 import { devtools } from "@youneed/server-plugin-devtools";
 import { loggerProvider } from "@youneed/server-middleware-logger";
 

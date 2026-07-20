@@ -476,6 +476,12 @@
       "@youneed/server-plugin-grpc/devtools": [
         "./packages/server-plugin-grpc/src/devtools.ts"
       ],
+      "@youneed/server-plugin-jsonrpc": [
+        "./packages/server-plugin-jsonrpc/src/index.ts"
+      ],
+      "@youneed/server-plugin-jsonrpc/devtools": [
+        "./packages/server-plugin-jsonrpc/src/devtools.ts"
+      ],
       "@youneed/server-plugin-otlp": [
         "./packages/server-plugin-otlp/src/index.ts"
       ],
