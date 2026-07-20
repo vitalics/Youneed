@@ -113,6 +113,30 @@
       "@youneed/orm-adapter-mongo": [
         "./packages/orm-adapter-mongo/src/index.ts"
       ],
+      "@youneed/otel": [
+        "./packages/otel/src/index.ts"
+      ],
+      "@youneed/otel/node": [
+        "./packages/otel/src/node.ts"
+      ],
+      "@youneed/otel/web": [
+        "./packages/otel/src/web.ts"
+      ],
+      "@youneed/server-plugin-otel": [
+        "./packages/server-plugin-otel/src/index.ts"
+      ],
+      "@youneed/cli-plugin-otel": [
+        "./packages/cli-plugin-otel/src/index.ts"
+      ],
+      "@youneed/dom-provider-otel": [
+        "./packages/dom-provider-otel/src/index.ts"
+      ],
+      "@youneed/test-plugin-otel": [
+        "./packages/test-plugin-otel/src/index.ts"
+      ],
+      "@youneed/logger-plugin-otel": [
+        "./packages/logger-plugin-otel/src/index.ts"
+      ],
       "@youneed/server-adapter": [
         "./packages/server-adapter/src/index.ts"
       ],
@@ -452,6 +476,12 @@
       "@youneed/server-plugin-grpc/devtools": [
         "./packages/server-plugin-grpc/src/devtools.ts"
       ],
+      "@youneed/server-plugin-jsonrpc": [
+        "./packages/server-plugin-jsonrpc/src/index.ts"
+      ],
+      "@youneed/server-plugin-jsonrpc/devtools": [
+        "./packages/server-plugin-jsonrpc/src/devtools.ts"
+      ],
       "@youneed/server-plugin-otlp": [
         "./packages/server-plugin-otlp/src/index.ts"
       ],
@@ -574,6 +604,9 @@
       ],
       "@youneed/server-plugin-ssr/devtools": [
         "./packages/server-plugin-ssr/src/devtools.ts"
+      ],
+      "@youneed/ssr-plugin-otel": [
+        "./packages/ssr-plugin-otel/src/index.ts"
       ],
       "@youneed/ssr-plugin-robots": [
         "./packages/ssr-plugin-robots/src/index.ts"

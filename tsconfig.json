@@ -1,7 +1,11 @@
 {
   "extends": "./tsconfig.base.json",
   "compilerOptions": {
-    "noEmit": true
+    "noEmit": true,
+    // server-plugin-devtools/src/web.ts → ext.ts → flow.tsx is a React island
+    // (esbuild-bundled at build time). Typecheck needs a jsx mode to parse it;
+    // this config is noEmit + typecheck-only, so package builds are unaffected.
+    "jsx": "react-jsx"
   },
   "include": ["packages/*/src/**/*.ts", "examples/**/*.ts"],
   "exclude": [
@@ -13,3 +17,4 @@
     "packages/server-plugin-devtools/src/web.ts"
   ]
 }
+

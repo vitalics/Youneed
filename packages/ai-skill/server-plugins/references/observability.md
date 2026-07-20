@@ -48,3 +48,34 @@ endpoint and exported/failed/queued/batch counts.
 metrics (both in the main `youneed` skill's `references/server-security.md`/`server-optimizations.md`
 /`plugins-infra.md`). This plugin is only the **exporter** — it does not replace them; it ships
 the trace spans onward to an OTel backend.
+
+## Real OpenTelemetry SDK — `@youneed/server-plugin-otel` (+ other levels)
+
+When you want the actual OTel SDK instead of the zero-dep layer above, use
+`@youneed/server-plugin-otel` (built on the shared `@youneed/otel` core — `startNodeOtel` /
+`startWebOtel`, W3C propagation helpers, `instrumentedFetch`):
+
+```ts
+import { otel } from "@youneed/server-plugin-otel";
+
+Application(MyController).plugin(otel({ serviceName: "api", endpoint: "http://localhost:4318" }));
+// → SERVER span per request (remote parent from `traceparent`), http.server.request.duration /
+//   http.server.active_requests metrics, OTLP/HTTP export of traces AND metrics, flush on shutdown.
+//   `ctx.state.span` keeps a { traceId, spanId, otel } facade, so logger correlation still works.
+```
+
+The same core covers every framework level: `@youneed/cli-plugin-otel` (`otelPlugin()` +
+`otelCommand()` middleware — span + metrics per command, flushed before exit),
+`@youneed/dom-provider-otel` (`initDomOtel()` + `otelProvider()` — render/effect/event spans in the
+browser via the Web SDK, flush on pagehide), `@youneed/test-plugin-otel` (`otel()` TestPlugin — span
+per test with steps + failure status, plus `OtelFixture` injecting `this.otel` into test classes),
+`@youneed/logger-plugin-otel` (`otel()` LoggerPlugin —
+`trace_id`/`span_id`/`trace_flags` stamped on every record), and `instrumentedFetch()` for client
+spans + propagation with `@youneed/http-client` (`createClient({ fetch: instrumentedFetch() })`).
+Provider-style access exists on every level: server `otelProvider()` (typed `this.otel` in
+controllers, with per-request `traceId`/`spanId`), dom `otelProvider()` and cli `otelCommand()`
+(`this.otel`), test `OtelFixture` (`@Test.use(OtelFixture)`), and `@youneed/ssr-plugin-otel`
+(`otelModule()` — `ssr.render <url>` spans + metrics for static page renders). Every contributed
+api also exposes `counter(name)`/`histogram(name)` — the process-wide `useGlobalCounter`/
+`useGlobalHistogram` metrics shared across levels and tests.
+All honor `OTEL_SERVICE_NAME` / `OTEL_EXPORTER_OTLP_ENDPOINT` / `OTEL_SDK_DISABLED`.

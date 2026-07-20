@@ -45,3 +45,32 @@ explodes cardinality).
     URL.
 
 - **`DEFAULT_BUCKETS`** — the default histogram bucket array.
+
+## Global custom metrics
+
+`useGlobalCounter` / `useGlobalHistogram` register **process-wide** metrics that
+ride along in every `metrics()` exposition. The same name always yields the same
+underlying series — declare once (e.g. at the top of a test file) and share the
+metric across all callers, handlers and tests:
+
+```ts
+import { useGlobalCounter, useGlobalHistogram } from "@youneed/server-middleware-metrics";
+
+const urlCalls = useGlobalCounter("url_calls");
+urlCalls.inc({ route: "/users" });        // → url_calls{route="/users"} 1
+urlCalls.inc({ route: "/users" }, 2);     // → url_calls{route="/users"} 3
+urlCalls.inc();                           // → url_calls 1   (separate, label-less series)
+
+const jobSeconds = useGlobalHistogram("job_seconds", { buckets: [0.1, 1, 10] });
+jobSeconds.observe(0.42, { job: "resize" });
+// → job_seconds_bucket{job="resize",le="0.1"} 0 … le="+Inf"} 1
+//   job_seconds_sum{job="resize"} 0.42
+//   job_seconds_count{job="resize"} 1
+```
+
+- **`useGlobalCounter(name, opts?)`** → `{ name, inc(labels?, value?) }` —
+  `value` defaults to 1. Options: `help`.
+- **`useGlobalHistogram(name, opts?)`** → `{ name, observe(value, labels?) }`.
+  Options: `help`, `buckets` (default `DEFAULT_BUCKETS`).
+- Same cardinality discipline as the built-ins: keep label value sets bounded.
+- **`__resetGlobalMetricsForTests()`** — drop every registered global (test seam).
