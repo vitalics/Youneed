@@ -1,0 +1,35 @@
+{
+  "name": "@youneed/ssr-plugin-otel",
+  "version": "0.1.0",
+  "description": "@youneed/ssr module: real OpenTelemetry SDK — ssr.render spans per static page render, ssr.render metrics, via the shared @youneed/otel core.",
+  "type": "module",
+  "license": "ISC",
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": { "types": "./dist/index.d.ts", "default": "./dist/index.js" }
+  },
+  "files": [
+    "dist"
+  ],
+  "sideEffects": false,
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json",
+    "test": "tsx tests/otel.test.ts"
+  },
+  "dependencies": {
+    "@youneed/otel": "workspace:*"
+  },
+  "peerDependencies": {
+    "@youneed/server": "workspace:*",
+    "@youneed/server-plugin-ssr": "workspace:*"
+  },
+  "devDependencies": {
+    "@youneed/server": "workspace:*",
+    "@youneed/server-plugin-ssr": "workspace:*",
+    "@youneed/ssr": "workspace:*",
+    "@youneed/test": "workspace:*",
+    "@youneed/test-reporter-console": "workspace:*"
+  }
+}

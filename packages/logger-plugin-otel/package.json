@@ -1,0 +1,29 @@
+{
+  "name": "@youneed/logger-plugin-otel",
+  "version": "0.1.0",
+  "description": "@youneed/logger plugin: stamp trace_id / span_id / trace_flags of the active OpenTelemetry span on every log record.",
+  "type": "module",
+  "license": "ISC",
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": { "types": "./dist/index.d.ts", "default": "./dist/index.js" }
+  },
+  "files": [
+    "dist"
+  ],
+  "sideEffects": false,
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json",
+    "test": "tsx tests/otel.test.ts"
+  },
+  "dependencies": {
+    "@youneed/logger": "workspace:*",
+    "@youneed/otel": "workspace:*"
+  },
+  "devDependencies": {
+    "@youneed/test": "workspace:*",
+    "@youneed/test-reporter-console": "workspace:*"
+  }
+}

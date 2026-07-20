@@ -3,7 +3,7 @@ import { Test, TestApplication, expect } from "@youneed/test";
 import { ConsoleReporter } from "@youneed/test-reporter-console";
 import { Application, Response } from "@youneed/server";
 import type { HTTP } from "@youneed/server";
-import { metrics, DEFAULT_BUCKETS } from "../src/index.ts";
+import { metrics, useGlobalCounter, useGlobalHistogram, __resetGlobalMetricsForTests, DEFAULT_BUCKETS } from "../src/index.ts";
 
 interface RawRes {
   status: number;
@@ -76,6 +76,41 @@ class MetricsSuite extends Test({ name: "server-middleware-metrics" }) {
     expect(DEFAULT_BUCKETS.length).toBe(11);
     expect(DEFAULT_BUCKETS[0]).toBe(0.005);
     expect(DEFAULT_BUCKETS[DEFAULT_BUCKETS.length - 1]).toBe(10);
+  }
+
+  @Test.it("useGlobalCounter shares one counter across handles and renders it") async globalCounter() {
+    __resetGlobalMetricsForTests();
+    const a = useGlobalCounter("url_calls");
+    const b = useGlobalCounter("url_calls"); // same name → same underlying series
+    a.inc({ route: "/users" });
+    b.inc({ route: "/users" }, 2);
+    b.inc(); // no labels → separate series
+    const r = await get(`${this.base}/metrics`);
+    expect(r.body.includes("# TYPE url_calls counter")).toBe(true);
+    expect(r.body.includes('url_calls{route="/users"} 3')).toBe(true);
+    expect(r.body.includes("url_calls 1")).toBe(true);
+  }
+
+  @Test.it("useGlobalHistogram renders buckets/sum/count with custom buckets") async globalHistogram() {
+    __resetGlobalMetricsForTests();
+    const hist = useGlobalHistogram("job_seconds", { buckets: [0.1, 1], help: "Job latency." });
+    hist.observe(0.05, { job: "resize" });
+    hist.observe(0.5, { job: "resize" });
+    const r = await get(`${this.base}/metrics`);
+    expect(r.body.includes("# HELP job_seconds Job latency.")).toBe(true);
+    expect(r.body.includes("# TYPE job_seconds histogram")).toBe(true);
+    expect(r.body.includes('job_seconds_bucket{job="resize",le="0.1"} 1')).toBe(true);
+    expect(r.body.includes('job_seconds_bucket{job="resize",le="1"} 2')).toBe(true);
+    expect(r.body.includes('job_seconds_bucket{job="resize",le="+Inf"} 2')).toBe(true);
+    expect(r.body.includes('job_seconds_sum{job="resize"} 0.55')).toBe(true);
+    expect(r.body.includes('job_seconds_count{job="resize"} 2')).toBe(true);
+  }
+
+  @Test.it("__resetGlobalMetricsForTests clears registered globals") async resetGlobals() {
+    useGlobalCounter("ephemeral_calls").inc();
+    __resetGlobalMetricsForTests();
+    const r = await get(`${this.base}/metrics`);
+    expect(r.body.includes("ephemeral_calls")).toBe(false);
   }
 }
 
