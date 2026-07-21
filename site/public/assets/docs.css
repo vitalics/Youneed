@@ -254,6 +254,13 @@ section.doc-sec:first-of-type { border-top: 0; padding-top: 0; }
   font-size: var(--text-sm);
   font-weight: 500;
 }
+/* Usage examples inside index blocks: compact, scrollable when tall. */
+.pkg pre.code {
+  margin-top: var(--space-sm);
+  font-size: 0.78rem;
+  max-height: 18rem;
+  overflow: auto;
+}
 
 .gh-link {
   display: inline-flex;

@@ -45,7 +45,7 @@ export class DocsPage extends Page("/docs", {
       .replace(/<yn-docs-nav><\/yn-docs-nav>/g, () => renderToString(DocsNav))
       .replace(/<yn-package-index><\/yn-package-index>/, () => renderToString(PackageIndex))
       .replace(
-        /(<pre class="code" tabindex="0") data-hl(><code>)([\s\S]*?)(<\/code><\/pre>)/g,
+        /(<pre class="code" tabindex="0") data-hl(?:="")?(><code>)([\s\S]*?)(<\/code><\/pre>)/g,
         (_m, open, mid, code, close) => open + mid + highlight(decodeEntities(code)) + close,
       );
   }
