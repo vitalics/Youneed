@@ -220,6 +220,41 @@ section.doc-sec:first-of-type { border-top: 0; padding-top: 0; }
 .doc-sec p + p { margin-top: var(--space-md); }
 .doc-sec p.lede + p.lede { margin-top: var(--space-sm); }
 
+/* <yn-package-index> — the flat, anchorable package list the sidebar links into. */
+.pkg-index {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(22rem, 1fr));
+  gap: var(--space-md);
+}
+.pkg {
+  padding: var(--space-md);
+  border: 1px solid var(--color-rule);
+  border-radius: var(--radius-ctrl);
+  scroll-margin-top: var(--space-lg);
+}
+.pkg:target {
+  border-color: var(--color-accent);
+  background: color-mix(in srgb, var(--color-accent) 6%, transparent);
+}
+.pkg__name {
+  margin: 0;
+  font-size: var(--text-sm);
+  font-weight: 600;
+}
+.pkg__name code { white-space: nowrap; }
+.pkg__desc {
+  margin-top: var(--space-xs);
+  font-size: var(--text-sm);
+  line-height: 1.55;
+  color: var(--color-ink-2);
+}
+.pkg__link {
+  display: inline-block;
+  margin-top: var(--space-xs);
+  font-size: var(--text-sm);
+  font-weight: 500;
+}
+
 .gh-link {
   display: inline-flex;
   align-items: center;

@@ -15,6 +15,7 @@ const CATEGORIES: { id: Filter; label: string }[] = [
   { id: "test", label: "test" },
   { id: "orm", label: "orm" },
   { id: "logger", label: "logger" },
+  { id: "otel", label: "otel" },
   { id: "core", label: "core & tooling" },
 ];
 

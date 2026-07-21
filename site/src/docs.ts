@@ -2,7 +2,6 @@
 // (bundled by esbuild in scripts/build-client.mjs → /docs.js).
 import "./components/copy-button.ts";
 import "./components/docs-nav.ts";
-import "./components/package-explorer.ts"; // full index in the #naming section
 import { highlightAll } from "./highlight.ts";
 
 // Code blocks are highlighted at SSR time (data-hl is dropped there); this is
