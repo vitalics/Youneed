@@ -3,7 +3,7 @@ import { Test, TestApplication, expect } from "@youneed/test";
 import { ConsoleReporter } from "@youneed/test-reporter-console";
 import { Application, Response } from "@youneed/server";
 import type { HTTP } from "@youneed/server";
-import { rateLimit, RateLimitStrategy, TokenBucket, KvFixedWindow } from "../src/index.ts";
+import { rateLimit, RateLimitStrategy, slidingWindow, tokenBucket, leakyBucket, exponentialBackoff, kvFixedWindow } from "../src/index.ts";
 import { MemoryKV } from "@youneed/kv";
 
 const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
@@ -31,12 +31,12 @@ class RateLimitStrategySuite extends Test({ name: "server-middleware-rate-limit"
   base = "http://127.0.0.1:41202";
   @Test.beforeAll() async start() {
     const app = Application()
-      .use("/fixed", rateLimit({ strategy: "fixed", max: 2, windowMs: 300 }))
-      .use("/sliding", rateLimit({ strategy: "sliding", max: 2, windowMs: 300 }))
-      .use("/exp", rateLimit({ strategy: "exponential", max: 1, windowMs: 600, maxBlockMs: 60_000 }))
-      .use("/bucket", rateLimit({ strategy: "token-bucket", max: 2, windowMs: 1000 })) // cap 2, ~1 token/500ms
-      .use("/leaky", rateLimit({ strategy: "leaky-bucket", max: 2, windowMs: 1000 })) // cap 2, ~1 slot/500ms
-      .use("/custom", rateLimit({ strategy: new AllowN(1) })) // strategy instance, not a name
+      .use("/fixed", rateLimit({ strategy: "fixed", max: 2, windowMs: 300 })) // name shorthand
+      .use("/sliding", rateLimit({ strategy: slidingWindow({ max: 2, windowMs: 300 }) }))
+      .use("/exp", rateLimit({ strategy: exponentialBackoff({ max: 1, windowMs: 600, maxBlockMs: 60_000 }) }))
+      .use("/bucket", rateLimit({ strategy: tokenBucket({ capacity: 2, refillPerSec: 2 }) })) // ~1 token/500ms
+      .use("/leaky", rateLimit({ strategy: leakyBucket({ capacity: 2, leakPerSec: 2 }) })) // ~1 slot/500ms
+      .use("/custom", rateLimit({ strategy: new AllowN(1) })) // strategy instance, not a name/factory
       .get("/fixed", () => Response.json({ ok: true }))
       .get("/sliding", () => Response.json({ ok: true }))
       .get("/exp", () => Response.json({ ok: true }))
@@ -111,8 +111,6 @@ class RateLimitStrategySuite extends Test({ name: "server-middleware-rate-limit"
   }
 }
 
-void TokenBucket;
-
 // ── KvFixedWindow: a distributed limiter sharing a single KV ───────────────────
 // Two `rateLimit()` middlewares each wrap their OWN KvFixedWindow, but both
 // limiters point at the SAME MemoryKV — simulating two app nodes behind a load
@@ -125,10 +123,10 @@ class KvFixedWindowSuite extends Test({ name: "rate-limit/kv-fixed-window" }) {
   @Test.beforeAll() async start() {
     // One shared store, two limiters (= two nodes) pointing at it.
     this.#kv = new MemoryKV({ sweepMs: 0 });
-    const nodeA = rateLimit({ strategy: new KvFixedWindow(this.#kv, { max: 2, windowMs: 60_000, prefix: "rl:test:" }) });
-    const nodeB = rateLimit({ strategy: new KvFixedWindow(this.#kv, { max: 2, windowMs: 60_000, prefix: "rl:test:" }) });
+    const nodeA = rateLimit({ strategy: kvFixedWindow(this.#kv, { max: 2, windowMs: 60_000, prefix: "rl:test:" }) });
+    const nodeB = rateLimit({ strategy: kvFixedWindow(this.#kv, { max: 2, windowMs: 60_000, prefix: "rl:test:" }) });
     // A standalone window for the basic single-node 200/429 assertions.
-    const solo = rateLimit({ strategy: new KvFixedWindow(this.#kv, { max: 2, windowMs: 60_000, prefix: "rl:solo:" }) });
+    const solo = rateLimit({ strategy: kvFixedWindow(this.#kv, { max: 2, windowMs: 60_000, prefix: "rl:solo:" }) });
     const app = Application()
       .use("/a", nodeA)
       .use("/b", nodeB)

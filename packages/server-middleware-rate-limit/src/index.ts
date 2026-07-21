@@ -1,11 +1,13 @@
 // ── Rate limiting (pluggable strategies) ───────────────────────────────────────
 //
-// `rateLimit({ strategy })` takes either a built-in NAME or a RateLimitStrategy
-// INSTANCE. A strategy is an object — a subclass of the abstract
-// `RateLimitStrategy` — that, given a client key + the current time, decides
-// allow/deny. The base owns the per-key store + bounded eviction; a subclass
-// implements just the algorithm, so you can drop in your own (leaky bucket, GCRA,
-// a Redis-backed limiter, …) without touching the middleware.
+// `rateLimit({ strategy })` takes a strategy from a FACTORY — `fixedWindow()`,
+// `slidingWindow()`, `tokenBucket()`, `leakyBucket()`, `exponentialBackoff()`,
+// `kvFixedWindow(kv)` — or a built-in NAME, or any `RateLimiter` instance of
+// your own. A strategy decides allow/deny from a client key + the current time;
+// the abstract `RateLimitStrategy` base owns the per-key store + bounded
+// eviction, so a custom limiter (GCRA, Redis-backed, …) is one `decide` method.
+//
+//   app.use("/api", rateLimit({ strategy: tokenBucket({ capacity: 50, refillPerSec: 5 }) }));
 //
 // Built in: FixedWindow, SlidingWindowLog, TokenBucket, LeakyBucket, ExponentialBackoff.
 import { HttpError } from "@youneed/server";
@@ -273,6 +275,42 @@ export class KvFixedWindow implements RateLimiter {
 
 /** Built-in strategy shorthands (configured from `windowMs`/`max`/`maxBlockMs`). */
 export type RateLimitStrategyName = "fixed" | "sliding" | "exponential" | "token-bucket" | "leaky-bucket";
+
+// ── Strategy factories ───────────────────────────────────────────────────────
+// The primary public API — `rateLimit({ strategy: fixedWindow({ max: 50 }) })`.
+// Factories over the classes above, same pattern as the rest of the middleware
+// family (cors(), helmet(), metrics(), tracing(), …). Classes stay exported for
+// subclassing; string shorthands stay for quick configs.
+
+/** Fixed window: one counter per `windowMs`. */
+export function fixedWindow(opts?: WindowConfig): FixedWindow {
+  return new FixedWindow(opts);
+}
+
+/** Sliding window (log): the limit holds over the last `windowMs` at every instant. */
+export function slidingWindow(opts?: WindowConfig): SlidingWindowLog {
+  return new SlidingWindowLog(opts);
+}
+
+/** Token bucket: bursts up to `capacity`, then paces to `refillPerSec`. */
+export function tokenBucket(opts?: TokenBucketConfig): TokenBucket {
+  return new TokenBucket(opts);
+}
+
+/** Leaky bucket (GCRA): burst of `capacity`, then a strict one-per-interval pace. */
+export function leakyBucket(opts?: LeakyBucketConfig): LeakyBucket {
+  return new LeakyBucket(opts);
+}
+
+/** Exponential backoff: cooldown doubles each strike, a clean window forgives. */
+export function exponentialBackoff(opts?: ExponentialBackoffConfig): ExponentialBackoff {
+  return new ExponentialBackoff(opts);
+}
+
+/** Distributed fixed window on a shared KV — the limit holds across instances. */
+export function kvFixedWindow(kv: KV, opts?: KvFixedWindowConfig): KvFixedWindow {
+  return new KvFixedWindow(kv, opts);
+}
 
 export interface RateLimitOptions {
   windowMs?: number; // default 60s — for the name shorthands
