@@ -260,6 +260,9 @@
       "@youneed/server-middleware-rate-limit": [
         "./packages/server-middleware-rate-limit/src/index.ts"
       ],
+      "@youneed/server-middleware-rate-limit/strategies/*.js": [
+        "./packages/server-middleware-rate-limit/src/strategies/*.ts"
+      ],
       "@youneed/server-middleware-http2-guard": [
         "./packages/server-middleware-http2-guard/src/index.ts"
       ],

@@ -1,9 +1,12 @@
 // Run: pnpm --filter @youneed/server-middleware-rate-limit test
 import { Test, TestApplication, expect } from "@youneed/test";
 import { ConsoleReporter } from "@youneed/test-reporter-console";
-import { Application, Response } from "@youneed/server";
+import { Application, Controller, Response } from "@youneed/server";
 import type { HTTP } from "@youneed/server";
-import { rateLimit, RateLimitStrategy, TokenBucket, KvFixedWindow } from "../src/index.ts";
+import { rateLimit, rateLimitProvider, RateLimitStrategy, fixedWindow, slidingWindow, tokenBucket, leakyBucket, exponentialBackoff, kvFixedWindow, type RateLimitApi } from "../src/index.ts";
+// Deep-import entries (@youneed/server-middleware-rate-limit/strategies/*.js)
+import { fixedWindow as fixedWindowDeep } from "../src/strategies/fixedWindow.ts";
+import { leakyBucket as leakyBucketDeep } from "../src/strategies/leakyBucket.ts";
 import { MemoryKV } from "@youneed/kv";
 
 const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
@@ -31,15 +34,17 @@ class RateLimitStrategySuite extends Test({ name: "server-middleware-rate-limit"
   base = "http://127.0.0.1:41202";
   @Test.beforeAll() async start() {
     const app = Application()
-      .use("/fixed", rateLimit({ strategy: "fixed", max: 2, windowMs: 300 }))
-      .use("/sliding", rateLimit({ strategy: "sliding", max: 2, windowMs: 300 }))
-      .use("/exp", rateLimit({ strategy: "exponential", max: 1, windowMs: 600, maxBlockMs: 60_000 }))
-      .use("/bucket", rateLimit({ strategy: "token-bucket", max: 2, windowMs: 1000 })) // cap 2, ~1 token/500ms
-      .use("/custom", rateLimit({ strategy: new AllowN(1) })) // strategy instance, not a name
+      .use("/fixed", rateLimit({ strategy: "fixed", max: 2, windowMs: 300 })) // name shorthand
+      .use("/sliding", rateLimit({ strategy: slidingWindow({ max: 2, windowMs: 300 }) }))
+      .use("/exp", rateLimit({ strategy: exponentialBackoff({ max: 1, windowMs: 600, maxBlockMs: 60_000 }) }))
+      .use("/bucket", rateLimit({ strategy: tokenBucket({ capacity: 2, refillPerSec: 2 }) })) // ~1 token/500ms
+      .use("/leaky", rateLimit({ strategy: leakyBucket({ capacity: 2, leakPerSec: 2 }) })) // ~1 slot/500ms
+      .use("/custom", rateLimit({ strategy: new AllowN(1) })) // strategy instance, not a name/factory
       .get("/fixed", () => Response.json({ ok: true }))
       .get("/sliding", () => Response.json({ ok: true }))
       .get("/exp", () => Response.json({ ok: true }))
       .get("/bucket", () => Response.json({ ok: true }))
+      .get("/leaky", () => Response.json({ ok: true }))
       .get("/custom", () => Response.json({ ok: true }));
     this.#server = await new Promise<HTTP>((resolve) => {
       const h = app.listen(41202, () => resolve(h));
@@ -91,15 +96,32 @@ class RateLimitStrategySuite extends Test({ name: "server-middleware-rate-limit"
     expect((await this.#hit("/bucket")).status).toBe(200);
   }
 
+  @Test.it("leaky-bucket: bursts to capacity, then a slot frees as the bucket drains") async leakyBucket() {
+    expect((await this.#hit("/leaky")).status).toBe(200); // pour 1
+    expect((await this.#hit("/leaky")).status).toBe(200); // pour 2 (capacity)
+    const spilled = await this.#hit("/leaky"); // overflow → spill
+    expect(spilled.status).toBe(429);
+    expect(Number(spilled.headers.get("retry-after")) >= 1).toBe(true);
+    await sleep(600); // ~1 unit drains (rate ≈ 1 / 500ms) → a slot frees
+    expect((await this.#hit("/leaky")).status).toBe(200);
+  }
+
   @Test.it("accepts a custom RateLimitStrategy instance (pluggable)") async custom() {
     expect((await this.#hit("/custom")).status).toBe(200); // AllowN(1): first allowed
     const blocked = await this.#hit("/custom");
     expect(blocked.status).toBe(429); // never resets → always limited after
     expect(blocked.headers.get("x-ratelimit-limit")).toBe("1");
   }
-}
 
-void TokenBucket;
+  @Test.it("deep imports (strategies/*.js) resolve to working limiters") async deepImports() {
+    expect(fixedWindowDeep({ max: 1 }).limit).toBe(1);
+    // capacity 1 → no burst tolerance; the very next hit inside the interval spills
+    const lb = leakyBucketDeep({ capacity: 1, leakPerSec: 100 }); // one slot per 10ms
+    expect((await lb.check("k", 1000)).limited).toBe(false);
+    expect((await lb.check("k", 1001)).limited).toBe(true);
+    expect((await lb.check("k", 1015)).limited).toBe(false); // interval drained
+  }
+}
 
 // ── KvFixedWindow: a distributed limiter sharing a single KV ───────────────────
 // Two `rateLimit()` middlewares each wrap their OWN KvFixedWindow, but both
@@ -113,10 +135,10 @@ class KvFixedWindowSuite extends Test({ name: "rate-limit/kv-fixed-window" }) {
   @Test.beforeAll() async start() {
     // One shared store, two limiters (= two nodes) pointing at it.
     this.#kv = new MemoryKV({ sweepMs: 0 });
-    const nodeA = rateLimit({ strategy: new KvFixedWindow(this.#kv, { max: 2, windowMs: 60_000, prefix: "rl:test:" }) });
-    const nodeB = rateLimit({ strategy: new KvFixedWindow(this.#kv, { max: 2, windowMs: 60_000, prefix: "rl:test:" }) });
+    const nodeA = rateLimit({ strategy: kvFixedWindow(this.#kv, { max: 2, windowMs: 60_000, prefix: "rl:test:" }) });
+    const nodeB = rateLimit({ strategy: kvFixedWindow(this.#kv, { max: 2, windowMs: 60_000, prefix: "rl:test:" }) });
     // A standalone window for the basic single-node 200/429 assertions.
-    const solo = rateLimit({ strategy: new KvFixedWindow(this.#kv, { max: 2, windowMs: 60_000, prefix: "rl:solo:" }) });
+    const solo = rateLimit({ strategy: kvFixedWindow(this.#kv, { max: 2, windowMs: 60_000, prefix: "rl:solo:" }) });
     const app = Application()
       .use("/a", nodeA)
       .use("/b", nodeB)
@@ -159,4 +181,75 @@ class KvFixedWindowSuite extends Test({ name: "rate-limit/kv-fixed-window" }) {
   }
 }
 
-await TestApplication().addTests(RateLimitStrategySuite, KvFixedWindowSuite).reporter(new ConsoleReporter()).run();
+// ── rateLimitProvider: the controller drives the limiter itself ───────────────
+class LimitedController extends Controller("/limited", {
+  providers: [rateLimitProvider({ strategy: fixedWindow({ max: 2, windowMs: 300 }) })],
+}) {
+  @Controller.get() async enforced() {
+    await this.rateLimit.enforce(); // 429 + Retry-After when over — like the middleware
+    return Response.json({ ok: true });
+  }
+  @Controller.get("/peek") async peek() {
+    const d = await this.rateLimit.check(); // verdict only — the handler decides
+    return Response.json({ limited: d.limited, remaining: d.remaining });
+  }
+}
+
+class RateLimitProviderSuite extends Test({ name: "rate-limit/provider" }) {
+  #server!: HTTP;
+  base = "http://127.0.0.1:41204";
+  @Test.beforeAll() async start() {
+    const app = Application(LimitedController);
+    this.#server = await new Promise<HTTP>((resolve) => {
+      const h = app.listen(41204, () => resolve(h));
+    });
+  }
+  @Test.afterAll() async stop() {
+    await this.#server.close();
+  }
+  async #hit(path: string): Promise<globalThis.Response> {
+    const r = await fetch(`${this.base}${path}`);
+    await r.body?.cancel();
+    return r;
+  }
+
+  @Test.it("enforce(): controller bounces over-limit requests with 429 + headers") async enforce() {
+    expect((await this.#hit("/limited")).status).toBe(200);
+    const second = await this.#hit("/limited");
+    expect(second.status).toBe(200);
+    expect(second.headers.get("x-ratelimit-limit")).toBe("2");
+    const over = await this.#hit("/limited");
+    expect(over.status).toBe(429); // the controller rejected it, no middleware involved
+    expect(Number(over.headers.get("retry-after"))).toBeGreaterThan(0);
+    await sleep(350); // window resets
+    expect((await this.#hit("/limited")).status).toBe(200);
+  }
+
+  @Test.it("check(): verdict without rejection — remaining counts down") async check() {
+    await sleep(350); // fresh window (the strategy is shared with the enforce suite)
+    const peek = async () => {
+      const r = await fetch(`${this.base}/limited/peek`);
+      return { status: r.status, body: (await r.json()) as { limited: boolean; remaining: number } };
+    };
+    const r1 = await peek();
+    expect(r1.status).toBe(200);
+    expect(r1.body.remaining).toBe(1);
+    const r2 = await peek();
+    expect(r2.body.limited).toBe(false);
+    const r3 = await peek();
+    expect(r3.body.limited).toBe(true); // verdict, still 200
+    expect(r3.status).toBe(200);
+    await sleep(350);
+  }
+
+  @Test.it("outside a request the api still checks against the store (global key)") async outsideRequest() {
+    const host: Record<string, unknown> = {};
+    rateLimitProvider({ strategy: fixedWindow({ max: 1, windowMs: 300 }) }).install(host);
+    const api = host.rateLimit as RateLimitApi;
+    expect(api.limit).toBe(1);
+    expect((await api.check()).limited).toBe(false);
+    expect((await api.check()).limited).toBe(true);
+  }
+}
+
+await TestApplication().addTests(RateLimitStrategySuite, KvFixedWindowSuite, RateLimitProviderSuite).reporter(new ConsoleReporter()).run();
