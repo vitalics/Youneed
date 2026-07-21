@@ -1,6 +1,6 @@
 {
   "name": "@youneed/otel",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Shared OpenTelemetry setup for @youneed/* framework levels: real OTel SDK (node + web), OTLP/HTTP traces + metrics, W3C propagation helpers, instrumented fetch.",
   "type": "module",
   "license": "ISC",

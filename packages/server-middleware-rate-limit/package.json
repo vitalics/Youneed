@@ -1,6 +1,6 @@
 {
   "name": "@youneed/server-middleware-rate-limit",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "@youneed/server middleware: rate limiting with pluggable strategies (fixed/sliding/token-bucket/leaky-bucket/exponential + KV).",
   "type": "module",
   "license": "ISC",

@@ -1,6 +1,6 @@
 {
   "name": "@youneed/test-plugin-otel",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "@youneed/test plugin: real OpenTelemetry SDK — a span per test case with steps and failure status, test.* metrics, OTLP/HTTP export flushed at teardown.",
   "type": "module",
   "license": "ISC",
@@ -8,7 +8,10 @@
   "module": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "exports": {
-    ".": { "types": "./dist/index.d.ts", "default": "./dist/index.js" }
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    }
   },
   "files": [
     "dist"

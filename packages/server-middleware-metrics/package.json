@@ -1,6 +1,6 @@
 {
   "name": "@youneed/server-middleware-metrics",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "@youneed/server middleware: dependency-free Prometheus metrics + /metrics exposition.",
   "type": "module",
   "license": "ISC",
