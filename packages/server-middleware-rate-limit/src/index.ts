@@ -7,7 +7,7 @@
 // implements just the algorithm, so you can drop in your own (leaky bucket, GCRA,
 // a Redis-backed limiter, …) without touching the middleware.
 //
-// Built in: FixedWindow, SlidingWindowLog, TokenBucket, ExponentialBackoff.
+// Built in: FixedWindow, SlidingWindowLog, TokenBucket, LeakyBucket, ExponentialBackoff.
 import { HttpError } from "@youneed/server";
 import type { Middleware, Context } from "@youneed/server";
 import type { KV } from "@youneed/kv";
@@ -151,6 +151,46 @@ export class TokenBucket extends RateLimitStrategy<{ tokens: number; last: numbe
   }
 }
 
+export interface LeakyBucketConfig {
+  /** Burst size — requests allowed instantly before pacing kicks in (default 100). */
+  capacity?: number;
+  /** Outflow rate: requests drained per second (default 10). */
+  leakPerSec?: number;
+}
+
+/** Leaky bucket (as a meter, GCRA formulation): requests pour in and the bucket
+ *  drains at exactly `leakPerSec` — after a burst of `capacity` the pace is a
+ *  strict one-per-interval, the classic Nginx `limit_req` behaviour. Tracked as
+ *  the theoretical arrival time (TAT): a hit is allowed while `tat - now` stays
+ *  within the burst tolerance `(capacity - 1) · interval`; each allowed hit
+ *  pushes the TAT one emission interval out. */
+export class LeakyBucket extends RateLimitStrategy<{ tat: number }> {
+  readonly limit: number;
+  #intervalMs: number;
+  #toleranceMs: number;
+  constructor({ capacity = 100, leakPerSec = 10 }: LeakyBucketConfig = {}) {
+    super();
+    this.limit = capacity;
+    this.#intervalMs = 1000 / leakPerSec;
+    this.#toleranceMs = Math.max(0, capacity - 1) * this.#intervalMs;
+  }
+  protected decide(state: { tat: number } | undefined, now: number) {
+    const tat = state?.tat ?? now;
+    const overBy = tat - now - this.#toleranceMs;
+    if (overBy > 0) {
+      const waitMs = Math.ceil(overBy);
+      return { state: { tat }, decision: { limited: true, remaining: 0, resetMs: now + waitMs, retryAfterMs: waitMs } };
+    }
+    const next = Math.max(now, tat) + this.#intervalMs;
+    // How many MORE hits pass at `now`: tat + (k-1)·interval ≤ now + tolerance.
+    const remaining = Math.max(0, Math.floor((this.#toleranceMs - (next - now)) / this.#intervalMs) + 1);
+    return { state: { tat: next }, decision: { limited: false, remaining, resetMs: next, retryAfterMs: 0 } };
+  }
+  protected dead(s: { tat: number }, now: number) {
+    return s.tat <= now; // fully drained
+  }
+}
+
 export interface ExponentialBackoffConfig extends WindowConfig {
   /** Ceiling on the doubling cooldown (default 1h). */
   maxBlockMs?: number;
@@ -232,7 +272,7 @@ export class KvFixedWindow implements RateLimiter {
 }
 
 /** Built-in strategy shorthands (configured from `windowMs`/`max`/`maxBlockMs`). */
-export type RateLimitStrategyName = "fixed" | "sliding" | "exponential" | "token-bucket";
+export type RateLimitStrategyName = "fixed" | "sliding" | "exponential" | "token-bucket" | "leaky-bucket";
 
 export interface RateLimitOptions {
   windowMs?: number; // default 60s — for the name shorthands
@@ -258,6 +298,8 @@ function resolveRateStrategy(opts: RateLimitOptions): RateLimiter {
       return new ExponentialBackoff({ windowMs, max, maxBlockMs: opts.maxBlockMs ?? 3_600_000 });
     case "token-bucket":
       return new TokenBucket({ capacity: max, refillPerSec: max / (windowMs / 1000) });
+    case "leaky-bucket":
+      return new LeakyBucket({ capacity: max, leakPerSec: max / (windowMs / 1000) });
     default:
       return new FixedWindow({ windowMs, max });
   }

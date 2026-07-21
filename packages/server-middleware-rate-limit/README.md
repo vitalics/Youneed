@@ -19,6 +19,7 @@ Application()
 | `FixedWindow` | `"fixed"` | one counter per `windowMs`; cheapest, can allow up to 2×max across a boundary |
 | `SlidingWindowLog` | `"sliding"` | limit holds over the last `windowMs` at every instant; no boundary burst |
 | `TokenBucket` | `"token-bucket"` | spend one token per request, refill continuously; allows bursts up to `capacity` |
+| `LeakyBucket` | `"leaky-bucket"` | requests pour in, the bucket drains at `leakPerSec`; burst of `capacity`, then a strict one-per-interval pace (GCRA, Nginx `limit_req` model) |
 | `ExponentialBackoff` | `"exponential"` | cooldown DOUBLES each strike (capped at `maxBlockMs`); a clean window forgives |
 
 > Default key is the client IP. Override with `key: (ctx) => …` (e.g. an API key

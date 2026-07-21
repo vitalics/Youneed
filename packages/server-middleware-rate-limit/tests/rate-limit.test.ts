@@ -35,11 +35,13 @@ class RateLimitStrategySuite extends Test({ name: "server-middleware-rate-limit"
       .use("/sliding", rateLimit({ strategy: "sliding", max: 2, windowMs: 300 }))
       .use("/exp", rateLimit({ strategy: "exponential", max: 1, windowMs: 600, maxBlockMs: 60_000 }))
       .use("/bucket", rateLimit({ strategy: "token-bucket", max: 2, windowMs: 1000 })) // cap 2, ~1 token/500ms
+      .use("/leaky", rateLimit({ strategy: "leaky-bucket", max: 2, windowMs: 1000 })) // cap 2, ~1 slot/500ms
       .use("/custom", rateLimit({ strategy: new AllowN(1) })) // strategy instance, not a name
       .get("/fixed", () => Response.json({ ok: true }))
       .get("/sliding", () => Response.json({ ok: true }))
       .get("/exp", () => Response.json({ ok: true }))
       .get("/bucket", () => Response.json({ ok: true }))
+      .get("/leaky", () => Response.json({ ok: true }))
       .get("/custom", () => Response.json({ ok: true }));
     this.#server = await new Promise<HTTP>((resolve) => {
       const h = app.listen(41202, () => resolve(h));
@@ -89,6 +91,16 @@ class RateLimitStrategySuite extends Test({ name: "server-middleware-rate-limit"
     expect((await this.#hit("/bucket")).status).toBe(429); // empty bucket
     await sleep(600); // ~1 token refills (rate ≈ 1 / 500ms)
     expect((await this.#hit("/bucket")).status).toBe(200);
+  }
+
+  @Test.it("leaky-bucket: bursts to capacity, then a slot frees as the bucket drains") async leakyBucket() {
+    expect((await this.#hit("/leaky")).status).toBe(200); // pour 1
+    expect((await this.#hit("/leaky")).status).toBe(200); // pour 2 (capacity)
+    const spilled = await this.#hit("/leaky"); // overflow → spill
+    expect(spilled.status).toBe(429);
+    expect(Number(spilled.headers.get("retry-after")) >= 1).toBe(true);
+    await sleep(600); // ~1 unit drains (rate ≈ 1 / 500ms) → a slot frees
+    expect((await this.#hit("/leaky")).status).toBe(200);
   }
 
   @Test.it("accepts a custom RateLimitStrategy instance (pluggable)") async custom() {
