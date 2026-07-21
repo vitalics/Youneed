@@ -1,6 +1,6 @@
 {
   "name": "@youneed/server-plugin-otel",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "@youneed/server plugin + middleware: real OpenTelemetry SDK — SERVER spans per request with W3C propagation, http.server metrics, OTLP/HTTP export.",
   "type": "module",
   "license": "ISC",
@@ -8,7 +8,10 @@
   "module": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "exports": {
-    ".": { "types": "./dist/index.d.ts", "default": "./dist/index.js" }
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    }
   },
   "files": [
     "dist"

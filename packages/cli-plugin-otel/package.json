@@ -1,6 +1,6 @@
 {
   "name": "@youneed/cli-plugin-otel",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "@youneed/cli plugin + middleware: real OpenTelemetry SDK — a span per command execution, cli.command metrics, OTLP/HTTP export flushed before exit.",
   "type": "module",
   "license": "ISC",
@@ -8,7 +8,10 @@
   "module": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "exports": {
-    ".": { "types": "./dist/index.d.ts", "default": "./dist/index.js" }
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    }
   },
   "files": [
     "dist"
