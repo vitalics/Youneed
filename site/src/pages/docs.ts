@@ -1,7 +1,8 @@
 // The docs page as a @youneed/ssr Page. Static sections live in
 // fragments/docs.html; on the server we pre-render:
 //   • both <yn-docs-nav> sidebars (light DOM — the nav is readable without JS),
-//   • the <yn-package-explorer> full index (Declarative Shadow DOM),
+//   • the <yn-package-index> full anchor index in #naming (light DOM, static —
+//     the sidebar's per-package links target its #pkg-<dir> blocks),
 //   • the data-hl code blocks (the highlighter runs at render time, so the
 //     page is fully styled with JavaScript disabled — data-hl is dropped and
 //     the client highlighter has nothing left to do).
@@ -9,7 +10,7 @@ import { readFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import { Page, renderToString, Meta, Link } from "@youneed/ssr";
 import { DocsNav } from "../components/docs-nav.ts";
-import { PackageExplorer } from "../components/package-explorer.ts";
+import { PackageIndex } from "../components/package-index.ts";
 import { highlight } from "../highlight.ts";
 import { baseHead } from "./head.ts";
 
@@ -42,9 +43,9 @@ export class DocsPage extends Page("/docs", {
   render() {
     return fragment
       .replace(/<yn-docs-nav><\/yn-docs-nav>/g, () => renderToString(DocsNav))
-      .replace(/<yn-package-explorer>[\s\S]*?<\/yn-package-explorer>/, () => renderToString(PackageExplorer))
+      .replace(/<yn-package-index><\/yn-package-index>/, () => renderToString(PackageIndex))
       .replace(
-        /(<pre class="code" tabindex="0") data-hl(><code>)([\s\S]*?)(<\/code><\/pre>)/g,
+        /(<pre class="code" tabindex="0") data-hl(?:="")?(><code>)([\s\S]*?)(<\/code><\/pre>)/g,
         (_m, open, mid, code, close) => open + mid + highlight(decodeEntities(code)) + close,
       );
   }

@@ -1,10 +1,13 @@
 // <yn-docs-nav> — the docs sidebar, data-driven and rendered in light DOM so
-// the page's .rail__* styles keep applying. Grouped by ecosystem (dom / server /
-// ssr / cli); the scroll-spy lives inside the component, and the filter box is
-// debounced through @youneed/dom-provider-timers — the site uses the provider
-// it documents.
+// the page's .rail__* styles keep applying. Groups are BUILT FROM the generated
+// package catalog (src/data/packages.ts): every package of every ecosystem is
+// listed — the ~20 with a hand-written section link to it, the rest anchor into
+// the static <yn-package-index> blocks (#pkg-<dir>) in the #naming section.
+// The scroll-spy lives inside the component, and the filter box is debounced
+// through @youneed/dom-provider-timers — the site uses the provider it documents.
 import { Component, html, type OnMount, type OnUnmount } from "@youneed/dom";
 import { timersProvider } from "@youneed/dom-provider-timers";
+import { packages, type PackageCategory } from "../data/packages.ts";
 
 interface NavItem {
   id: string;
@@ -15,64 +18,102 @@ interface NavGroup {
   items: NavItem[];
 }
 
-export const NAV_GROUPS: NavGroup[] = [
-  {
-    title: "Start",
-    items: [
-      { id: "intro", label: "Introduction" },
-      { id: "quick-start", label: "Installation & quick start" },
-    ],
-  },
-  {
-    title: "dom",
-    items: [
-      { id: "dom", label: "dom" },
-      { id: "dom-router", label: "dom-router" },
-      { id: "devtools", label: "devtools" },
-      { id: "dom-adapter-react", label: "adapter: react" },
-      { id: "dom-provider-i18n", label: "provider: i18n" },
-      { id: "dom-provider-timers", label: "provider: timers" },
-    ],
-  },
-  {
-    title: "server",
-    items: [
-      { id: "server", label: "server" },
-      { id: "schema", label: "schema" },
-      { id: "orm-sql", label: "orm-sql" },
-      { id: "server-middleware-rate-limit", label: "middleware: rate-limit" },
-      { id: "server-plugin-jobs", label: "plugin: jobs" },
-    ],
-  },
-  {
-    title: "ssr",
-    items: [
-      { id: "ssr", label: "ssr" },
-      { id: "ssr-plugin-meta", label: "plugin: meta" },
-      { id: "ssr-plugin-sitemap", label: "plugin: sitemap" },
-      { id: "ssr-plugin-robots", label: "plugin: robots" },
-    ],
-  },
-  {
-    title: "cli",
-    items: [
-      { id: "cli", label: "cli" },
-      { id: "cli-middleware-prompt", label: "middleware: prompt" },
-      { id: "cli-plugin-help", label: "plugin: help" },
-    ],
-  },
-  {
-    title: "Standalone",
-    items: [
-      { id: "test", label: "test" },
-      { id: "logger", label: "logger" },
-    ],
-  },
-  {
+/** Ecosystem groups in sidebar order. */
+const GROUP_ORDER: { cat: PackageCategory; title: string }[] = [
+  { cat: "dom", title: "dom" },
+  { cat: "server", title: "server" },
+  { cat: "ssr", title: "ssr" },
+  { cat: "cli", title: "cli" },
+  { cat: "test", title: "test" },
+  { cat: "orm", title: "orm" },
+  { cat: "logger", title: "logger" },
+  { cat: "otel", title: "otel" },
+  { cat: "core", title: "core & tooling" },
+];
+
+/**
+ * Packages with a hand-written section in docs.html (id === dir), in sidebar
+ * order — these link to their section instead of the flat index.
+ */
+const CURATED: [dir: string, label: string][] = [
+  ["dom", "dom"],
+  ["dom-router", "dom-router"],
+  ["devtools", "devtools"],
+  ["dom-adapter-react", "adapter: react"],
+  ["dom-provider-i18n", "provider: i18n"],
+  ["dom-provider-timers", "provider: timers"],
+  ["server", "server"],
+  ["schema", "schema"],
+  ["orm-sql", "orm-sql"],
+  ["server-middleware-rate-limit", "middleware: rate-limit"],
+  ["server-plugin-jobs", "plugin: jobs"],
+  ["ssr", "ssr"],
+  ["ssr-plugin-meta", "plugin: meta"],
+  ["ssr-plugin-sitemap", "plugin: sitemap"],
+  ["ssr-plugin-robots", "plugin: robots"],
+  ["cli", "cli"],
+  ["cli-middleware-prompt", "middleware: prompt"],
+  ["cli-plugin-help", "plugin: help"],
+  ["test", "test"],
+  ["logger", "logger"],
+];
+
+const CURATED_LABEL = new Map(CURATED);
+
+/** Short label from the naming convention: server-middleware-cors → "middleware: cors". */
+const KIND_PREFIXES: [string, string][] = [
+  ["dom-provider-", "provider: "],
+  ["dom-adapter-", "adapter: "],
+  ["dom-ui-", "ui: "],
+  ["server-middleware-", "middleware: "],
+  ["server-plugin-", "plugin: "],
+  ["server-adapter-", "adapter: "],
+  ["ssr-plugin-", "plugin: "],
+  ["cli-middleware-", "middleware: "],
+  ["cli-plugin-", "plugin: "],
+  ["test-plugin-", "plugin: "],
+  ["test-reporter-", "reporter: "],
+  ["logger-plugin-", "plugin: "],
+  ["logger-transport-", "transport: "],
+  ["orm-adapter-", "adapter: "],
+];
+function labelOf(dir: string): string {
+  for (const [prefix, kind] of KIND_PREFIXES) if (dir.startsWith(prefix)) return kind + dir.slice(prefix.length);
+  return dir;
+}
+
+function buildNavGroups(): NavGroup[] {
+  const groups: NavGroup[] = [
+    {
+      title: "Start",
+      items: [
+        { id: "intro", label: "Introduction" },
+        { id: "quick-start", label: "Installation & quick start" },
+      ],
+    },
+  ];
+  for (const { cat, title } of GROUP_ORDER) {
+    const entries = packages.filter((p) => p.cat === cat);
+    if (entries.length === 0) continue;
+    // Hand-written sections first (in CURATED order), then the rest A→Z into the index.
+    const curated = CURATED.filter(([dir]) => entries.some((p) => p.dir === dir));
+    const rest = entries.filter((p) => !CURATED_LABEL.has(p.dir));
+    groups.push({
+      title,
+      items: [
+        ...curated.map(([dir, label]) => ({ id: dir, label })),
+        ...rest.map((p) => ({ id: `pkg-${p.dir}`, label: labelOf(p.dir) })),
+      ],
+    });
+  }
+  groups.push({
     title: "Reference",
     items: [{ id: "naming", label: "Naming & the full index" }],
-  },
-];
+  });
+  return groups;
+}
+
+export const NAV_GROUPS: NavGroup[] = buildNavGroups();
 
 @Component.define()
 export class DocsNav
