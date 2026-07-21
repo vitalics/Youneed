@@ -10,8 +10,8 @@
 //   app.use("/api", rateLimit({ strategy: tokenBucket({ capacity: 50, refillPerSec: 5 }) }));
 //
 // Built in: FixedWindow, SlidingWindowLog, TokenBucket, LeakyBucket, ExponentialBackoff.
-import { HttpError } from "@youneed/server";
-import type { Middleware, Context } from "@youneed/server";
+import { HttpError, context } from "@youneed/server";
+import type { ControllerProvider, HttpResponse, Middleware, Context } from "@youneed/server";
 import type { KV } from "@youneed/kv";
 
 /** A per-request verdict. `resetMs` is absolute epoch ms; `retryAfterMs` relative. */
@@ -343,20 +343,113 @@ function resolveRateStrategy(opts: RateLimitOptions): RateLimiter {
   }
 }
 
+/** The `X-RateLimit-*` headers every verdict carries (middleware + provider alike). */
+function applyRateHeaders(res: HttpResponse, limit: number, d: RateDecision): void {
+  res.setHeader("X-RateLimit-Limit", String(limit));
+  res.setHeader("X-RateLimit-Remaining", String(d.remaining));
+  res.setHeader("X-RateLimit-Reset", String(Math.ceil(d.resetMs / 1000)));
+}
+
+/** The `Retry-After` header for a rejection (seconds, ≥ 1 per RFC 9110). */
+function retryAfterHeader(d: RateDecision): string {
+  return String(Math.max(1, Math.ceil(d.retryAfterMs / 1000)));
+}
+
 /** Rate limiter with a pluggable strategy + standard `X-RateLimit-*`/`Retry-After`. */
 export function rateLimit(opts: RateLimitOptions = {}): Middleware {
   const strategy = resolveRateStrategy(opts);
   const keyOf = opts.key ?? ((ctx) => ctx.request.socket?.remoteAddress ?? "global");
   return async (ctx, next) => {
     const d = await strategy.check(keyOf(ctx), Date.now());
-    const res = ctx.response;
-    res.setHeader("X-RateLimit-Limit", String(strategy.limit));
-    res.setHeader("X-RateLimit-Remaining", String(d.remaining));
-    res.setHeader("X-RateLimit-Reset", String(Math.ceil(d.resetMs / 1000)));
+    applyRateHeaders(ctx.response, strategy.limit, d);
     if (d.limited) {
-      res.setHeader("Retry-After", String(Math.max(1, Math.ceil(d.retryAfterMs / 1000))));
+      ctx.response.setHeader("Retry-After", retryAfterHeader(d));
       throw new HttpError(opts.statusCode ?? 429, opts.message ?? { error: "Too Many Requests" });
     }
     return next();
+  };
+}
+
+// ── ControllerProvider ───────────────────────────────────────────────────────
+
+/**
+ * The per-request api {@link rateLimitProvider} contributes as `this.rateLimit`:
+ * the limiter the CONTROLLER drives itself — per-endpoint limits, conditional
+ * limiting (only the expensive paths), or multiple checks per request.
+ */
+export interface RateLimitApi {
+  /** The configured limit (the `X-RateLimit-Limit` header value). */
+  readonly limit: number;
+  /**
+   * Check (and record) a hit for `key` — default: the client key of the ambient
+   * request (same resolution as the middleware). Sets the `X-RateLimit-*`
+   * headers on the current response; YOU decide what the verdict means.
+   */
+  check(key?: string): Promise<RateDecision>;
+  /**
+   * {@link RateLimitApi.check} plus the standard rejection when limited:
+   * `Retry-After` header + `HttpError(429)` (status/message overridable in the
+   * provider options). Call it at the top of a handler to bounce over-limit
+   * requests exactly like the middleware would.
+   */
+  enforce(key?: string): Promise<RateDecision>;
+}
+
+export interface RateLimitProviderOptions extends RateLimitOptions {
+  /** Instance member the api is exposed under (default `"rateLimit"`). */
+  member?: string;
+}
+
+/**
+ * A {@link ControllerProvider} that injects a {@link RateLimitApi} as
+ * `this.<member>` (default `this.rateLimit`) — the provider form of
+ * {@link rateLimit}, mirroring `loggerProvider`/`otelProvider`:
+ *
+ *   class Billing extends Controller("/billing", {
+ *     providers: [rateLimitProvider({ strategy: tokenBucket({ capacity: 10, refillPerSec: 1 }) })],
+ *   }) {
+ *     @Controller.post("/charge")
+ *     async charge() {
+ *       await this.rateLimit.enforce();      // 429 + Retry-After when over
+ *       // …only the expensive operation is limited, /billing/inspect stays free
+ *     }
+ *   }
+ *
+ * The client key and headers come from the ambient request (`context()`), so it
+ * behaves exactly like the middleware from inside a handler. Outside a request
+ * (startup, WS frames) checks still run against the store with a "global" key.
+ */
+export function rateLimitProvider(opts: RateLimitProviderOptions = {}): ControllerProvider<{ rateLimit: RateLimitApi }> {
+  const strategy = resolveRateStrategy(opts);
+  const keyOf = opts.key ?? ((ctx: Context) => ctx.request.socket?.remoteAddress ?? "global");
+  const member = opts.member ?? "rateLimit";
+  return {
+    install(instance: object) {
+      const api: RateLimitApi = {
+        limit: strategy.limit,
+        async check(key?: string): Promise<RateDecision> {
+          const ctx = context();
+          const k = key ?? (ctx ? keyOf(ctx) : "global");
+          const d = await strategy.check(k, Date.now());
+          if (ctx) applyRateHeaders(ctx.response, strategy.limit, d);
+          return d;
+        },
+        async enforce(key?: string): Promise<RateDecision> {
+          const d = await api.check(key);
+          if (d.limited) {
+            const ctx = context();
+            if (ctx) ctx.response.setHeader("Retry-After", retryAfterHeader(d));
+            throw new HttpError(opts.statusCode ?? 429, opts.message ?? { error: "Too Many Requests" });
+          }
+          return d;
+        },
+      };
+      Object.defineProperty(instance, member, {
+        get: () => api,
+        enumerable: false,
+        configurable: true,
+      });
+    },
+    __contributes: undefined as unknown as { rateLimit: RateLimitApi },
   };
 }

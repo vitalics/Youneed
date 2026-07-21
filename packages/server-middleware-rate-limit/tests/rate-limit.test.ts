@@ -1,9 +1,9 @@
 // Run: pnpm --filter @youneed/server-middleware-rate-limit test
 import { Test, TestApplication, expect } from "@youneed/test";
 import { ConsoleReporter } from "@youneed/test-reporter-console";
-import { Application, Response } from "@youneed/server";
+import { Application, Controller, Response } from "@youneed/server";
 import type { HTTP } from "@youneed/server";
-import { rateLimit, RateLimitStrategy, slidingWindow, tokenBucket, leakyBucket, exponentialBackoff, kvFixedWindow } from "../src/index.ts";
+import { rateLimit, rateLimitProvider, RateLimitStrategy, fixedWindow, slidingWindow, tokenBucket, leakyBucket, exponentialBackoff, kvFixedWindow, type RateLimitApi } from "../src/index.ts";
 // Deep-import entries (@youneed/server-middleware-rate-limit/strategies/*.js)
 import { fixedWindow as fixedWindowDeep } from "../src/strategies/fixedWindow.ts";
 import { leakyBucket as leakyBucketDeep } from "../src/strategies/leakyBucket.ts";
@@ -181,4 +181,75 @@ class KvFixedWindowSuite extends Test({ name: "rate-limit/kv-fixed-window" }) {
   }
 }
 
-await TestApplication().addTests(RateLimitStrategySuite, KvFixedWindowSuite).reporter(new ConsoleReporter()).run();
+// ── rateLimitProvider: the controller drives the limiter itself ───────────────
+class LimitedController extends Controller("/limited", {
+  providers: [rateLimitProvider({ strategy: fixedWindow({ max: 2, windowMs: 300 }) })],
+}) {
+  @Controller.get() async enforced() {
+    await this.rateLimit.enforce(); // 429 + Retry-After when over — like the middleware
+    return Response.json({ ok: true });
+  }
+  @Controller.get("/peek") async peek() {
+    const d = await this.rateLimit.check(); // verdict only — the handler decides
+    return Response.json({ limited: d.limited, remaining: d.remaining });
+  }
+}
+
+class RateLimitProviderSuite extends Test({ name: "rate-limit/provider" }) {
+  #server!: HTTP;
+  base = "http://127.0.0.1:41204";
+  @Test.beforeAll() async start() {
+    const app = Application(LimitedController);
+    this.#server = await new Promise<HTTP>((resolve) => {
+      const h = app.listen(41204, () => resolve(h));
+    });
+  }
+  @Test.afterAll() async stop() {
+    await this.#server.close();
+  }
+  async #hit(path: string): Promise<globalThis.Response> {
+    const r = await fetch(`${this.base}${path}`);
+    await r.body?.cancel();
+    return r;
+  }
+
+  @Test.it("enforce(): controller bounces over-limit requests with 429 + headers") async enforce() {
+    expect((await this.#hit("/limited")).status).toBe(200);
+    const second = await this.#hit("/limited");
+    expect(second.status).toBe(200);
+    expect(second.headers.get("x-ratelimit-limit")).toBe("2");
+    const over = await this.#hit("/limited");
+    expect(over.status).toBe(429); // the controller rejected it, no middleware involved
+    expect(Number(over.headers.get("retry-after"))).toBeGreaterThan(0);
+    await sleep(350); // window resets
+    expect((await this.#hit("/limited")).status).toBe(200);
+  }
+
+  @Test.it("check(): verdict without rejection — remaining counts down") async check() {
+    await sleep(350); // fresh window (the strategy is shared with the enforce suite)
+    const peek = async () => {
+      const r = await fetch(`${this.base}/limited/peek`);
+      return { status: r.status, body: (await r.json()) as { limited: boolean; remaining: number } };
+    };
+    const r1 = await peek();
+    expect(r1.status).toBe(200);
+    expect(r1.body.remaining).toBe(1);
+    const r2 = await peek();
+    expect(r2.body.limited).toBe(false);
+    const r3 = await peek();
+    expect(r3.body.limited).toBe(true); // verdict, still 200
+    expect(r3.status).toBe(200);
+    await sleep(350);
+  }
+
+  @Test.it("outside a request the api still checks against the store (global key)") async outsideRequest() {
+    const host: Record<string, unknown> = {};
+    rateLimitProvider({ strategy: fixedWindow({ max: 1, windowMs: 300 }) }).install(host);
+    const api = host.rateLimit as RateLimitApi;
+    expect(api.limit).toBe(1);
+    expect((await api.check()).limited).toBe(false);
+    expect((await api.check()).limited).toBe(true);
+  }
+}
+
+await TestApplication().addTests(RateLimitStrategySuite, KvFixedWindowSuite, RateLimitProviderSuite).reporter(new ConsoleReporter()).run();

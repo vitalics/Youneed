@@ -6,4 +6,6 @@ New `LeakyBucket` rate-limit strategy (+ `"leaky-bucket"` shorthand): requests p
 
 Also new: factory functions for every strategy — `fixedWindow()`, `slidingWindow()`, `tokenBucket()`, `leakyBucket()`, `exponentialBackoff()`, `kvFixedWindow(kv)` — matching the middleware-family convention (`cors()`, `helmet()`, `metrics()`, `tracing()`). `rateLimit({ strategy: tokenBucket({ capacity: 50, refillPerSec: 5 }) })` is now the primary documented form; the classes (for subclassing) and the string shorthands keep working unchanged.
 
-And: per-strategy deep imports — `@youneed/server-middleware-rate-limit/strategies/fixedWindow.js` (plus `slidingWindow.js`, `tokenBucket.js`, `leakyBucket.js`, `exponentialBackoff.js`, `kvFixedWindow.js`) — each subpath exports the class, the factory and the config type.
+Per-strategy deep imports — `@youneed/server-middleware-rate-limit/strategies/fixedWindow.js` (plus `slidingWindow.js`, `tokenBucket.js`, `leakyBucket.js`, `exponentialBackoff.js`, `kvFixedWindow.js`) — each subpath exports the class, the factory and the config type.
+
+And the provider form: `rateLimitProvider()` — a `ControllerProvider` injecting `this.rateLimit` so controllers can drive the limiter themselves: `check(key?)` (verdict + `X-RateLimit-*` headers) and `enforce(key?)` (+ `Retry-After` and a 429 `HttpError` when limited), keyed off the ambient request like the middleware. For per-endpoint limits, conditional limiting, and multiple checks per request.
