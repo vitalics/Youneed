@@ -28,6 +28,23 @@ Factories return the strategy classes (`FixedWindow`, `SlidingWindowLog`,
 too, for subclassing. String shorthands (`strategy: "fixed"`, configured via the
 top-level `windowMs`/`max`/`maxBlockMs`) keep working for quick configs.
 
+### Deep imports
+
+Every strategy is also importable from its own subpath — handy when you want
+just the limiter (e.g. in a test harness) without pulling the whole module:
+
+```ts
+import { fixedWindow } from "@youneed/server-middleware-rate-limit/strategies/fixedWindow.js";
+import { leakyBucket } from "@youneed/server-middleware-rate-limit/strategies/leakyBucket.js";
+
+Application().use("/api", rateLimit({ strategy: fixedWindow({ max: 100 }) }));
+```
+
+Available subpaths: `strategies/fixedWindow.js`, `strategies/slidingWindow.js`,
+`strategies/tokenBucket.js`, `strategies/leakyBucket.js`,
+`strategies/exponentialBackoff.js`, `strategies/kvFixedWindow.js` — each exports
+the class, the factory and the config type.
+
 > Default key is the client IP. Override with `key: (ctx) => …` (e.g. an API key
 > or user id). Drop in a custom limiter by subclassing `RateLimitStrategy`.
 

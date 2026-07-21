@@ -4,6 +4,9 @@ import { ConsoleReporter } from "@youneed/test-reporter-console";
 import { Application, Response } from "@youneed/server";
 import type { HTTP } from "@youneed/server";
 import { rateLimit, RateLimitStrategy, slidingWindow, tokenBucket, leakyBucket, exponentialBackoff, kvFixedWindow } from "../src/index.ts";
+// Deep-import entries (@youneed/server-middleware-rate-limit/strategies/*.js)
+import { fixedWindow as fixedWindowDeep } from "../src/strategies/fixedWindow.ts";
+import { leakyBucket as leakyBucketDeep } from "../src/strategies/leakyBucket.ts";
 import { MemoryKV } from "@youneed/kv";
 
 const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
@@ -108,6 +111,15 @@ class RateLimitStrategySuite extends Test({ name: "server-middleware-rate-limit"
     const blocked = await this.#hit("/custom");
     expect(blocked.status).toBe(429); // never resets → always limited after
     expect(blocked.headers.get("x-ratelimit-limit")).toBe("1");
+  }
+
+  @Test.it("deep imports (strategies/*.js) resolve to working limiters") async deepImports() {
+    expect(fixedWindowDeep({ max: 1 }).limit).toBe(1);
+    // capacity 1 → no burst tolerance; the very next hit inside the interval spills
+    const lb = leakyBucketDeep({ capacity: 1, leakPerSec: 100 }); // one slot per 10ms
+    expect((await lb.check("k", 1000)).limited).toBe(false);
+    expect((await lb.check("k", 1001)).limited).toBe(true);
+    expect((await lb.check("k", 1015)).limited).toBe(false); // interval drained
   }
 }
 
